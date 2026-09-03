@@ -1,0 +1,421 @@
+/* --- DESIGN SYSTEM & SYSTEM TOKENS --- */
+:root {
+    --bg-color: #FFFFFF;
+    --primary-color: #FF5A5F;   /* Bright Coral */
+    --secondary-color: #FFB400; /* Warm Yellow */
+    --accent-color: #00A699;    /* Fresh Teal */
+    --text-main: #2B2B2B;       /* Deep Charcoal */
+    --font-stack: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+}
+
+/* --- RESET & BASIC CORE --- */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+html {
+    width: 100%;
+    min-height: 100%;
+    scroll-behavior: smooth;
+}
+
+body {
+    width: 100%;
+    min-height: 100%;
+    font-family: var(--font-stack);
+    background-color: var(--bg-color);
+    color: var(--text-main);
+
+    /* IMPORTANT: allow page scrolling */
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+
+/* --- PRELOADER OVERLAY CANVAS --- */
+#preloader {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: var(--bg-color);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+    transition: opacity 0.5s ease, transform 0.5s ease;
+}
+
+/* Entrance Gateway Container */
+.start-gate {
+    text-align: center;
+    cursor: pointer;
+    padding: 20px;
+    animation: bounceIn 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.start-btn {
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+    color: white;
+    border: none;
+    padding: 16px 36px;
+    font-size: 1.2rem;
+    font-weight: bold;
+    border-radius: 50px;
+    box-shadow: 0 10px 20px rgba(255, 90, 95, 0.3);
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.start-btn:hover {
+    transform: scale(1.05);
+    box-shadow: 0 12px 24px rgba(255, 90, 95, 0.4);
+}
+
+/* Loading Canvas Elements */
+.loading-assets {
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+/* --- VECTOR COMPONENT STYLING --- */
+.vector-container {
+    width: 150px;
+    height: 150px;
+    margin-bottom: 25px;
+    position: relative;
+}
+
+/* Vector Blocks Sequential Animations */
+.block {
+    transform-origin: bottom center;
+    animation: dropBlock 0.6s ease-out forwards;
+    opacity: 0;
+}
+
+.block-bottom { fill: var(--accent-color); animation-delay: 0s; }
+.block-middle { fill: var(--secondary-color); animation-delay: 0.3s; }
+.block-top    { fill: var(--primary-color); animation-delay: 0.6s; }
+
+/* --- TYPOGRAPHY & INTERACTIVE TIMING BAR --- */
+.brand-name {
+    font-size: 2.5rem;
+    font-weight: 800;
+    letter-spacing: -1px;
+    color: var(--text-main);
+    margin-bottom: 15px;
+    opacity: 0;
+    animation: fadeInUp 0.5s ease-out 0.8s forwards;
+}
+
+.brand-name span {
+    color: var(--primary-color);
+}
+
+.progress-track {
+    width: 200px;
+    height: 6px;
+    background-color: #F0F0F0;
+    border-radius: 10px;
+    overflow: hidden;
+    position: relative;
+}
+
+.progress-bar {
+    width: 0%;
+    height: 100%;
+    background: linear-gradient(90deg, var(--accent-color), var(--primary-color));
+    border-radius: 10px;
+    transition: width 2s linear;
+}
+
+/* --- MAIN INTERFACE CANVAS HOUSING --- */
+#main-content {
+    opacity: 0;
+    padding: 40px;
+    max-width: 1200px;
+    margin: 0 auto;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    transform: translateY(20px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+#main-content.loaded {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.hero-title {
+    font-size: 3.5rem;
+    color: var(--text-main);
+    margin-bottom: 20px;
+}
+
+.hero-title span {
+    color: var(--accent-color);
+}
+
+.hero-subtitle {
+    font-size: 1.2rem; 
+    color: #666; 
+    max-width: 600px; 
+    line-height: 1.6;
+}
+
+/* --- RESPONSIVE ANIMATIONS & BREAKPOINTS --- */
+@keyframes dropBlock {
+    0% { transform: translateY(-50px) scaleY(0); opacity: 0; }
+    60% { transform: translateY(5px) scaleY(1.1); opacity: 1; }
+    100% { transform: translateY(0) scaleY(1); opacity: 1; }
+}
+
+@keyframes fadeInUp {
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes bounceIn {
+    from { opacity: 0; transform: scale(0.3); }
+    to { opacity: 1; transform: scale(1); }
+}
+
+/* Responsive Mobile Configurations */
+@media (max-width: 768px) {
+    .brand-name { font-size: 2rem; }
+    .vector-container { width: 120px; height: 120px; }
+    .hero-title { font-size: 2.2rem; }
+    .progress-track { width: 160px; }
+}
+
+/* --- DESIGN SYSTEM VARS (Required for colors) --- */
+:root {
+    --bg-color: #FFFFFF;
+    --primary-color: #FF5A5F;   /* Bright Coral */
+    --secondary-color: #FFB400; /* Warm Yellow */
+    --accent-color: #00A699;    /* Fresh Teal */
+    --text-main: #2B2B2B;       /* Deep Charcoal */
+    --font-stack: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    --header-height: 80px;
+}
+
+/* --- FLOATING STICKY HEADER HOUSING --- */
+.floating-header {
+    position: fixed;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 92%;
+    max-width: 1300px;
+    height: var(--header-height);
+    background-color: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    box-shadow: 0 8px 32px rgba(43, 43, 43, 0.08);
+    border-radius: 24px;
+    z-index: 1000;
+}
+
+.header-container {
+    width: 100%;
+    height: 100%;
+    padding: 0 0 0 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+}
+
+/* --- LOGO SECTION --- */
+.logo-wrapper {
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+}
+
+.brand-img {
+    height: 42px;
+    width: auto;
+    object-fit: contain;
+    transition: transform 0.3s ease;
+}
+
+.logo-wrapper:hover .brand-img {
+    transform: scale(1.05) rotate(-2deg);
+}
+
+/* --- CENTERED NAV MENU (DESKTOP) --- */
+.nav-menu {
+    display: flex;
+    gap: 35px;
+    align-items: center;
+}
+
+.nav-item {
+    text-decoration: none;
+    color: var(--text-main);
+    font-weight: 600;
+    font-size: 1.05rem;
+    position: relative;
+    padding: 8px 2px;
+    transition: color 0.3s;
+}
+
+.nav-item:hover, .nav-item.active {
+    color: var(--primary-color);
+}
+
+/* Underline Animation Effect */
+.nav-item::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: 3px;
+    background-color: var(--secondary-color);
+    border-radius: 2px;
+    transition: width 0.3s ease;
+}
+
+.nav-item:hover::after, .nav-item.active::after {
+    width: 100%;
+}
+
+/* --- RIGHT ALIGNED AUTH BUTTON --- */
+.auth-actions {
+    display: flex;
+    align-items: center;
+}
+
+.auth-btn {
+    background-color: var(--accent-color);
+    color: #FFFFFF;
+    border: none;
+    padding: 12px 24px;
+    border-radius: 16px;
+    font-weight: 700;
+    font-size: 0.95rem;
+    cursor: pointer;
+    box-shadow: 0 4px 12px rgba(0, 166, 153, 0.2);
+    transition: background-color 0.3s, transform 0.2s, box-shadow 0.2s;
+}
+
+.auth-btn:hover {
+    background-color: #00877D;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(0, 166, 153, 0.3);
+}
+
+/* --- HAMBURGER ICON --- */
+.hamburger-menu {
+    display: none;
+    flex-direction: column;
+    gap: 6px;
+    cursor: pointer;
+    z-index: 1010;
+}
+
+.hamburger-menu .bar {
+    width: 28px;
+    height: 3px;
+    background-color: var(--text-main);
+    border-radius: 4px;
+    transition: transform 0.3s, opacity 0.3s;
+}
+
+/* --- RESPONSIVE TABLET & MOBILE VIEWPORT --- */
+@media (max-width: 992px) {
+    .floating-header { 
+        top: 10px; 
+        width: 95%; 
+        height: 70px; 
+        --header-height: 70px;
+    }
+    
+    .hamburger-menu { 
+        display: flex; 
+    }
+    
+    /* Transform Navbar to Mobile Drawer Layout */
+    .nav-menu {
+        position: absolute;
+        top: -450px;
+        left: 0;
+        width: 100%;
+        background-color: #FFFFFF;
+        box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+        border-radius: 0 0 20px 20px;
+        flex-direction: column;
+        gap: 0;
+        padding: 20px 0;
+        transition: top 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        z-index: -1;
+    }
+    
+    .nav-menu.active { 
+        top: 68px; 
+    }
+    
+    .nav-item { 
+        width: 100%; 
+        text-align: center; 
+        padding: 15px 0; 
+        border-bottom: 1px solid #F5F5F5; 
+    }
+    
+    .nav-item::after { 
+        display: none; 
+    }
+    
+    .auth-actions { 
+        display: none; /* Auto-hides standalone desktop portal switch */
+    }
+    
+    /* Cross icon mutation shapes on activation */
+    .hamburger-menu.active .bar:nth-child(1) { transform: translateY(9px) rotate(45deg); }
+    .hamburger-menu.active .bar:nth-child(2) { opacity: 0; }
+    .hamburger-menu.active .bar:nth-child(3) { transform: translateY(-9px) rotate(-45deg); }
+}
+
+/* =========================================================
+   GLOBAL PAGE SCROLL FIX
+========================================================= */
+
+html,
+body {
+    width: 100%;
+    min-height: 100%;
+}
+
+body {
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+
+/* Prevent individual sections from blocking document scroll */
+.hero-fresh-banner,
+.elephant-stage {
+    max-width: 100%;
+}
+
+/* Keep full-screen hero but allow the document to continue below it */
+.hero-fresh-banner {
+    min-height: 100vh;
+    height: auto;
+}
+
+/* Mobile/tablet hero */
+@media (max-width: 992px) {
+    .hero-fresh-banner {
+        min-height: auto;
+        height: auto;
+    }
+}

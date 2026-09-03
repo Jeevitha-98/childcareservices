@@ -1,0 +1,3137 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stackly - Creative Childcare Services</title>
+    <!-- Linking external CSS styles -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- PRELOADER SCREEN OVERLAY -->
+    <div id="preloader">
+        <!-- Interactive Entrance Button (Ensures sound is allowed by web browsers) -->
+        <div class="start-gate" id="startGate">
+            <button class="start-btn" onclick="initiatePreloader()">✨ Enter Stackly</button>
+        </div>
+
+        <!-- Main Loading Assets Container (Triggered on click) -->
+        <div class="loading-assets" id="loadingAssets">
+            <!-- Vector Graphic: Childcare Stacking Blocks Layer -->
+            <div class="vector-container">
+                <svg viewBox="0 0 100 100" width="100%" height="100%">
+                    <!-- Base Block -->
+                    <rect class="block block-bottom" x="15" y="70" width="70" height="20" rx="4" />
+                    <!-- Middle Block -->
+                    <rect class="block block-middle" x="27.5" y="45" width="45" height="20" rx="4" />
+                    <!-- Top Triangle Block -->
+                    <polygon class="block block-top" points="50,15 35,38 65,38" />
+                </svg>
+            </div>
+
+            <!-- Brand Logo Header Text -->
+            <h1 class="brand-name">Stackly<span>.</span></h1>
+
+            <!-- Loading Timing Bar Indicator -->
+            <div class="progress-track">
+                <div class="progress-bar" id="progressBar"></div>
+            </div>
+        </div>
+    </div>
+
+
+
+    <!-- Linking external Javascript behaviors -->
+    <script>
+
+        // --- NATIVE AUDIO SYNTHESIZER (Web Audio API) ---
+// Generates a bright, warm, browser-safe chime sequence dynamically without external dependencies.
+function playChimeSound() {
+    try {
+        const AudioContext = window.AudioContext || window.webkitAudioContext;
+        const ctx = new AudioContext();
+        
+        // Note One: Bright Introduction Core Base
+        let osc1 = ctx.createOscillator();
+        let gain1 = ctx.createGain();
+        osc1.type = 'triangle'; 
+        osc1.frequency.setValueAtTime(523.25, ctx.currentTime); // C5 Note
+        gain1.gain.setValueAtTime(0.15, ctx.currentTime);
+        gain1.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.6);
+        osc1.connect(gain1);
+        gain1.connect(ctx.destination);
+        osc1.start();
+        osc1.stop(ctx.currentTime + 0.6);
+
+        // Note Two: Upbeat Harmonizing Accent delayed by 150 milliseconds
+        setTimeout(() => {
+            let osc2 = ctx.createOscillator();
+            let gain2 = ctx.createGain();
+            osc2.type = 'sine';
+            osc2.frequency.setValueAtTime(659.25, ctx.currentTime); // E5 Note
+            gain2.gain.setValueAtTime(0.2, ctx.currentTime);
+            gain2.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.8);
+            osc2.connect(gain2);
+            gain2.connect(ctx.destination);
+            osc2.start();
+            osc2.stop(ctx.currentTime + 0.8);
+        }, 150);
+
+    } catch (error) {
+        console.warn("Audio presentation skipped due to client system security rules:", error);
+    }
+}
+
+// --- STATE COORDINATION RUNNER ---
+function initiatePreloader() {
+    // 1. Fire Audio Chime Module
+    playChimeSound();
+
+    // 2. Tear down the static start interaction gate
+    document.getElementById('startGate').style.display = 'none';
+    
+    // 3. Reveal Animated Loading elements 
+    const loadingAssets = document.getElementById('loadingAssets');
+    loadingAssets.style.display = 'flex';
+
+    // 4. Trigger 2-Second Linear Track filling
+    const bar = document.getElementById('progressBar');
+    setTimeout(() => {
+        bar.style.width = '100%';
+    }, 50);
+
+    // 5. Exit Preloader View and Introduce Main Landing Layout after exactly 2 seconds
+    setTimeout(() => {
+        const preloader = document.getElementById('preloader');
+        const mainContent = document.getElementById('main-content');
+        
+        // Smooth Outward Transitions
+        preloader.style.opacity = '0';
+        preloader.style.transform = 'scale(1.05)';
+        
+        setTimeout(() => {
+            preloader.style.display = 'none';
+            // Smoothly ease in your main app canvas elements
+            mainContent.classList.add('loaded');
+        }, 500); // 500ms aligns with CSS exit style limits
+
+    }, 2000); // Strict 2000ms duration requirement
+}
+
+    </script>
+
+    <!-- FLOATING STICKY HEADER Component -->
+<header class="floating-header">
+    <div class="header-container">
+        
+        <!-- Brand Logo (Refreshes Page on Click) -->
+        <div class="logo-wrapper" onclick="refreshPage()">
+            <img src="https://placehold.co" alt="Stackly Logo" class="brand-img">
+        </div>
+
+        <!-- Mobile Hamburger Menu Icon Toggle -->
+        <div class="hamburger-menu" id="hamburgerToggle" onclick="toggleMobileMenu()">
+            <span class="bar"></span>
+            <span class="bar"></span>
+            <span class="bar"></span>
+        </div>
+
+        <!-- Centered Navigation Menu Layout -->
+        <nav class="nav-menu" id="navMenu">
+            <a href="#home" class="nav-item active">Home</a>
+            <a href="#programs" class="nav-item">Programs</a>
+            <a href="#about" class="nav-item">About Us</a>
+            <a href="#teachers" class="nav-item">Our Team</a>
+            <a href="#contact" class="nav-item">Contact</a>
+        </nav>
+
+        <!-- Right-Aligned Authentication Action Element -->
+        <div class="auth-actions">
+            <button class="auth-btn">Parent Portal</button>
+        </div>
+        
+    </div>
+</header>
+
+<script>
+    // --- LOGO PAGE REFRESH FUNCTION ---
+function refreshPage() {
+    window.location.reload();
+}
+
+// --- HAMBURGER MENU DRAWER INTERACTION ---
+function toggleMobileMenu() {
+    const hamburger = document.getElementById('hamburgerToggle');
+    const navMenu = document.getElementById('navMenu');
+    
+    hamburger.classList.toggle('active');
+    navMenu.classList.toggle('active');
+}
+
+// Automatically close responsive drawer if any nav link is selected
+document.querySelectorAll('.nav-item').forEach(item => {
+    item.addEventListener('click', () => {
+        document.getElementById('hamburgerToggle').classList.remove('active');
+        document.getElementById('navMenu').classList.remove('active');
+    });
+});
+
+</script>
+
+
+<!-- FULL WIDTH & HEIGHT HERO BANNER -->
+<section class="hero-fresh-banner" id="home">
+    <div class="hero-fresh-container">
+        
+        <!-- Left Side: Core Brand Copy with Letter-by-Letter Framework -->
+        <div class="hero-fresh-content">
+            <h1 class="hero-fresh-title" id="freshAnimatedTitle">
+                <span>B</span><span>u</span><span>i</span><span>l</span><span>d</span><span>i</span><span>n</span><span>g</span> 
+                <span>F</span><span>u</span><span>t</span><span>u</span><span>r</span><span>e</span><span>s</span> 
+                <span>B</span><span>l</span><span>o</span><span>c</span><span>k</span> 
+                <span>b</span><span>y</span> 
+                <span class="coral-highlight"><span>B</span><span>l</span><span>o</span><span>c</span><span>k</span></span>
+            </h1>
+            <p class="hero-fresh-subtitle">
+                Welcome to Stackly. Discover early childhood pathways where active, play-based frameworks meet modern safety standards to give your children the strongest foundation possible.
+            </p>
+            
+            <!-- Dual Interactive Floating Action Triggers -->
+            <div class="hero-fresh-actions">
+                <button class="hero-cta-btn primary-fresh float-node-1">Enroll Now ✨</button>
+                <button class="hero-cta-btn secondary-fresh float-node-2">Our Programs ➔</button>
+            </div>
+        </div>
+
+        <!-- Right Side: Irregular Geometric Fluid Video Canvas -->
+        <div class="hero-fresh-media">
+            <div class="organic-fluid-mask">
+                <video autoplay loop muted playsinline class="mask-video-player">
+                    <source src="./assests/hero.mp4" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+        </div>
+
+    </div>
+</section>
+
+<style>
+    /* --- BRAND CORE STYLE SYSTEM --- */
+:root {
+    --primary-color: #FF5A5F;   /* Bright Coral */
+    --secondary-color: #FFB400; /* Warm Yellow */
+    --accent-color: #00A699;    /* Fresh Teal */
+    --text-main: #2B2B2B;       /* Deep Charcoal */
+}
+
+/* --- FULL WINDOW VIEWPORT FRAME --- */
+.hero-fresh-banner {
+    width: 100vw;
+    height: 100vh; /* Demands full height of the browser screen */
+    min-height: 650px;
+    background: linear-gradient(135deg, #FFFFFF 0%, #F5FAFA 100%);
+    padding: 0 20px; /* Generous sideways padding for content safe-zones */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.hero-fresh-container {
+    width: 100%;
+    max-width: 1300px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1.15fr 0.85fr;
+    gap: 50px;
+    align-items: center;
+}
+
+/* --- LEFT REGION: BRAND ENGAGEMENT INDEX --- */
+.hero-fresh-content {
+    text-align: left;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+/* Letter-by-Letter Alignment Mapping */
+.hero-fresh-title {
+    font-size: 3.8rem;
+    font-weight: 800;
+    line-height: 1.15;
+    color: var(--text-main);
+    letter-spacing: -1.5px;
+    margin-bottom: 24px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0 6px; /* Clean gap breaks between individual words */
+}
+
+/* Base style mapping for standard character entry */
+.hero-fresh-title span {
+    display: inline-block;
+    opacity: 0;
+    transform: translateY(15px) scale(0.92);
+    animation: bounceInCharacter 0.45s cubic-bezier(0.175, 0.885, 0.32, 1.15) forwards;
+}
+
+.hero-fresh-title .coral-highlight span {
+    color: var(--primary-color);
+}
+
+.hero-fresh-subtitle {
+    font-size: 1.2rem;
+    line-height: 1.7;
+    color: #555555;
+    max-width: 560px;
+    margin-bottom: 35px;
+}
+
+/* --- FLOATING CALL TO ACTION SYSTEM --- */
+.hero-fresh-actions {
+    display: flex;
+    gap: 18px;
+    align-items: center;
+}
+
+.hero-cta-btn {
+    padding: 16px 36px;
+    font-size: 1.05rem;
+    font-weight: 700;
+    border-radius: 18px;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.2s, box-shadow 0.2s;
+}
+
+.primary-fresh {
+    background-color: var(--accent-color);
+    color: #FFFFFF;
+    box-shadow: 0 6px 18px rgba(0, 166, 153, 0.25);
+}
+.primary-fresh:hover { background-color: #008C81; }
+
+.secondary-fresh {
+    background-color: #FFFFFF;
+    color: var(--text-main);
+    box-shadow: 0 6px 18px rgba(43, 43, 43, 0.04);
+    border: 2px solid #E6ECEF;
+}
+.secondary-fresh:hover { background-color: #F8FAFB; }
+
+/* Dynamic Floating Node Physics Loops */
+.float-node-1 { animation: rhythmicFloat 4.5s ease-in-out infinite alternate; }
+.float-node-2 { animation: rhythmicFloat 4.5s ease-in-out infinite alternate-reverse; animation-delay: 0.6s; }
+
+.hero-cta-btn:hover {
+    transform: translateY(-4px) scale(1.02);
+    box-shadow: 0 10px 22px rgba(43, 43, 43, 0.12);
+}
+
+/* --- RIGHT REGION: ORGANIC GEOMETRIC VIDEO CONTAINER --- */
+.hero-fresh-media {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Custom non-standard shape (Not a rectangle, circle, or standard square) */
+.organic-fluid-mask {
+    position: relative;
+    width: 100%;
+    max-width: 460px;
+    aspect-ratio: 1 / 1;
+    overflow: hidden;
+    background-color: var(--secondary-color);
+    /* Morphing blob curve coordinates */
+    border-radius: 54% 46% 62% 38% / 41% 59% 41% 59%;
+    box-shadow: 0 20px 45px rgba(43, 43, 43, 0.1);
+    animation: continuousMorph 12s ease-in-out infinite alternate;
+}
+
+.mask-video-player {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transform: scale(1.04); /* Conceals clipping perimeter pixel gaps */
+}
+
+/* --- HARDWARE-ACCELERATED ANIMATIONS KEYFRAMES --- */
+@keyframes bounceInCharacter {
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+@keyframes rhythmicFloat {
+    0% { transform: translateY(0); }
+    100% { transform: translateY(-8px); }
+}
+
+@keyframes continuousMorph {
+    0% { border-radius: 54% 46% 62% 38% / 41% 59% 41% 59%; }
+    50% { border-radius: 65% 35% 48% 52% / 55% 45% 55% 45%; }
+    100% { border-radius: 46% 54% 38% 62% / 48% 52% 38% 62%; }
+}
+
+/* --- ADAPTIVE BREAKPOINT MAXIMIZATION SYSTEM --- */
+@media (max-width: 992px) {
+    .hero-fresh-banner { height: auto; min-height: auto; padding: 120px 24px 60px 24px; }
+    .hero-fresh-container { grid-template-columns: 1fr; gap: 60px; text-align: center; }
+    .hero-fresh-content { align-items: center; text-align: center; }
+    .hero-fresh-title { font-size: 2.6rem; justify-content: center; }
+    .hero-fresh-subtitle { margin-left: auto; margin-right: auto; }
+    .organic-fluid-mask { max-width: 360px; }
+}
+
+@media (max-width: 480px) {
+    .hero-fresh-title { font-size: 2.1rem; }
+    .hero-fresh-actions { flex-direction: column; width: 100%; gap: 12px; }
+    .hero-cta-btn { width: 100%; text-align: center; }
+}
+
+</style>
+
+<script>
+    /**
+ * Stackly Childcare Website - Slower Sequential Letter Cascade Controller
+ */
+document.addEventListener("DOMContentLoaded", () => {
+    runFreshLetterReveal();
+});
+
+function runFreshLetterReveal() {
+    const letters = document.querySelectorAll("#freshAnimatedTitle span");
+    if (letters.length === 0) return;
+
+    let indexCount = 0;
+
+    letters.forEach((letter) => {
+        // Safe bypass parameter to ensure layout containers don't stall the indexing math
+        if (letter.classList.contains("coral-highlight")) return;
+
+        // Apply a crisp, staggered transition entry footprint (35ms per character gap)
+        letter.style.animationDelay = `${indexCount * 0.035}s`;
+        indexCount++;
+    });
+}
+
+</script>
+<!-- ADVANCED ABOUT EXTENSION HOUSING -->
+<section class="about-next-section" id="about-more">
+    <div class="about-next-container">
+        
+        <!-- Left Column: Asymmetrical Pebble Masked Auto-Changing Slideshow Track -->
+        <div class="about-next-media-vault">
+            <div class="attractive-pebble-mask">
+                <div class="about-next-slideshow-track" id="aboutNextSlideshow">
+                    <img src="./assests/care center.webp" alt="Children interactive group play" class="next-slide-img active">
+                    <img src="./assests/care 2.webp" alt="Nurturing classroom reading time" class="next-slide-img">
+                    <img src="./assests/care 3.webp" alt="Creative spatial block mechanics" class="next-slide-img">
+                </div>
+                <!-- Ambient Backdrop Radiant Glow Accent -->
+                <div class="pebble-glow-accent"></div>
+            </div>
+        </div>
+
+        <!-- Right Column: Content Deck with Mouse Glow Tracking & Scroll Letter Triggers -->
+        <div class="about-next-content-card" id="aboutNextGlowCard">
+            <!-- Scroll-Triggered Letter-by-Letter Headline Matrix -->
+            <h2 class="about-next-headline" id="aboutNextScrollTitle">
+                <span>E</span><span>m</span><span>p</span><span>o</span><span>w</span><span>e</span><span>r</span><span>i</span><span>n</span><span>g</span> 
+                <span>Y</span><span>o</span><span>u</span><span>n</span><span>g</span> 
+                <span class="teal-highlight"><span>M</span><span>i</span><span>n</span><span>d</span><span>s</span></span>
+            </h2>
+            
+            <p class="about-next-description">
+                We believe that every child's potential builds up sequentially. By introducing immersive sensory materials, adaptive social milestones, and highly structured creative toolkits, Stackly turns daily daycare routines into meaningful exploratory adventures.
+            </p>
+
+            <!-- Vector Driven Interactive Feature Layout -->
+            <div class="about-next-grid-list">
+                <div class="next-grid-item">
+                    <div class="vector-badge-casing yellow-bg">
+                        <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="#FFB400" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z"/>
+                            <path d="M12 6v6l4 2"/>
+                        </svg>
+                    </div>
+                    <div>
+                        <h3>Flexible Routines</h3>
+                        <p>Adaptive care timelines</p>
+                    </div>
+                </div>
+
+                <div class="next-grid-item">
+                    <div class="vector-badge-casing coral-bg">
+                        <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="#FF5A5F" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+                            <circle cx="9" cy="7" r="4"/>
+                            <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
+                            <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+                        </svg>
+                    </div>
+                    <div>
+                        <h3>Expert Mentors</h3>
+                        <p>Certified child experts</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</section>
+
+<style>
+    /* --- COMPONENT TOKEN SYSTEM --- */
+:root {
+    --primary-color: #FF5A5F;   /* Bright Coral */
+    --secondary-color: #FFB400; /* Warm Yellow */
+    --accent-color: #00A699;    /* Fresh Teal */
+    --text-main: #2B2B2B;       /* Deep Charcoal */
+    --card-surface: #FFFFFF;
+}
+
+/* --- WRAPPER CASING STRUCTURE --- */
+.about-next-section {
+    width: 100%;
+    background-color: #FBFDFD;
+    /* REDUCED TARGET PADDING VALUES: 50px Top, 30px Bottom */
+    padding: 10px 20px 30px 20px;
+    overflow: hidden;
+    position: relative;
+}
+
+.about-next-container {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 0.95fr 1.05fr; /* Aligns Image Left, Content Right */
+    gap: 60px;
+    align-items: center;
+}
+
+/* --- LEFT SIDE: ATTRACTIVE PEBBLE SHAPE & AUTOMATIC CYCLE SLIDESHOW --- */
+.about-next-media-vault {
+    display: flex;
+    justify-content: center;
+    position: relative;
+}
+
+/* Custom irregular geometric organic fluid shape (Strictly NOT rectangle, square, or standard circle) */
+.attractive-pebble-mask {
+    position: relative;
+    width: 100%;
+    max-width: 440px;
+    aspect-ratio: 1 / 1;
+    overflow: hidden;
+    /* Organic multi-point asymmetrical smooth pebble architecture layout curves */
+    border-radius: 38% 62% 43% 57% / 55% 40% 60% 45%;
+    box-shadow: 0 20px 40px rgba(43, 43, 43, 0.08);
+    background-color: #EAF5F5;
+    z-index: 5;
+    transition: transform 0.4s ease;
+}
+
+.attractive-pebble-mask:hover {
+    transform: scale(1.02) rotate(1deg);
+}
+
+.about-next-slideshow-track {
+    width: 100%;
+    height: 100%;
+    position: relative;
+}
+
+.next-slide-img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0;
+    transform: scale(1.08);
+    transition: opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1), 
+                transform 1.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.next-slide-img.active {
+    opacity: 1;
+    transform: scale(1);
+    z-index: 2;
+}
+
+.pebble-glow-accent {
+    position: absolute;
+    bottom: -15px;
+    left: -15px;
+    width: 65px;
+    height: 65px;
+    background-color: var(--secondary-color);
+    border-radius: 50%;
+    filter: blur(25px);
+    opacity: 0.4;
+    z-index: 1;
+}
+
+/* --- RIGHT SIDE: CONTENT CARD & MOUSE HOVER GLOW LAYER --- */
+.about-next-content-card {
+    background-color: var(--card-surface);
+    border: 1px solid #EAF2F2;
+    padding: 40px;
+    border-radius: 28px;
+    box-shadow: 0 10px 30px rgba(0, 166, 153, 0.02);
+    position: relative;
+    overflow: hidden;
+    text-align: left;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* JavaScript Mouse-Coordinate Generated Radial Glow Effect overlay */
+.about-next-content-card::before {
+    content: '';
+    position: absolute;
+    top: var(--next-mouse-y, -200px);
+    left: var(--next-mouse-x, -200px);
+    width: 320px;
+    height: 320px;
+    background: radial-gradient(circle, rgba(0, 166, 153, 0.12) 0%, rgba(255, 90, 95, 0.02) 65%, transparent 100%);
+    border-radius: 50%;
+    pointer-events: none;
+    transform: translate(-50%, -50%);
+    z-index: 1;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.about-next-content-card:hover::before {
+    opacity: 1;
+}
+
+.about-next-content-card:hover {
+    border-color: rgba(0, 166, 153, 0.25);
+    box-shadow: 0 15px 35px rgba(0, 166, 153, 0.05);
+}
+
+/* --- SCROLL TRIGGER ENGINE: LETTER-BY-LETTER BREAKDOWNS --- */
+.about-next-headline {
+    font-size: 2.6rem;
+    font-weight: 800;
+    line-height: 1.25;
+    color: var(--text-main);
+    letter-spacing: -1px;
+    margin-bottom: 24px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0 6px; /* Break spacing layout between separate structural words */
+}
+
+/* Base style for individual letter-by-letter reveal nodes */
+.about-next-headline span {
+    display: inline-block;
+    opacity: 0;
+    transform: translateY(15px) scale(0.92);
+    transition: opacity 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.15), 
+                transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.15);
+}
+
+/* Triggered reveal class assigned via script scroll listener context */
+.about-next-headline span.char-revealed {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+}
+
+.about-next-headline .teal-highlight span {
+    color: var(--accent-color);
+}
+
+.about-next-description {
+    font-size: 1.1rem;
+    line-height: 1.65;
+    color: #555555;
+    margin-bottom: 30px;
+    position: relative;
+    z-index: 2;
+}
+
+/* Feature elements grid rows */
+.about-next-grid-list {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    position: relative;
+    z-index: 2;
+}
+
+.next-grid-item {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+}
+
+.next-grid-item h3 { font-size: 1.1rem; font-weight: 700; color: var(--text-main); margin-bottom: 2px; }
+.next-grid-item p { font-size: 0.9rem; color: #777; font-weight: 500; }
+
+.vector-badge-casing {
+    width: 48px;
+    height: 48px;
+    border-radius: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+.yellow-bg { background-color: #FFF6E0; }
+.coral-bg { background-color: #FFEBEB; }
+
+/* --- CRITICAL RESPONSIVE ADAPTATION INTERFACE --- */
+@media (max-width: 992px) {
+    .about-next-section { padding: 40px 20px 30px 20px; }
+    .about-next-container {
+        grid-template-columns: 1fr;
+        gap: 40px;
+    }
+    .attractive-pebble-mask { max-width: 360px; }
+    .about-next-headline { font-size: 2rem; justify-content: center; }
+    .about-next-content-card { padding: 30px 24px; text-align: center; }
+    .next-grid-item { flex-direction: column; text-align: center; }
+    .about-next-grid-list { grid-template-columns: 1fr; gap: 25px; }
+}
+
+</style>
+
+<script>
+    /**
+ * Stackly Childcare Website - Interactive Next About Component Engine
+ */
+document.addEventListener("DOMContentLoaded", () => {
+    initAboutNextSlideshow();
+    initAboutNextGlowCard();
+    initLetterScrollReveal();
+});
+
+// 1. DYNAMIC AUTO SLIDESHOW TRACK: Swaps asset frames automatically every 2 seconds
+function initAboutNextSlideshow() {
+    const slides = document.querySelectorAll(".about-next-slideshow-track .next-slide-img");
+    if (slides.length === 0) return;
+
+    let currentIndex = 0;
+
+    setInterval(() => {
+        // Demote active status from current view frame layer
+        slides[currentIndex].classList.remove("active");
+        
+        // Loop pointer index boundaries forward seamlessly
+        currentIndex = (currentIndex + 1) % slides.length;
+        
+        // Elevate active properties on target sliding frame
+        slides[currentIndex].classList.add("active");
+    }, 2000); // 2-second arrival target frequency intervals
+}
+
+// 2. CURSOR BOUNDARY GLOW POSITIONER: Captures mouse positions over card element
+function initAboutNextGlowCard() {
+    const card = document.getElementById("aboutNextGlowCard");
+    if (!card) return;
+
+    card.addEventListener("mousemove", (e) => {
+        const rect = card.getBoundingClientRect();
+        const xCoord = e.clientX - rect.left;
+        const yCoord = e.clientY - rect.top;
+
+        // Set local contextual tokens directly into target element scope structure
+        card.style.setProperty("--next-mouse-x", `${xCoord}px`);
+        card.style.setProperty("--next-mouse-y", `${yCoord}px`);
+    });
+}
+
+// 3. LETTER SCROLL MATRIX OBSERVER: Animates individual characters sequentially when scrolled into view
+function initLetterScrollReveal() {
+    const scrollTitle = document.getElementById("aboutNextScrollTitle");
+    if (!scrollTitle) return;
+
+    const observerConfig = {
+        root: null,
+        threshold: 0.25, // Executes logic loop when 25% of title block cuts into viewport frame
+        rootMargin: "0px 0px -4px 0px"
+    };
+
+    const intersectionObserver = new IntersectionObserver((entries, observer) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                const parentNode = entry.target;
+                const letterNodes = parentNode.querySelectorAll("span");
+                
+                // Sequentially stagger individual character entrance displays by 35ms
+                let activeLetterCounter = 0;
+                letterNodes.forEach((letter) => {
+                    if (letter.classList.contains("teal-highlight")) return;
+                    
+                    setTimeout(() => {
+                        letter.classList.add("char-revealed");
+                    }, activeLetterCounter * 35);
+                    activeLetterCounter++;
+                });
+
+                // Clear structural tracker to optimize performance loops
+                observer.unobserve(parentNode);
+            }
+        });
+    }, observerConfig);
+
+    // Attach tracking hook onto target text block container layout node
+    intersectionObserver.observe(scrollTitle);
+}
+
+</script>
+
+<!-- DYNAMIC SERVICES PACKAGES SITE BLOCK -->
+<section class="services-section" id="services">
+    
+    <!-- Centered Scroll-Triggered Sentence Headline Stage -->
+    <div class="services-header-stage">
+        <h2 class="services-center-headline" id="servicesScrollTitle">
+            <span class="serv-sentence">Tailoring spaces for children.</span>
+            <span class="serv-sentence">Providing world-class infrastructure.</span>
+            <span class="serv-sentence highlight">Services built on premium care.</span>
+        </h2>
+    </div>
+
+    <!-- Paginated Page-Swapping Viewport Window Wrapper -->
+    <div class="services-window-viewport">
+        
+        <!-- PAGE ONE CANVAS CONTAINER (Active by default) -->
+        <div class="services-page active" id="servPage1">
+            <div class="services-cards-grid">
+                
+                <!-- Service Card 1 -->
+                <div class="service-glow-card">
+                    <div class="card-img-wrapper">
+                        <img src="./assests/care 2.webp" alt="Full Day Daycare" class="card-display-img">
+                    </div>
+                    <div class="card-body-content">
+                        <h3>Full Day Daycare</h3>
+                        <p>Comprehensive 8 AM - 6 PM care modules equipped with certified nursing staff, organic balanced meals, and safe sleep suites.</p>
+                        <button class="card-cta-trigger">Learn More ➔</button>
+                    </div>
+                </div>
+
+                <!-- Service Card 2 -->
+                <div class="service-glow-card">
+                    <div class="card-img-wrapper">
+                        <img src="./assests/preschool.webp" alt="Preschool Academy" class="card-display-img">
+                    </div>
+                    <div class="card-body-content">
+                        <h3>Preschool Academy</h3>
+                        <p>Structured interactive spaces focusing on play-based sensory tools, language acquisition, and basic mathematical concepts.</p>
+                        <button class="card-cta-trigger">Learn More ➔</button>
+                    </div>
+                </div>
+
+                <!-- Service Card 3 -->
+                <div class="service-glow-card">
+                    <div class="card-img-wrapper">
+                        <img src="./assests/outdoor.webp" alt="After School Hub" class="card-display-img">
+                    </div>
+                    <div class="card-body-content">
+                        <h3>After School Hub</h3>
+                        <p>Engaging post-school sessions featuring homework guidance, speech enhancement clubs, and creative arts workshops.</p>
+                        <button class="card-cta-trigger">Learn More ➔</button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- PAGE TWO CANVAS CONTAINER (Hidden until swapped) -->
+        <div class="services-page" id="servPage2">
+            <div class="services-cards-grid">
+                
+                <!-- Service Card 4 -->
+                <div class="service-glow-card">
+                    <div class="card-img-wrapper">
+                        <img src="./assests/infant care.webp" alt="Infant Care Pods" class="card-display-img">
+                    </div>
+                    <div class="card-body-content">
+                        <h3>Infant Care Pods</h3>
+                        <p>Hyper-hygienic premium crib units built for infants from 6 months onwards with dedicated 1-on-1 caregiver tracking.</p>
+                        <button class="card-cta-trigger">Learn More ➔</button>
+                    </div>
+                </div>
+
+                <!-- Service Card 5 -->
+                <div class="service-glow-card">
+                    <div class="card-img-wrapper">
+                        <img src="./assests/weekend bootcamp.webp" alt="Weekend Bootcamps" class="card-display-img">
+                    </div>
+                    <div class="card-body-content">
+                        <h3>Weekend Bootcamps</h3>
+                        <p>Playful Saturday creative workshops hosting children's yoga sessions, introductory coding blocks, and live storytelling theater.</p>
+                        <button class="card-cta-trigger">Learn More ➔</button>
+                    </div>
+                </div>
+
+                <!-- Service Card 6 -->
+                <div class="service-glow-card">
+                    <div class="card-img-wrapper">
+                        <img src="./assests/emergency care.webp" alt="Emergency Backup Care" class="card-display-img">
+                    </div>
+                    <div class="card-body-content">
+                        <h3>Emergency Care</h3>
+                        <p>Flexible, on-demand childcare slots for parents facing unexpected work adjustments or short-notice corporate meetings.</p>
+                        <button class="card-cta-trigger">Learn More ➔</button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Page Swapping Control Navigation Bar Deck -->
+    <div class="services-pagination-deck">
+        <button class="pag-bullet active" data-target="servPage1" aria-label="View Page 1"></button>
+        <button class="pag-bullet" data-target="servPage2" aria-label="View Page 2"></button>
+    </div>
+
+</section>
+
+<style>
+    /* --- COMPONENT TOKEN LAYOUT SYSTEM --- */
+:root {
+    --primary-color: #FF5A5F;   /* Bright Coral */
+    --secondary-color: #FFB400; /* Warm Yellow */
+    --accent-color: #00A699;    /* Fresh Teal */
+    --text-main: #2B2B2B;       /* Deep Charcoal */
+    --card-bg: #FFFFFF;
+}
+
+/* --- SECTION CONTAINER WRAPPER --- */
+.services-section {
+    width: 100%;
+    background-color: #FFFFFF;
+    /* TARGET DESIGN PARAMETER PADDINGS: 50px Top, 30px Bottom */
+    padding: 50px 20px 30px 20px;
+    overflow: hidden;
+    position: relative;
+    text-align: center;
+}
+
+/* --- CENTERED HEADLINE SCROLL CONFIGURATIONS --- */
+.services-header-stage {
+    max-width: 800px;
+    margin: 0 auto 40px auto;
+}
+
+.services-center-headline {
+    font-size: 2.5rem;
+    font-weight: 800;
+    line-height: 1.35;
+    color: var(--text-main);
+    letter-spacing: -1px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+}
+
+.serv-sentence {
+    opacity: 0;
+    transform: translateY(18px);
+    transition: opacity 0.6s cubic-bezier(0.215, 0.610, 0.355, 1), 
+                transform 0.6s cubic-bezier(0.215, 0.610, 0.355, 1);
+}
+
+.serv-sentence.revealed {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.services-center-headline .highlight {
+    color: var(--primary-color);
+}
+
+/* --- PAGINATED PAGE WINDOW VIEWPORT FRAME --- */
+.services-window-viewport {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    position: relative;
+    min-height: 480px;
+}
+
+.services-page {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: auto;
+    opacity: 0;
+    visibility: hidden;
+    transform: scale(0.97) translateY(12px);
+    transition: opacity 0.5s cubic-bezier(0.4, 0, 0.2, 1), 
+                transform 0.5s cubic-bezier(0.4, 0, 0.2, 1),
+                visibility 0.5s;
+    z-index: 1;
+}
+
+.services-page.active {
+    position: relative;
+    opacity: 1;
+    visibility: visible;
+    transform: scale(1) translateY(0);
+    z-index: 5;
+}
+
+.services-cards-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 30px;
+    width: 100%;
+}
+
+/* --- SERVICE CARD STRUCTURE WITH HOVER GLOWS --- */
+.service-glow-card {
+    background-color: var(--card-bg);
+    border: 1px solid #EBF2F2;
+    border-radius: 24px;
+    overflow: hidden;
+    box-shadow: 0 10px 25px rgba(0, 166, 153, 0.02);
+    text-align: left;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    transition: transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94), 
+                border-color 0.3s ease, 
+                box-shadow 0.3s ease;
+}
+
+/* Dynamic Cursor Tracker Canvas Radial Backplate Glow overlay via JS context coordinate pointers */
+.service-glow-card::before {
+    content: '';
+    position: absolute;
+    top: var(--serv-mouse-y, -200px);
+    left: var(--serv-mouse-x, -200px);
+    width: 260px;
+    height: 260px;
+    background: radial-gradient(circle, rgba(0, 166, 153, 0.08) 0%, transparent 70%);
+    border-radius: 50%;
+    pointer-events: none;
+    transform: translate(-50%, -50%);
+    z-index: 1;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.service-glow-card:hover::before {
+    opacity: 1;
+}
+
+.service-glow-card:hover {
+    transform: translateY(-6px);
+    border-color: rgba(0, 166, 153, 0.25);
+    box-shadow: 0 15px 35px rgba(0, 166, 153, 0.06);
+}
+
+/* Creative Dynamic Image Presentation Wrap Shape - Highly Attractive asymmetrical bottom angle curve radius */
+.card-img-wrapper {
+    width: 100%;
+    height: 180px;
+    overflow: hidden;
+    position: relative;
+    border-radius: 0 0 40px 10px;
+}
+
+.card-display-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+}
+
+.service-glow-card:hover .card-display-img {
+    transform: scale(1.06);
+}
+
+.card-body-content {
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    position: relative;
+    z-index: 2;
+}
+
+.card-body-content h3 {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--text-main);
+    margin-bottom: 12px;
+}
+
+.card-body-content p {
+    font-size: 0.95rem;
+    line-height: 1.55;
+    color: #555555;
+    margin-bottom: 22px;
+    flex-grow: 1;
+}
+
+/* Card Action CTA Trigger Buttons Styles */
+.card-cta-trigger {
+    background-color: transparent;
+    border: 2px solid #E2E8F0;
+    color: var(--text-main);
+    padding: 10px 22px;
+    font-size: 0.9rem;
+    font-weight: 700;
+    border-radius: 12px;
+    cursor: pointer;
+    text-align: center;
+    align-self: flex-start;
+    transition: background-color 0.3s, border-color 0.3s, color 0.3s, box-shadow 0.2s;
+}
+
+.service-glow-card:hover class="card-cta-trigger",
+.card-cta-trigger:hover {
+    background-color: var(--accent-color);
+    border-color: var(--accent-color);
+    color: #FFFFFF;
+    box-shadow: 0 4px 12px rgba(0, 166, 153, 0.2);
+}
+
+/* --- SWAP PAGE PAGINATION CONTROL DECK --- */
+.services-pagination-deck {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    margin-top: 5px;
+}
+
+.pag-bullet {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background-color: #E2E8F0;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s;
+}
+
+.pag-bullet.active {
+    background-color: var(--primary-color);
+    transform: scale(1.25);
+    box-shadow: 0 2px 6px rgba(255, 90, 95, 0.3);
+}
+
+/* --- HIGH-UTILITY RESPONSIVE INTEGRATION LAYER --- */
+@media (max-width: 992px) {
+    .services-section { padding: 40px 20px 30px 20px; }
+    .services-center-headline { font-size: 2rem; }
+    .services-cards-grid { grid-template-columns: repeat(2, 1fr); gap: 24px; }
+    .services-window-viewport { min-height: auto; }
+}
+
+@media (max-width: 650px) {
+    .services-cards-grid { grid-template-columns: 1fr; gap: 20px; }
+    .services-center-headline { font-size: 1.7rem; }
+}
+
+</style>
+
+<script>
+    /**
+ * Stackly Childcare Website - Interactive Services Module Engine
+ */
+document.addEventListener("DOMContentLoaded", () => {
+    initServicesScrollReveal();
+    initServicesCardGlow();
+    initServicesPageSwapper();
+});
+
+// 1. CENTERED HEADLINE SCROLL ENGINE: Reveals individual lines sentence-by-sentence
+function initServicesScrollReveal() {
+    const scrollTitle = document.getElementById("servicesScrollTitle");
+    if (!scrollTitle) return;
+
+    const observerParams = {
+        root: null,
+        threshold: 0.25,
+        rootMargin: "0px 0px -30px 0px"
+    };
+
+    const targetObserver = new IntersectionObserver((entries, observer) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                const parent = entry.target;
+                const sentences = parent.querySelectorAll(".serv-sentence");
+                
+                sentences.forEach((sentence, index) => {
+                    setTimeout(() => {
+                        sentence.classList.add("revealed");
+                    }, index * 240); // 240ms spacing delays between sequential lines
+                });
+                observer.unobserve(parent);
+            }
+        });
+    }, observerParams);
+
+    targetObserver.observe(scrollTitle);
+}
+
+// 2. MOUSE CURSOR TRAILING GLOWS: Traces pointer coordinates on individual service box elements
+function initServicesCardGlow() {
+    const cards = document.querySelectorAll(".service-glow-card");
+    
+    cards.forEach(card => {
+        card.addEventListener("mousemove", (e) => {
+            const rect = card.getBoundingClientRect();
+            const posX = e.clientX - rect.left;
+            const posY = e.clientY - rect.top;
+
+            // Bind calculations into item style local variables scope
+            card.style.setProperty("--serv-mouse-y", `${posY}px`);
+            card.style.setProperty("--serv-mouse-x", `${posX}px`);
+        });
+    });
+}
+
+// 3. PAGE SWAPPING ENGINE: Modulates layout visibility when pagination switch bullets get selected
+function initServicesPageSwapper() {
+    const bullets = document.querySelectorAll(".pag-bullet");
+    const pages = document.querySelectorAll(".services-page");
+
+    bullets.forEach(bullet => {
+        bullet.addEventListener("click", () => {
+            const targetPageId = bullet.getAttribute("data-target");
+            const targetPageElement = document.getElementById(targetPageId);
+
+            if (!targetPageElement || bullet.classList.contains("active")) return;
+
+            // Remove active tags from operational elements loops
+            bullets.forEach(b => b.classList.remove("active"));
+            pages.forEach(p => p.classList.remove("active"));
+
+            // Inject state parameters smoothly onto operational target elements
+            bullet.classList.add("active");
+            targetPageElement.classList.add("active");
+        });
+    });
+}
+
+</script>
+
+<!-- REINFORCED FIXED FEATURES PANEL -->
+<section class="features-section" id="features-showcase">
+    <div class="features-main-container">
+
+        <!-- CARD 1: TIMELINE & SCHEDULING (Light Ice-Blue Slate) -->
+        <div class="feature-slate-card scheduling-slate" id="schedGlowCard">
+            <!-- Left Isolated Box: Running Vector Clock + Safety Containment Margins -->
+            <div class="clock-containment-zone">
+                <div class="clock-vector-stage">
+                    <svg viewBox="0 0 100 100" class="live-clock-svg">
+                        <!-- Crimson Red Outer Bezel Shell Base -->
+                        <circle cx="50" cy="50" r="45" fill="#FF5A5F" />
+                        <!-- Cream-White Inside Face Plate -->
+                        <circle cx="50" cy="50" r="38" fill="#F8FAFC" />
+                        <!-- Clock Pin Pointer Group -->
+                        <g transform="translate(50,50)">
+                            <line id="hourHand" x1="0" y1="0" x2="0" y2="-18" stroke="#2B2B2B" stroke-width="5" stroke-linecap="round" />
+                            <line id="minuteHand" x1="0" y1="0" x2="0" y2="-26" stroke="#2B2B2B" stroke-width="3.5" stroke-linecap="round" />
+                            <circle cx="0" cy="0" r="3.5" fill="#FFFFFF" stroke="#2B2B2B" stroke-width="2" />
+                        </g>
+                    </svg>
+                </div>
+                <!-- Floating tags constrained strictly within the clock's margin buffer -->
+                <span class="schedule-bubble bubble-1 float-anim-1">Full day</span>
+                <span class="schedule-bubble bubble-2 float-anim-2">Half day</span>
+                <span class="schedule-bubble bubble-3 float-anim-3">Hourly</span>
+            </div>
+
+            <!-- Right Isolated Box: Text Data Layout -->
+            <div class="slate-text-casing">
+                <h3 class="scroll-fade-text">Nutritious Meals & Snacks Provided</h3>
+                <p class="scroll-fade-text">Balanced, kid-friendly meals prepared daily by nutrition experts to sustain vibrant mental milestones and high active playground hours.</p>
+                <a href="#meals" class="slate-action-link scroll-fade-text">Read More</a>
+            </div>
+        </div>
+
+        <!-- CARD 2: PLAY & EXPLORATION (Warm Sunlight Yellow Slate) -->
+        <div class="feature-slate-card activities-slate" id="actGlowCard">
+            <!-- Left Isolated Box: Content Layout Area -->
+            <div class="slate-text-casing yellow-theme-text">
+                <h3 class="scroll-fade-text">Kid-Friendly Fun, Learning, and Play</h3>
+                <p class="scroll-fade-text">Immersive physical exploration grids paired with tactile logic toys to encourage collaborative learning profiles naturally.</p>
+            </div>
+
+            <!-- Right Isolated Box: Adaptive Media Stage -->
+            <div class="slate-interactive-media">
+                <div class="asymmetrical-image-mask">
+                    <img src="./assests/care 2.webp" alt="Nurturing child play instruction" class="slate-display-img">
+                    
+                    <!-- Vector Art Overlay Layer -->
+                    <div class="slate-vector-overlay">
+                        <svg viewBox="0 0 100 60" width="100%" height="100%">
+                            <rect x="10" y="35" width="16" height="16" rx="4" fill="#00A699" opacity="0.8"/>
+                            <circle cx="45" cy="40" r="9" fill="#FFB400" opacity="0.8"/>
+                            <polygon points="80,25 68,48 92,48" fill="#FF5A5F" opacity="0.8"/>
+                        </svg>
+                    </div>
+
+                    <!-- Custom 404 Play Button Trigger -->
+                    <button class="video-play-nav-node" onclick="routeTo404()" aria-label="Play Feature Overview Video">
+                        <svg viewBox="0 0 24 24" width="20" height="20" fill="#2B2B2B">
+                            <polygon points="8,5 19,12 8,19" />
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</section>
+
+<style>
+    /* --- SITE CONTEXT SYSTEM TOKENS --- */
+:root {
+    --primary-color: #FF5A5F;
+    --secondary-color: #FFB400;
+    --accent-color: #00A699;
+    --text-main: #2B2B2B;
+    --ice-blue-bg: #E3F2FD;
+}
+
+/* --- MAIN CONTAINER SETUPS --- */
+.features-section {
+    width: 100%;
+    background-color: #FFFFFF;
+    /* TARGET DESIGN PARAMETER PADDINGS: 50px Top, 30px Bottom */
+    padding: 50px 20px 30px 20px;
+    overflow: hidden;
+}
+
+.features-main-container {
+    width: 100%;
+    max-width: 1260px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1.15fr 0.85fr;
+    gap: 25px;
+}
+
+/* --- UNIVERSAL SLATE LAYOUT ENGINE --- */
+.feature-slate-card {
+    border-radius: 28px;
+    padding: 40px;
+    display: flex;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(43, 43, 43, 0.02);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.feature-slate-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 15px 35px rgba(43, 43, 43, 0.08);
+}
+
+/* --- FIXED CLOCK AND BUBBLE CONTAINER ZONE (PREVENTS OVERLAPPING) --- */
+.scheduling-slate {
+    background-color: var(--ice-blue-bg);
+    display: flex;
+    align-items: center;
+    gap: 50px; /* Strong separation boundary line */
+}
+
+.clock-containment-zone {
+    position: relative;
+    width: 120px;
+    height: 120px;
+    margin-right: 45px; /* Mandated breathing room block to protect text column lines */
+    flex-shrink: 0;
+}
+
+.clock-vector-stage {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    z-index: 5;
+}
+
+.live-clock-svg {
+    width: 100%;
+    height: 100%;
+    filter: drop-shadow(0 6px 12px rgba(255, 90, 95, 0.15));
+}
+
+/* Floating interactive label bubble items */
+.schedule-bubble {
+    position: absolute;
+    background-color: #FFFFFF;
+    color: var(--text-main);
+    padding: 6px 14px;
+    font-size: 0.8rem;
+    font-weight: 700;
+    border-radius: 30px;
+    box-shadow: 0 4px 12px rgba(43, 43, 43, 0.06);
+    white-space: nowrap;
+    z-index: 10;
+}
+
+/* Absolute spatial anchors calibrated tightly onto the clock area boundaries */
+.bubble-1 { top: -14px; left: 50%; transform: translateX(-50%); }
+.bubble-2 { top: 40px; right: -55px; }
+.bubble-3 { bottom: -14px; left: 50%; transform: translateX(-50%); }
+
+/* --- CARD 2 SPECIFIC: SLATE MASKS & INTERACTION --- */
+.activities-slate {
+    background-color: #FFCD38; /* Rich Sunlight Theme Yellow Background Profile */
+    display: flex;
+    align-items: center;
+    gap: 30px;
+    justify-content: space-between;
+}
+
+.slate-interactive-media {
+    flex-shrink: 0;
+}
+
+.asymmetrical-image-mask {
+    position: relative;
+    width: 175px;
+    height: 175px;
+    border-radius: 40% 60% 35% 65% / 50% 35% 65% 50%; /* Attractive irregular geometric flow */
+    overflow: hidden;
+    box-shadow: 0 10px 25px rgba(43, 43, 43, 0.1);
+    background-color: #FFFFFF;
+}
+
+.slate-display-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.slate-vector-overlay {
+    position: absolute;
+    bottom: 5px;
+    left: 5px;
+    width: 75px;
+    height: 45px;
+    z-index: 3;
+    pointer-events: none;
+}
+
+.video-play-nav-node {
+    position: absolute;
+    bottom: 12px;
+    right: 12px;
+    width: 38px;
+    height: 38px;
+    background-color: #FFFFFF;
+    border: none;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+    z-index: 5;
+    transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275), background-color 0.2s;
+}
+.video-play-nav-node:hover { transform: scale(1.12); background-color: var(--ice-blue-bg); }
+
+/* --- TEXT DATA COLUMN MANAGEMENT BLOCK --- */
+.slate-text-casing {
+    flex-grow: 1;
+    text-align: left;
+    position: relative;
+    z-index: 2;
+}
+
+.slate-text-casing h3 {
+    font-size: 1.4rem;
+    font-weight: 800;
+    line-height: 1.25;
+    color: var(--text-main);
+    margin-bottom: 10px;
+}
+
+.slate-text-casing p {
+    font-size: 0.95rem;
+    line-height: 1.52;
+    color: #555555;
+    margin-bottom: 16px;
+}
+
+.yellow-theme-text h3 { color: #1A1A1A; }
+.yellow-theme-text p { color: #2B2B2B; opacity: 0.85; }
+
+.slate-action-link {
+    font-size: 0.9rem;
+    font-weight: 800;
+    color: var(--text-main);
+    text-decoration: none;
+    border-bottom: 2px solid var(--primary-color);
+    padding-bottom: 2px;
+    transition: color 0.2s, border-color 0.2s;
+}
+.slate-action-link:hover { color: var(--primary-color); }
+
+/* Interactive Pointer trailing glows overlay */
+.feature-slate-card::before {
+    content: ''; position: absolute; top: var(--mx, -200px); left: var(--my, -200px);
+    width: 240px; height: 240px; border-radius: 50%; pointer-events: none;
+    transform: translate(-50%, -50%); z-index: 1; opacity: 0; transition: opacity 0.3s ease;
+}
+.scheduling-slate::before { background: radial-gradient(circle, rgba(255,90,95,0.08) 0%, transparent 70%); }
+.activities-slate::before { background: radial-gradient(circle, rgba(255,255,255,0.25) 0%, transparent 70%); }
+.feature-slate-card:hover::before { opacity: 1; }
+
+/* Scroll Sequential Revel Node Classes */
+.scroll-fade-text {
+    opacity: 0;
+    transform: translateY(12px);
+    transition: opacity 0.55s cubic-bezier(0.215, 0.610, 0.355, 1), transform 0.55s cubic-bezier(0.215, 0.610, 0.355, 1);
+}
+.scroll-fade-text.revealed-node { opacity: 1; transform: translateY(0); }
+
+/* --- INFINITE FLOATING PHYSICS ANIMATIONS --- */
+@keyframes floatX1 { 0% { transform: translate(-50%, 0) rotate(0deg); } 100% { transform: translate(-50%, -6px) rotate(2deg); } }
+@keyframes floatX2 { 0% { transform: translateY(0) rotate(0deg); } 100% { transform: translateY(-8px) rotate(-3deg); } }
+@keyframes floatX3 { 0% { transform: translate(-50%, 0) rotate(0deg); } 100% { transform: translate(-50%, -5px) rotate(1deg); } }
+
+/* Applied with fixed horizontal centering override matrix tags */
+.bubble-1 { animation: floatX1 3s ease-in-out infinite alternate; }
+.bubble-2 { animation: floatX2 3.4s ease-in-out infinite alternate-reverse; }
+.bubble-3 { animation: floatX3 2.8s ease-in-out infinite alternate; }
+
+/* --- RESPONSTRUCTIVE MEDIA ARCHITECTURES --- */
+@media (max-width: 1024px) {
+    .features-main-container { grid-template-columns: 1fr; gap: 20px; }
+}
+
+@media (max-width: 600px) {
+    .features-section { padding: 40px 16px 30px 16px; }
+    .feature-slate-card { flex-direction: column; text-align: center; padding: 35px 24px; }
+    .clock-containment-zone { margin-right: 0; margin-bottom: 25px; }
+    .slate-text-casing { display: flex; flex-direction: column; align-items: center; text-align: center; }
+    .bubble-2 { right: -35px; } /* Pulls mobile horizontal bubble items inward safely */
+}
+
+</style>
+
+<script>
+    /**
+ * Stackly Childcare Website - Interactive Features Section Engine
+ */
+document.addEventListener("DOMContentLoaded", () => {
+    initRealTimeVectorClock();
+    initSlateMouseGlowTracking();
+    initOneByOneScrollReveal();
+});
+
+// 1. DYNAMIC VECTOR CLOCK ELEMENT TIMER: Controls clock hands inside the protected viewport zone
+function initRealTimeVectorClock() {
+    const hourHand = document.getElementById("hourHand");
+    const minuteHand = document.getElementById("minuteHand");
+
+    if (!hourHand || !minuteHand) return;
+
+    function refreshClockMovementTicks() {
+        const now = new Date();
+        const hour = now.getHours() % 12;
+        const minute = now.getMinutes();
+
+        // Convert actual standard duration to vector angular units
+        const hourDegrees = (hour * 30) + (minute * 0.5);
+        const minuteDegrees = minute * 6;
+
+        hourHand.setAttribute("transform", `rotate(${hourDegrees})`);
+        minuteHand.setAttribute("transform", `rotate(${minuteDegrees})`);
+    }
+
+    refreshClockMovementTicks();
+    setInterval(refreshClockMovementTicks, 1000); // Ticks smoothly every second
+}
+
+// 2. CURSOR RADIAL TRAILING GLOWS: Follows mouse inputs across both panel elements
+function initSlateMouseGlowTracking() {
+    const slates = document.querySelectorAll(".feature-slate-card");
+    
+    slates.forEach(slate => {
+        slate.addEventListener("mousemove", (e) => {
+            const rect = slate.getBoundingClientRect();
+            const mouseX = e.clientX - rect.left;
+            const mouseY = e.clientY - rect.top;
+
+            slate.style.setProperty("--mx", `${mouseY}px`);
+            slate.style.setProperty("--my", `${mouseX}px`);
+        });
+    });
+}
+
+// 3. ONE-BY-ONE CASCADING SCROLL OBSERVER: Unveils layout sentences sequentially when scrolled into view
+function initOneByOneScrollReveal() {
+    const textNodes = document.querySelectorAll(".scroll-fade-text");
+    if (textNodes.length === 0) return;
+
+    const intersectionObserver = new IntersectionObserver((entries, observer) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                const targetCard = entry.target;
+                const lines = targetCard.querySelectorAll(".scroll-fade-text");
+
+                // Staggered 150ms cascade sequence loop
+                lines.forEach((line, index) => {
+                    setTimeout(() => {
+                        line.classList.add("revealed-node");
+                    }, index * 150);
+                });
+
+                observer.unobserve(targetCard);
+            }
+        });
+    }, { root: null, threshold: 0.15 });
+
+    const slate1 = document.getElementById("schedGlowCard");
+    const slate2 = document.getElementById("actGlowCard");
+    
+    if (slate1) intersectionObserver.observe(slate1);
+    if (slate2) intersectionObserver.observe(slate2);
+}
+
+// 4. VIDEO ROUTER DISPATCHER: Redirects page to 404 handler location
+function routeTo404() {
+    window.location.href = "404.html";
+}
+
+</script>
+
+<!-- ABOUT US DETAILED REINFORCED PROFILE POD -->
+<section class="about-profile-section" id="about-profile">
+    <div class="about-profile-container" id="profileGlowPod">
+        
+        <!-- LEFT COLUMN BOUNDS: FIXED IMAGE GALLERY SIDE -->
+        <div class="profile-media-column">
+            <div class="asymmetrical-profile-frame">
+                <!-- Main representation image mapping from reference image theme -->
+                <img src="https://unsplash.com" alt="Teacher instructing children in creative space" class="profile-display-img">
+            </div>
+            
+            <!-- Drifting Background Vector Cross Accent -->
+            <div class="profile-vector-cross float-item-1">
+                <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="#2B6CB0" stroke-width="2.5" stroke-linecap="round">
+                    <path d="M12 5v14M5 12h14"/>
+                </svg>
+            </div>
+        </div>
+
+        <!-- RIGHT COLUMN BOUNDS: FIXED TEXT CONTENT SIDE -->
+        <div class="profile-text-column">
+            <span class="profile-mini-tagline">About Us</span>
+            
+            <!-- Scroll-Triggered Sentence-by-Sentence Headline Matrix -->
+            <h2 class="profile-scroll-headline" id="profileScrollRevealTitle">
+                <span class="profile-sentence">Inspire Growth Through</span>
+                <span class="profile-sentence highlight">Learning Daily.</span>
+            </h2>
+            
+            <p class="profile-description">
+                We are a caring kindergarten & school dedicated to building strong foundations through play-based and academic learning loops. At Stackly, our aim is to give everyone a chance to discover a new language, cultivate spatial awareness, and reach milestones.
+            </p>
+
+            <!-- Dual Highlight Blocks Rows with Inline Vector Badges -->
+            <div class="profile-highlights-matrix">
+                <div class="profile-highlight-capsule">
+                    <div class="profile-badge-shell orange-tint">
+                        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="12" cy="12" r="10"/>
+                            <circle cx="12" cy="12" r="2" fill="currentColor"/>
+                        </svg>
+                    </div>
+                    <p>Child-Friendly Learning Environment</p>
+                </div>
+                
+                <div class="profile-highlight-capsule">
+                    <div class="profile-badge-shell blue-tint">
+                        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
+                            <polyline points="22 4 12 14.01 9 11.01"/>
+                        </svg>
+                    </div>
+                    <p>Focus On Child-Friendly, Safe, & Quality Education</p>
+                </div>
+            </div>
+
+            <!-- Call Actions Footer Dock with Floating Buttons -->
+            <div class="profile-action-footer">
+                <button class="profile-cta-btn primary-profile-cta float-cta-node">Know More ➔</button>
+                
+                <div class="profile-phone-bridge">
+                    <div class="profile-phone-badge">
+                        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="#FFFFFF" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
+                        </svg>
+                    </div>
+                    <div class="profile-phone-labels">
+                        <span>Call Us Now</span>
+                        <a href="tel:+11123065498" class="profile-phone-anchor">+11 123 0654 98</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</section>
+
+<style>
+    /* --- SITE DESIGN SYSTEM TOKENS --- */
+:root {
+    --primary-color: #FF5A5F;   /* Bright Coral */
+    --secondary-color: #FFB400; /* Warm Yellow */
+    --accent-color: #00A699;    /* Fresh Teal */
+    --text-main: #2B2B2B;       /* Deep Charcoal */
+    --card-surface: #FFFFFF;
+}
+
+/* --- SECTION CONTAINER WRAPPER --- */
+.about-profile-section {
+    width: 100%;
+    background-color: #F8FCFC;
+    /* TARGET ASSIGNED SYSTEM PADDINGS: 50px Top, 30px Bottom */
+    padding: 50px 20px 30px 20px;
+    overflow: hidden;
+    position: relative;
+}
+
+.about-profile-container {
+    width: 100%;
+    max-width: 1220px;
+    margin: 0 auto;
+    background-color: var(--card-surface);
+    border: 1px solid #EBF5F5;
+    border-radius: 36px;
+    padding: 50px;
+    display: grid;
+    /* MANDATED ORIENTATION MAPPING: Left Side Image column, Right Side Text content column */
+    grid-template-columns: 0.95fr 1.05fr;
+    gap: 60px;
+    align-items: center;
+    box-shadow: 0 12px 35px rgba(0, 166, 153, 0.01);
+    position: relative;
+}
+
+/* --- LEFT SIDE: MEDIA LAYOUT PANE WITH CUSTOM CURVE MASKS --- */
+.profile-media-column {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    width: 100%;
+}
+
+/* Attractive organic picture frame silhouette (strictly non-standard square/rectangle bounds) */
+.asymmetrical-profile-frame {
+    width: 100%;
+    max-width: 450px;
+    aspect-ratio: 1.15 / 1;
+    overflow: hidden;
+    border-radius: 40% 60% 30% 70% / 60% 40% 60% 40%; /* Smooth fluid edge masking contours */
+    box-shadow: 0 15px 35px rgba(43, 43, 43, 0.05);
+    background-color: #F2F8F8;
+    z-index: 2;
+}
+
+.profile-display-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.profile-vector-cross {
+    position: absolute;
+    top: -15px;
+    left: 20px;
+    z-index: 1;
+    opacity: 0.6;
+}
+.float-item-1 { animation: miniFloat 3.5s ease-in-out infinite alternate; }
+@keyframes miniFloat { 0% { transform: translateY(0); } 100% { transform: translateY(-5px); } }
+
+/* --- RIGHT SIDE: COPYWRITING TEXT PANE AND SCROLL REGISTERS --- */
+.profile-text-column {
+    width: 100%;
+    text-align: left;
+    position: relative;
+}
+
+.profile-mini-tagline {
+    font-size: 0.85rem;
+    font-weight: 800;
+    color: var(--primary-color);
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    display: inline-block;
+    margin-bottom: 12px;
+}
+
+/* Sentence-by-Sentence text reveal configuration classes maps */
+.profile-scroll-headline {
+    font-size: 2.6rem;
+    font-weight: 800;
+    line-height: 1.25;
+    color: var(--text-main);
+    letter-spacing: -1.2px;
+    margin-bottom: 22px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.profile-sentence {
+    opacity: 0;
+    transform: translateY(18px);
+    transition: opacity 0.6s cubic-bezier(0.215, 0.610, 0.355, 1), 
+                transform 0.6s cubic-bezier(0.215, 0.610, 0.355, 1);
+}
+
+.profile-sentence.revealed-line {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.profile-scroll-headline .highlight {
+    color: var(--accent-color);
+}
+
+.profile-description {
+    font-size: 1.05rem;
+    line-height: 1.65;
+    color: #555555;
+    margin-bottom: 28px;
+}
+
+/* Inside highlighting points block pods layout grid rows */
+.profile-highlights-matrix {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    margin-bottom: 35px;
+}
+
+.profile-highlight-capsule {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    font-weight: 700;
+    color: var(--text-main);
+    font-size: 0.95rem;
+}
+
+.profile-badge-shell {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+.orange-tint { background-color: #FFF3D6; color: var(--secondary-color); }
+.blue-tint { background-color: #E6F6F5; color: var(--accent-color); }
+
+/* --- CALL INTERACTIVE FOOTER ACTION DECK LAYOUTS --- */
+.profile-action-footer {
+    display: flex;
+    align-items: center;
+    gap: 45px;
+}
+
+.profile-cta-btn {
+    padding: 15px 36px;
+    font-size: 1rem;
+    font-weight: 700;
+    border-radius: 16px;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.2s, box-shadow 0.2s;
+}
+
+.primary-profile-cta {
+    background-color: var(--primary-color);
+    color: #FFFFFF;
+    box-shadow: 0 5px 15px rgba(255, 90, 95, 0.25);
+}
+.primary-profile-cta:hover {
+    background-color: #E04449;
+}
+
+/* Infinite Floating CTAs engine */
+.float-cta-node { animation: ctaLevitation 4s ease-in-out infinite alternate; }
+@keyframes ctaLevitation { 0% { transform: translateY(0); } 100% { transform: translateY(-7px); } }
+
+.profile-cta-btn:hover {
+    transform: translateY(-3px) scale(1.02);
+    box-shadow: 0 8px 20px rgba(43, 43, 43, 0.12);
+}
+
+/* Phone Connection Anchor layout badges structure */
+.profile-phone-bridge {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+}
+
+.profile-phone-badge {
+    width: 44px;
+    height: 44px;
+    background-color: var(--text-main);
+    border-radius: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 12px rgba(43, 43, 43, 0.1);
+}
+
+.profile-phone-labels {
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+}
+
+.profile-phone-labels span {
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: #777777;
+    text-transform: uppercase;
+}
+
+.profile-phone-anchor {
+    font-size: 1.15rem;
+    font-weight: 800;
+    color: var(--text-main);
+    text-decoration: none;
+    transition: color 0.2s;
+}
+.profile-phone-anchor:hover {
+    color: var(--primary-color);
+}
+
+/* Ambient Cursor Hover Glow Matrix overlay via coordinates pointer trackers */
+.about-profile-container::before {
+    content: '';
+    position: absolute;
+    top: var(--ap-y, -200px);
+    left: var(--ap-x, -200px);
+    width: 320px;
+    height: 320px;
+    background: radial-gradient(circle, rgba(0, 166, 153, 0.05) 0%, transparent 70%);
+    border-radius: 50%;
+    pointer-events: none;
+    transform: translate(-50%, -50%);
+    z-index: 1;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+.about-profile-container:hover::before { opacity: 1; }
+
+/* ================= COMPREHENSIVE HIGH-UTILITY RESPONSIVE INTERFACE ================= */
+@media (max-width: 992px) {
+    .about-profile-section { padding: 40px 16px 30px 16px; }
+    
+    /* Converts to stacked fluid rows naturally on small screens layout structure */
+    .about-profile-container { 
+        grid-template-columns: 1fr; 
+        gap: 45px; 
+        padding: 40px 24px; 
+    }
+    
+    .profile-media-column { order: -1; } /* Shifts image asset component up above text on small viewports */
+    .profile-scroll-headline { font-size: 2.1rem; align-items: center; text-align: center; }
+    .profile-text-column { display: flex; flex-direction: column; align-items: center; text-align: center; }
+}
+
+@media (max-width: 580px) {
+    .profile-action-footer { flex-direction: column; width: 100%; gap: 24px; }
+    .profile-cta-btn { width: 100%; text-align: center; }
+    .profile-phone-bridge { width: 100%; justify-content: center; }
+    .asymmetrical-profile-frame { max-width: 340px; }
+}
+
+</style>
+
+<script>
+    /**
+ * Stackly Childcare Website - Interactive About Profile Module Engine
+ */
+document.addEventListener("DOMContentLoaded", () => {
+    initProfileGlowContainer();
+    initSentenceScrollRevealObserver();
+});
+
+// 1. POINTER INTERACTIVE GLOW RADIAL COORDINATOR: Projects lighting trails onto background card panel grid
+function initProfileGlowContainer() {
+    const pod = document.getElementById("profileGlowPod");
+    if (!pod) return;
+
+    pod.addEventListener("mousemove", (e) => {
+        const rect = pod.getBoundingClientRect();
+        const mouseX = e.clientX - rect.left;
+        const mouseY = e.clientY - rect.top;
+
+        // Set contextual token hooks directly inside target style rules environments scope
+        pod.style.setProperty("--ap-x", `${mouseX}px`);
+        pod.style.setProperty("--ap-y", `${mouseY}px`);
+    });
+}
+
+// 2. SENTENCE-BY-SENTENCE SCROLL REVEAL OBSERVER: Unveils individual content text lines sequentially when scrolled inside viewports
+function initSentenceScrollRevealObserver() {
+    const titleNode = document.getElementById("profileScrollRevealTitle");
+    if (!titleNode) return;
+
+    const intersectionObserver = new IntersectionObserver((entries, observer) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                const parent = entry.target;
+                const sentences = parent.querySelectorAll(".profile-sentence");
+
+                // Stagger individual lines sequence reveals cleanly by 240 milliseconds
+                sentences.forEach((sentence, index) => {
+                    setTimeout(() => {
+                        sentence.classList.add("profile-reveal-line", "revealed-line");
+                    }, index * 240);
+                });
+
+                // Clear operational tracking targets once loop has run to optimize layout loops memory efficiency
+                observer.unobserve(parent);
+            }
+        });
+    }, { root: null, threshold: 0.2, rootMargin: "0px 0px -20px 0px" });
+
+    intersectionObserver.observe(titleNode);
+}
+
+</script>
+
+<!-- ELEPHANT ANIMATION STAGE SECTION -->
+<section class="elephant-stage">
+    
+    <!-- Seamless Background Landscape Hills -->
+    <div class="stage-backdrop">
+        <svg viewBox="0 0 1440 200" preserveAspectRatio="none" width="100%" height="100%">
+            <path d="M0,160 Q360,100 720,150 T1440,120 L1440,200 L0,200 Z" fill="#F4F9F9"/>
+            <path d="M0,180 Q400,140 800,170 T1440,150 L1440,200 L0,200 Z" fill="#EBF4F6"/>
+        </svg>
+    </div>
+
+    <!-- The Adaptive Moving Layout Container -->
+    <div class="elephant-container">
+        <div class="dancing-elephant">
+            <svg viewBox="0 0 120 90" width="100%" height="100%">
+                <!-- Main Body Outline Shadow -->
+                <ellipse cx="65" cy="50" rx="28" ry="22" fill="#A0B2C6" />
+                
+                <!-- Head & Snout -->
+                <circle cx="42" cy="42" r="16" fill="#B3C5D7" />
+                <ellipse cx="65" cy="48" rx="26" ry="20" fill="#B3C5D7" />
+                
+                <!-- Big Childish Ear -->
+                <ellipse cx="68" cy="42" rx="11" ry="14" fill="#C5D6E7" />
+                <ellipse cx="66" cy="42" rx="7" ry="10" fill="#FFB400" opacity="0.4" />
+                
+                <!-- Trunk / Snout (Happy Upward Curl) -->
+                <path d="M32,44 Q20,44 18,32 Q16,24 22,24 Q24,24 23,28 Q20,36 30,38 Z" fill="#B3C5D7" />
+                
+                <!-- Cute Happy Eye Details -->
+                <circle cx="36" cy="38" r="2.5" fill="#2B2B2B" />
+                <circle cx="37" cy="37" r="0.8" fill="#FFFFFF" />
+                
+                <!-- Calibrated Slow-Motion Legs -->
+                <rect class="leg leg-1" x="45" y="65" width="8" height="16" rx="3" fill="#A0B2C6" />
+                <rect class="leg leg-2" x="57" y="66" width="8" height="16" rx="3" fill="#B3C5D7" />
+                <rect class="leg leg-3" x="72" y="65" width="8" height="16" rx="3" fill="#A0B2C6" />
+                <rect class="leg leg-4" x="82" y="66" width="8" height="16" rx="3" fill="#B3C5D7" />
+            </svg>
+        </div>
+    </div>
+</section>
+
+<style>
+    /* --- CONFIGURATION REFERENCE TARGETS --- */
+:root {
+    --header-height: 80px; /* Synchronizes with the main header footprint */
+}
+
+/* --- ELEPHANT CANVAS AREA --- */
+.elephant-stage {
+    position: relative;
+    width: 100%;
+    height: 140px;
+    /* REDUCED SPACE AT TOP: Pulls it right beneath the floating header */
+    margin-top: calc(var(--header-height) + 5px); 
+    padding-top: 0 !important;
+    overflow: hidden;
+    background-color: transparent;
+}
+
+/* Vector Landscape Backdrop Layer */
+.stage-backdrop {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    pointer-events: none;
+}
+
+/* --- THE PACING STRUCTURAL RUNNER --- */
+.elephant-container {
+    position: absolute;
+    bottom: -5px;
+    left: -120px;
+    width: 110px;
+    height: 85px;
+    z-index: 2;
+    cursor: pointer;
+    /* Linear loop path across the canvas area */
+    animation: walkAcrossSlow 26s linear infinite;
+}
+
+/* --- THE GENTLE DANCING CORE ENGINE --- */
+.dancing-elephant {
+    width: 100%;
+    height: 100%;
+    transform-origin: bottom center;
+    /* Bouncing cycle set to a relaxed 1.2s execution rate */
+    animation: gentleDance 1.2s ease-in-out infinite alternate;
+}
+
+/* Micro Leg Transform States */
+.dancing-elephant .leg {
+    transform-origin: top center;
+}
+.dancing-elephant .leg-1, .dancing-elephant .leg-3 {
+    animation: legSwingSlow 0.6s ease-in-out infinite alternate;
+}
+.dancing-elephant .leg-2, .dancing-elephant .leg-4 {
+    animation: legSwingSlow 0.6s ease-in-out infinite alternate-reverse;
+}
+
+/* --- HARDWARE-ACCELERATED PHYSICS LAYOUT --- */
+
+/* Horizontal Run Pacing Paths with correct directional flipping */
+@keyframes walkAcrossSlow {
+    /* 1. Moving Left to Right (Flipped scaleX(-1) so it looks forward) */
+    0% { left: -120px; transform: scaleX(-1); }
+    45% { left: calc(100% + 20px); transform: scaleX(-1); }
+    
+    /* 2. Instant Pivot Turn at the right border edge */
+    46% { left: calc(100% + 20px); transform: scaleX(1); }
+    
+    /* 3. Moving Right to Left (Normal scaleX(1) facing forward left) */
+    95% { left: -120px; transform: scaleX(1); }
+    
+    /* 4. Instant Pivot Turn back to start configuration */
+    100% { left: -120px; transform: scaleX(-1); }
+}
+
+/* Slower Vertical Dance Bounce Physics */
+@keyframes gentleDance {
+    0% { transform: translateY(0) rotate(-2deg); }
+    100% { transform: translateY(-10px) rotate(3deg); }
+}
+
+/* Soft Leg Swing Bounds */
+@keyframes legSwingSlow {
+    0% { transform: rotate(-8deg); }
+    100% { transform: rotate(8deg); }
+}
+
+/* --- MOBILE RESPONSIVE ADAPTATION INTERFACE --- */
+@media (max-width: 992px) {
+    .elephant-stage {
+        margin-top: 75px; /* Extremely tight layout tuning for small devices */
+        height: 110px;
+    }
+    .elephant-container {
+        width: 85px;
+        height: 65px;
+    }
+}
+
+</style>
+
+<script>
+    /**
+ * Stackly Childcare Website - Slower Interactive Elephant Engine
+ */
+document.addEventListener("DOMContentLoaded", () => {
+    initSlowerElephant();
+});
+
+function initSlowerElephant() {
+    const container = document.querySelector(".elephant-container");
+    const elephant = document.querySelector(".dancing-elephant");
+
+    if (!container || !elephant) return;
+
+    // Creative Speed Modulator (Dances slightly faster when users hover over the runner)
+    container.addEventListener("mouseenter", () => {
+        // Increases vertical dance frequency bounce safely
+        elephant.style.animationDuration = "0.4s";
+        
+        // Speeds up matching limb movements smoothly
+        document.querySelectorAll(".dancing-elephant .leg").forEach(leg => {
+            leg.style.animationDuration = "0.2s";
+        });
+    });
+
+    // Restores default relaxed 1.2s dance tempo upon cursor exit
+    container.addEventListener("mouseleave", () => {
+        elephant.style.animationDuration = "1.2s";
+        document.querySelectorAll(".dancing-elephant .leg").forEach(leg => {
+            leg.style.animationDuration = "0.6s";
+        });
+    });
+}
+
+</script>
+
+<!-- DYNAMIC SCROLL-REVEAL CAROUSEL SHOWCASE -->
+<section class="carousel-showcase-section" id="showcase">
+    
+    <!-- TOP CONTENT BLOCK: SCROLL ANIMATED BOTTOM-TO-TOP -->
+    <div class="showcase-header-pod scroll-bottom-to-top" id="showcaseHeader">
+        <h2 class="showcase-main-title">Your Little Ones</h2>
+        <p class="showcase-subtitle">
+            We provide trusted childcare with caring professionals, fun learning, and a secure environment your child will love.
+        </p>
+        
+        <!-- Interactive Floating Call-To-Action Trigger Button -->
+        <div class="showcase-action-deck">
+            <button class="showcase-cta-btn floating-action-node">
+                <!-- Inline Custom Service Vector Icon Badge -->
+                <svg class="cta-vector-badge" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z"/>
+                    <path d="M12 6v6l4 2"/>
+                </svg>
+                Book a Service
+            </button>
+        </div>
+    </div>
+
+    <!-- BOTTOM CONTENT BLOCK: AUTOMATIC STACKED CARD INTERCHANGE ENGINE -->
+    <div class="showcase-gallery-stage">
+        <div class="stacked-cards-window" id="cardsWindow">
+            
+            <!-- Hidden Outer Left Buffer Card (Position Far Left) -->
+            <div class="gallery-card card-hidden-left">
+                <img src="./assests/care 2.webp" alt="Creative Arts Activity" class="gallery-display-img">
+            </div>
+
+            <!-- Left Background Overlapping Card -->
+            <div class="gallery-card card-left">
+                <img src="./assests/care 3.webp" alt="Nurturing Daycare Playroom" class="gallery-display-img">
+            </div>
+
+            <!-- Left Inner Wing Card (Replicating Overlap profile from reference) -->
+            <div class="gallery-card card-left-wing">
+                <img src="./assests/outdoor.webp" alt="Child Nurturing Exploration" class="gallery-display-img">
+            </div>
+
+            <!-- Hero Featured Foreground Main Card (Bright Teal Stage Backplate) -->
+            <div class="gallery-card card-center-hero">
+                <div class="hero-teal-backplate">
+                    <img src="./assests/preschool.webp" alt="Smiling Active Little Baby" class="gallery-display-img">
+                    
+                    <!-- Decorative Graphic Vector Wiggle Mark Indicator -->
+                    <div class="vector-wiggle-badge">
+                        <svg viewBox="0 0 40 40" width="100%" height="100%">
+                            <path d="M5,12 Q12,5 18,15 T32,8" fill="none" stroke="#FF5A5F" stroke-width="4" stroke-linecap="round"/>
+                            <path d="M8,22 Q16,15 22,25 T36,18" fill="none" stroke="#FF5A5F" stroke-width="4" stroke-linecap="round"/>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Inner Wing Card (Replicating Overlap profile from reference) -->
+            <div class="gallery-card card-right-wing">
+                <img src="./assests/care 3.webp" alt="Tactile Learning Toys Room" class="gallery-display-img">
+            </div>
+
+            <!-- Right Background Overlapping Card -->
+            <div class="gallery-card card-right">
+                <img src="./assests/care center.webp" alt="Kindergarten Group Session" class="gallery-display-img">
+            </div>
+
+            <!-- Hidden Outer Right Buffer Card (Position Far Right) -->
+            <div class="gallery-card card-hidden-right">
+                <img src="./assests/weekend bootcamp.webp" alt="Immersive Block Exploration" class="gallery-display-img">
+            </div>
+
+        </div>
+    </div>
+
+</section>
+
+<style>
+    /* --- SITE CONTEXT CONFIG VARIABLES --- */
+:root {
+    --primary-color: #FF5A5F;   /* Bright Coral */
+    --secondary-color: #FFB400; /* Warm Yellow */
+    --accent-color: #00A699;    /* Fresh Teal */
+    --text-main: #1D2A29;       /* Deep Organic Charcoal */
+    --card-radius: 24px;
+}
+
+/* --- MAIN SECTION HOUSING CANVAS --- */
+.carousel-showcase-section {
+    width: 100%;
+    background-color: #FAFDFD;
+    /* DESIGN ASSIGNED CONSTANT PADDINGS: 50px Top, 30px Bottom */
+    padding: 50px 20px 30px 20px;
+    overflow: hidden;
+    position: relative;
+    text-align: center;
+}
+
+/* ================= TOP LAYER: SCROLL REVEAL CONTENT DECK ================= */
+.showcase-header-pod {
+    max-width: 780px;
+    margin: 0 auto 50px auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.showcase-main-title {
+    font-size: 3.5rem;
+    font-weight: 900;
+    color: var(--text-main);
+    letter-spacing: -1.5px;
+    margin-bottom: 18px;
+    line-height: 1.1;
+}
+
+.showcase-subtitle {
+    font-size: 1.15rem;
+    line-height: 1.6;
+    color: #5B6A68;
+    max-width: 640px;
+    margin-bottom: 25px;
+}
+
+/* --- BOTTOM-TO-TOP SCROLL KEYFRAME INTERFACE REVEAL --- */
+.scroll-bottom-to-top {
+    opacity: 0;
+    transform: translateY(40px);
+    transition: opacity 0.8s cubic-bezier(0.215, 0.610, 0.355, 1), 
+                transform 0.8s cubic-bezier(0.215, 0.610, 0.355, 1);
+}
+
+.scroll-bottom-to-top.activated-node {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* --- FLOATING ACTION CALL TRIGGER CTA --- */
+.showcase-action-deck {
+    position: relative;
+    z-index: 5;
+}
+
+.showcase-cta-btn {
+    background-color: #FF512F; /* Deep Safety Orange Theme Matching Reference */
+    color: #FFFFFF;
+    border: none;
+    padding: 15px 36px;
+    font-size: 1.05rem;
+    font-weight: 700;
+    border-radius: 50px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    box-shadow: 0 6px 20px rgba(255, 81, 47, 0.35);
+    transition: background-color 0.3s, transform 0.2s, box-shadow 0.2s;
+}
+
+.showcase-cta-btn:hover {
+    background-color: #E04323;
+    transform: translateY(-4px) scale(1.02);
+    box-shadow: 0 10px 25px rgba(255, 81, 47, 0.45);
+}
+
+.floating-action-node {
+    animation: ctaFloatMotion 4s ease-in-out infinite alternate;
+}
+@keyframes ctaFloatMotion { 0% { transform: translateY(0); } 100% { transform: translateY(-7px); } }
+
+.cta-vector-badge {
+    display: inline-block;
+    flex-shrink: 0;
+}
+
+/* ================= BOTTOM LAYER: STACKED RUNTIME CAROUSEL ENGINE ================= */
+.showcase-gallery-stage {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    position: relative;
+}
+
+.stacked-cards-window {
+    position: relative;
+    width: 100%;
+    height: 440px; /* Protected window canvas elevation box */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Universal Base Architecture for Swapping Image Nodes */
+.gallery-card {
+    position: absolute;
+    overflow: hidden;
+    border-radius: var(--card-radius);
+    background-color: #FFFFFF;
+    box-shadow: 0 15px 35px rgba(29, 42, 41, 0.06);
+    /* High performance hardware accelerated transitions mappings */
+    transition: transform 0.75s cubic-bezier(0.4, 0, 0.2, 1), 
+                opacity 0.75s cubic-bezier(0.4, 0, 0.2, 1), 
+                z-index 0.75s ease;
+    will-change: transform, opacity;
+}
+
+.gallery-display-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    pointer-events: none;
+    display: block;
+}
+
+/* --- STATE CONFIG MATRIX: SPATIAL TRANSFORM COEFFICIENTS (AUTOMATED SWAPPING) --- */
+
+/* 1. Core Foreground Hero Focus Element (Bright Cyan/Teal Canvas Backdrop) */
+.card-center-hero {
+    width: 500px;
+    height: 380px;
+    z-index: 50;
+    opacity: 1;
+    transform: translateX(0) scale(1.05);
+    border: 8px solid #FFFFFF;
+    box-shadow: 0 25px 55px rgba(29, 42, 41, 0.12);
+}
+.hero-teal-backplate {
+    width: 100%; height: 100%;
+    background-color: #6BD0D0; /* Authentic layout bright teal backplate profile mapping */
+    padding: 20px 20px 0 20px;
+    position: relative;
+    border-radius: calc(var(--card-radius) - 6px);
+}
+.hero-teal-backplate .gallery-display-img {
+    border-radius: calc(var(--card-radius) - 12px) calc(var(--card-radius) - 12px) 0 0;
+}
+
+/* 2. Left & Right Inner Wings Layout Layers (Overlapping boundaries) */
+.card-left-wing {
+    width: 250px; height: 330px; z-index: 40; opacity: 1;
+    transform: translateX(-310px) scale(0.95);
+}
+.card-right-wing {
+    width: 250px; height: 330px; z-index: 40; opacity: 1;
+    transform: translateX(310px) scale(0.95);
+}
+
+/* 3. Left & Right Background Distant Frame Layers */
+.card-left {
+    width: 200px; height: 290px; z-index: 30; opacity: 0.85;
+    transform: translateX(-490px) scale(0.85);
+}
+.card-right {
+    width: 200px; height: 290px; z-index: 30; opacity: 0.85;
+    transform: translateX(490px) scale(0.85);
+}
+
+/* 4. Outer Hidden Virtual Buffer Channels (Pre-loads assets loop outside visibility borders) */
+.card-hidden-left {
+    width: 180px; height: 260px; z-index: 10; opacity: 0;
+    transform: translateX(-650px) scale(0.7);
+}
+.card-hidden-right {
+    width: 180px; height: 260px; z-index: 10; opacity: 0;
+    transform: translateX(650px) scale(0.7);
+}
+
+/* Micro Graphic Vector Orange Wiggle Elements Anchor Positioning */
+.vector-wiggle-badge {
+    position: absolute;
+    top: -20px;
+    left: -15px;
+    width: 45px;
+    height: 45px;
+    z-index: 60;
+    transform: rotate(-15deg);
+}
+
+/* ================= ADAPTIVE RESPONSIVE COMPACT BREAKPOINTS ================= */
+@media (max-width: 1100px) {
+    .showcase-main-title { font-size: 2.8rem; }
+    .stacked-cards-window { height: 380px; }
+    
+    .card-center-hero { width: 400px; height: 320px; }
+    .card-left-wing  { width: 200px; height: 280px; transform: translateX(-240px) scale(0.93); }
+    .card-right-wing { width: 200px; height: 280px; transform: translateX(-240px) scale(0.93); z-index: 35; } /* Stack safely behind hero bounds */
+    .card-right-wing { transform: translateX(240px) scale(0.93); }
+    
+    .card-left, .card-right, .card-hidden-left, .card-hidden-right { display: none !important; } /* Crop distant cards to optimize tablet screens */
+}
+
+@media (max-width: 600px) {
+    .carousel-showcase-section { padding: 40px 16px 30px 16px; }
+    .showcase-main-title { font-size: 2.2rem; }
+    .showcase-subtitle { font-size: 1rem; }
+    
+    .stacked-cards-window { height: 320px; }
+    .card-center-hero { width: 88vw; height: 270px; border: 4px solid #FFFFFF; }
+    .hero-teal-backplate { padding: 12px 12px 0 12px; }
+    
+    .card-left-wing, .card-right-wing { display: none !important; } /* Focus entirely on the active hero card for mobile devices */
+    .showcase-cta-btn { width: 100%; justify-content: center; }
+}
+
+</style>
+
+<script>
+    /**
+ * Stackly Childcare Website - Automatic Interchanging Carousel Engine
+ */
+document.addEventListener("DOMContentLoaded", () => {
+    initScrollRevealBottomToTop();
+    initAutomatedCardRotator();
+});
+
+// 1. HEADER SCROLL DETECTION: Animates parent text node card from bottom to top upon approach
+function initScrollRevealBottomToTop() {
+    const headerNode = document.getElementById("showcaseHeader");
+    if (!headerNode) return;
+
+    const windowObserver = new IntersectionObserver((entries, observer) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add("activated-node");
+                observer.unobserve(entry.target); // Unbind cleanly to maintain memory parameters
+            }
+        });
+    }, { root: null, threshold: 0.15 });
+
+    windowObserver.observe(headerNode);
+}
+
+// 2. AUTOMATED CARD SLIDE TICKER: Continuously cycles geometric configurations every 3 seconds
+function initAutomatedCardRotator() {
+    const windowCasing = document.getElementById("cardsWindow");
+    if (!windowCasing) return;
+
+    // Ordered sequence string representations reflecting stylesheet matrix classes map
+    const activeLayoutStates = [
+        "card-hidden-left",
+        "card-left",
+        "card-left-wing",
+        "card-center-hero",
+        "card-right-wing",
+        "card-right",
+        "card-hidden-right"
+    ];
+
+    // Select live child nodes inside viewport housing
+    let currentCardsList = Array.from(windowCasing.querySelectorAll(".gallery-card"));
+    if (currentCardsList.length < 3) return;
+
+    setInterval(() => {
+        // Pop the trailing item off the array chain and inject it at the beginning of loop sequences
+        const lastCardNode = currentCardsList.pop();
+        currentCardsList.unshift(lastCardNode);
+
+        // Map fresh structural style tags seamlessly across active card elements
+        currentCardsList.forEach((card, index) => {
+            // Remove previous design tokens completely from class lists
+            activeLayoutStates.forEach(stateClass => card.classList.remove(stateClass));
+            
+            // Assign calculated next position token configuration class
+            card.classList.add(activeLayoutStates[index]);
+        });
+
+    }, 3000); // 3000ms target automatic interchange frequency interval
+}
+
+</script>
+
+<!-- STANDALONE FLOATING PILLARS & MASCOT SECTION -->
+<section class="standalone-pillars-section">
+    
+    <!-- PLAYFUL BACKGROUND DECORATION VECTOR ACCENT -->
+    <div class="pencil-vector-accent">
+        <svg viewBox="0 0 24 24" width="36" height="36" fill="none" stroke="#00A699" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 20h9"/>
+            <path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/>
+        </svg>
+    </div>
+
+    <div class="pillars-alone-container">
+        
+        <!-- CARD 1: ACTIVE LEARNING -->
+        <div class="pillar-alone-card shape-blob-1 animate-float-1">
+            <div class="vector-badge-shell badge-coral">
+                <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="10"/>
+                    <path d="M12 6v6l4 2"/>
+                </svg>
+            </div>
+            <h4 class="pillar-label">Active Learning</h4>
+        </div>
+
+        <!-- CARD 2: EXPERT TEACHERS -->
+        <div class="pillar-alone-card shape-blob-2 animate-float-2">
+            <div class="vector-badge-shell badge-blue">
+                <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+                    <circle cx="9" cy="7" r="4"/>
+                    <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
+                    <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+                </svg>
+            </div>
+            <h4 class="pillar-label">Expert Teachers</h4>
+        </div>
+
+        <!-- CARD 3: 100% SAFE CAMPUS -->
+        <div class="pillar-alone-card shape-blob-3 animate-float-3">
+            <div class="vector-badge-shell badge-teal">
+                <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                </svg>
+            </div>
+            <h4 class="pillar-label">100% Safe Campus</h4>
+        </div>
+
+        <!-- CARD 4: MODERN CURRICULUM -->
+        <div class="pillar-alone-card shape-blob-4 animate-float-4">
+            <div class="vector-badge-shell badge-yellow">
+                <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/>
+                    <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/>
+                </svg>
+            </div>
+            <h4 class="pillar-label">Modern Curriculum</h4>
+        </div>
+
+    </div>
+
+    <!-- ANIMATED PLAYFUL VECTOR GIRAFFE MASCOT -->
+    <div class="standalone-giraffe-mascot">
+        <svg viewBox="0 0 80 140" width="100%" height="100%">
+            <!-- Legs Layout -->
+            <rect x="22" y="95" width="5" height="40" fill="#FFB400" rx="2"/>
+            <rect x="32" y="95" width="5" height="38" fill="#E6A100" rx="2"/>
+            <rect x="48" y="95" width="5" height="40" fill="#FFB400" rx="2"/>
+            <rect x="56" y="95" width="5" height="35" fill="#E6A100" rx="2"/>
+            <!-- Main Body -->
+            <ellipse cx="42" cy="75" rx="22" ry="16" fill="#FFB400"/>
+            <!-- Long Neck -->
+            <path d="M26,30 L38,30 L48,70 L34,75 Z" fill="#FFB400"/>
+            <!-- Head Shell -->
+            <ellipse cx="26" cy="26" rx="12" ry="9" fill="#FFB400"/>
+            <circle cx="22" cy="24" r="1.5" fill="#2B2B2B"/> <!-- Eye -->
+            <!-- Giraffe Spots -->
+            <circle cx="42" cy="72" r="3" fill="#D47A00" opacity="0.6"/>
+            <circle cx="50" cy="78" r="4" fill="#D47A00" opacity="0.6"/>
+            <circle cx="34" cy="48" r="2.5" fill="#D47A00" opacity="0.6"/>
+            <!-- Ears & Antennas -->
+            <path d="M34,18 Q38,12 36,22" stroke="#FFB400" stroke-width="2" fill="none"/>
+            <circle cx="36" cy="11" r="2" fill="#D47A00"/>
+            <!-- Tail -->
+            <path d="M64,75 Q72,80 70,90" stroke="#FFB400" stroke-width="2" fill="none" stroke-linecap="round"/>
+            <circle cx="70" cy="90" r="2.5" fill="#D47A00"/>
+        </svg>
+    </div>
+
+</section>
+
+<style>
+    /* --- SITE CONTEXT COLOR THEME VARIABLES --- */
+:root {
+    --primary-color: #FF5A5F;   /* Bright Coral */
+    --secondary-color: #FFB400; /* Warm Yellow */
+    --accent-color: #00A699;    /* Fresh Teal */
+    --text-main: #2B2B2B;       /* Deep Charcoal */
+    --card-surface: #FFFFFF;
+}
+
+/* --- STANDALONE WRAPPER HOUSING --- */
+.standalone-pillars-section {
+    position: relative;
+    width: 100%;
+    background-color: transparent;
+    /* TARGET DESIGN PADDINGS: 50px Top, 30px Bottom */
+    padding: 50px 100px 30px 100px; 
+    overflow: visible;
+}
+
+.pillars-alone-container {
+    width: 100%;
+    max-width: 1100px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 24px;
+    position: relative;
+    z-index: 5;
+}
+
+/* --- PILLARS CARD FRAMEWORK ARCHITECTURE --- */
+.pillar-alone-card {
+    background-color: var(--card-surface);
+    padding: 30px 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 10px 30px rgba(43, 43, 43, 0.04);
+    border: 1px solid rgba(255, 90, 95, 0.05);
+    text-align: center;
+    transition: transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94), box-shadow 0.3s ease;
+}
+
+/* Distinct Organic Blob Geometries (Strictly non-square / non-rectangular) */
+.shape-blob-1 { border-radius: 42% 58% 70% 30% / 45% 55% 45% 55%; }
+.shape-blob-2 { border-radius: 55% 45% 38% 62% / 50% 42% 58% 50%; }
+.shape-blob-3 { border-radius: 40% 60% 54% 46% / 63% 40% 60% 37%; }
+.shape-blob-4 { border-radius: 65% 35% 50% 50% / 41% 59% 41% 59%; }
+
+.pillar-label {
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--text-main);
+    margin-top: 16px;
+    white-space: nowrap;
+}
+
+/* Badge Vector Wrappers */
+.vector-badge-shell {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.02);
+}
+.badge-coral { background-color: #FFEBEB; color: var(--primary-color); }
+.badge-blue  { background-color: #EBF8FF; color: #2B6CB0; }
+.badge-teal  { background-color: #E6F6F5; color: var(--accent-color); }
+.badge-yellow { background-color: #FFF6E0; color: var(--secondary-color); }
+
+/* --- HARDWARE ACCELERATED FLOATING ANIMATION LOOPS --- */
+.animate-float-1 { animation: organicFloat 4.2s ease-in-out infinite alternate; }
+.animate-float-2 { animation: organicFloat 4.2s ease-in-out infinite alternate-reverse; animation-delay: 0.4s; }
+.animate-float-3 { animation: organicFloat 4.2s ease-in-out infinite alternate; animation-delay: 0.8s; }
+.animate-float-4 { animation: organicFloat 4.2s ease-in-out infinite alternate-reverse; animation-delay: 1.2s; }
+
+@keyframes organicFloat {
+    0% { transform: translateY(0); }
+    100% { transform: translateY(-10px); }
+}
+
+/* Hover Elevation States */
+.pillar-alone-card:hover {
+    transform: translateY(-14px) scale(1.03);
+    box-shadow: 0 15px 35px rgba(255, 90, 95, 0.08);
+}
+
+/* --- ANIMATED DECORATIVE VECTOR MASCOTS --- */
+
+/* Left Pencil Vector */
+.pencil-vector-accent {
+    position: absolute;
+    bottom: 25px;
+    left: 30px;
+    z-index: 2;
+    opacity: 0.7;
+    animation: pencilWiggle 3s ease-in-out infinite alternate;
+}
+@keyframes pencilWiggle { 0% { transform: rotate(0deg); } 100% { transform: rotate(-8deg) translateY(-3px); } }
+
+/* Right Giraffe Mascot Vector (Positioned outside container padding margin parameters safely) */
+.standalone-giraffe-mascot {
+    position: absolute;
+    bottom: -10px;
+    right: 20px;
+    width: 95px;
+    height: 165px;
+    z-index: 10;
+    pointer-events: none;
+    transform-origin: bottom center;
+    animation: giraffeBreathing 2.5s ease-in-out infinite alternate;
+}
+@keyframes giraffeBreathing {
+    0% { transform: scale(1) rotate(-1deg); }
+    100% { transform: scale(1.02) rotate(2.5deg) translateY(-2px); }
+}
+
+/* ================= COMPREHENSIVE RESPONSIVE INTERFACE ================= */
+@media (max-width: 1100px) {
+    .standalone-pillars-section { padding: 40px 60px 30px 60px; }
+    .standalone-giraffe-mascot { width: 80px; height: 140px; right: 10px; bottom: -5px; }
+}
+
+@media (max-width: 900px) {
+    .pillars-alone-container { grid-template-columns: repeat(2, 1fr); gap: 20px; }
+    .standalone-pillars-section { padding: 40px 40px 30px 40px; }
+    .pencil-vector-accent { display: none; } /* Clear clutter on smaller viewports */
+}
+
+@media (max-width: 520px) {
+    .pillars-alone-container { grid-template-columns: 1fr; gap: 16px; }
+    .standalone-pillars-section { padding: 40px 24px 30px 24px; }
+    .standalone-giraffe-mascot { display: none; } /* Suppress mascot overlap on phone screens */
+}
+
+</style>
+
+<script>
+    /**
+ * Stackly Childcare Website - Standalone Pillars & Mascot Interactive Engine
+ */
+document.addEventListener("DOMContentLoaded", () => {
+    initMagneticPillarCards();
+    initInteractiveMascotReaction();
+});
+
+/**
+ * 1. Creative Magnetic Hover System
+ * Calibrates smooth mouse coordinate vectors to pull the cards toward the cursor
+ */
+function initMagneticPillarCards() {
+    const cards = document.querySelectorAll(".pillar-alone-card");
+    
+    cards.forEach(card => {
+        card.addEventListener("mousemove", (e) => {
+            const rect = card.getBoundingClientRect();
+            // Calculate cursor offset position relative to the center of the card
+            const x = e.clientX - rect.left - (rect.width / 2);
+            const y = e.clientY - rect.top - (rect.height / 2);
+            
+            // Gently pull the card elements toward the mouse position (max 12px shift)
+            card.style.transform = `translate(${x * 0.08}px, ${y * 0.08}px) scale(1.03) translateY(-14px)`;
+        });
+
+        // Reset the card cleanly back to its natural float baseline state when cursor exits
+        card.addEventListener("mouseleave", () => {
+            card.style.transform = "";
+        });
+    });
+}
+
+/**
+ * 2. Playful Mascot Interaction Core
+ * Accelerates the giraffe's breathing/dancing loop and triggers a native chime sound on click
+ */
+function initInteractiveMascotReaction() {
+    const giraffe = document.querySelector(".standalone-giraffe-mascot");
+    const cards = document.querySelectorAll(".pillar-alone-card");
+    
+    if (!giraffe) return;
+
+    // Make clicking any feature card excite the giraffe mascot layout
+    cards.forEach(card => {
+        card.addEventListener("click", () => {
+            triggerGiraffeExcitement();
+        });
+    });
+
+    function triggerGiraffeExcitement() {
+        // Double the giraffe's waddle-dancing loop speed temporarily
+        giraffe.style.animationDuration = "0.8s";
+        playPlayfulTwinkleSound();
+
+        // Cool down back to calm default breathing pace after 2.5 seconds
+        setTimeout(() => {
+            giraffe.style.animationDuration = "2.5s";
+        }, 2500);
+    }
+}
+
+/**
+ * Natively synthesizes a cheerful high-pitched 'twinkle' sound effect using
+ * the Web Audio API without requiring any external audio asset assets.
+ */
+function playPlayfulTwinkleSound() {
+    try {
+        const AudioContext = window.AudioContext || window.webkitAudioContext;
+        if (!AudioContext) return;
+
+        const ctx = new AudioContext();
+        const osc = ctx.createOscillator();
+        const gain = ctx.createGain();
+
+        osc.type = "sine";
+        // Fast upward scale tone sweep mirroring a cartoon notification ping
+        osc.frequency.setValueAtTime(600, ctx.currentTime);
+        osc.frequency.exponentialRampToValueAtTime(1500, ctx.currentTime + 0.2);
+
+        gain.gain.setValueAtTime(0.12, ctx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.2);
+
+        osc.connect(gain);
+        gain.connect(ctx.destination);
+
+        osc.start();
+        osc.stop(ctx.currentTime + 0.2);
+    } catch (e) {
+        console.warn("Audio processing parameter bypassed by client device conditions.");
+    }
+}
+
+</script>
+
+<!-- STANDALONE INTERACTIVE METRIC COUNTERS SECTION -->
+<section class="metrics-counters-section">
+    <div class="metrics-grid-container" id="countersGridStage">
+        
+        <!-- CARD 1: HAPPY CHILDREN -->
+        <div class="metric-isolated-card reveal-cascade-node">
+            <!-- Numeric counter anchor with target limits attached directly as data attributes -->
+            <div class="metric-number-display color-orange">
+                <span class="count-ticker" data-target="4000">0</span><span class="suffix">K+</span>
+            </div>
+            <h3 class="metric-label">Happy Children</h3>
+            <p class="metric-subtext">Trusted by hundreds of families for safe, loving, and joyful childcare.</p>
+        </div>
+
+        <!-- CARD 2: LEARNING COMPLETED -->
+        <div class="metric-isolated-card reveal-cascade-node">
+            <div class="metric-number-display color-green">
+                <span class="count-ticker" data-target="4000">0</span><span class="suffix">K+</span>
+            </div>
+            <h3 class="metric-label">Learning Completed</h3>
+            <p class="metric-subtext">From play-based activities to early education, nurturing bright young minds every day.</p>
+        </div>
+
+        <!-- CARD 3: PARENT SATISFACTION -->
+        <div class="metric-isolated-card reveal-cascade-node">
+            <div class="metric-number-display color-purple">
+                <span class="count-ticker" data-target="94">0</span><span class="suffix">%</span>
+            </div>
+            <h3 class="metric-label">Parent Satisfaction</h3>
+            <p class="metric-subtext">Long-term trust built on love, security, and consistent quality care.</p>
+        </div>
+
+    </div>
+</section>
+
+<style>
+    /* --- METRIC DESIGN SYSTEM TOKENS --- */
+:root {
+    --text-main: #2B2B2B;
+    --card-bg: #FFFFFF;
+}
+
+/* --- SECTION CONTAINER WRAPPER --- */
+.metrics-counters-section {
+    width: 100%;
+    background-color: #FAFDFD;
+    /* DESIGN MANDATE TARGET PADDINGS: 0px Top, 30px Bottom */
+    padding: 0 20px 30px 20px !important;
+    overflow: hidden;
+    position: relative;
+}
+
+.metrics-grid-container {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 30px;
+}
+
+/* --- ISOLATED INDEPENDENT CARD ARCHITECTURE --- */
+.metric-isolated-card {
+    background-color: var(--card-bg);
+    border: 1px solid #EBF5F5;
+    /* Soft creative custom geometric shape wrapper for each individual metric card */
+    border-radius: 40px 15px 40px 15px;
+    padding: 40px 30px;
+    box-shadow: 0 10px 30px rgba(43, 43, 43, 0.02);
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    
+    /* Pre-activation parameters for structural scroll animation reveals */
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.6s cubic-bezier(0.215, 0.610, 0.355, 1), 
+                transform 0.6s cubic-bezier(0.215, 0.610, 0.355, 1),
+                box-shadow 0.3s ease;
+}
+
+/* Activated class state appended systematically via Intersection Observers */
+.metric-isolated-card.reveal-activated {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.metric-isolated-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 35px rgba(0, 166, 153, 0.06);
+}
+
+/* --- TYPOGRAPHY & BRAND THEME CORRESPONDENCE --- */
+.metric-number-display {
+    font-size: 4rem;
+    font-weight: 900;
+    line-height: 1;
+    margin-bottom: 16px;
+    letter-spacing: -2px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Matching the precise theme palette styles across components from the image source */
+.color-orange { color: #FF5A5F; } /* Coral Orange Theme */
+.color-green  { color: #00A699; } /* Fresh Teal Green Theme */
+.color-purple { color: #8A7CF0; } /* Soft Pastel Violet Purple Theme */
+
+.metric-label {
+    font-size: 1.3rem;
+    font-weight: 800;
+    color: var(--text-main);
+    margin-bottom: 12px;
+}
+
+.metric-subtext {
+    font-size: 0.95rem;
+    line-height: 1.6;
+    color: #667572;
+    max-width: 280px;
+}
+
+/* --- RESPONSIVE MOBILE ADAPTATION SYSTEM --- */
+@media (max-width: 992px) {
+    .metrics-grid-container {
+        grid-template-columns: 1fr; /* Flips into fluid separate stacked rows naturally */
+        gap: 24px;
+    }
+    .metric-isolated-card {
+        padding: 35px 24px;
+        max-width: 480px;
+        margin: 0 auto;
+        width: 100%;
+    }
+    .metric-number-display {
+        font-size: 3.5rem;
+    }
+}
+
+</style>
+<script>
+    /**
+ * Stackly Childcare Website - One-by-One Scroll Reveal & Numeric Counter Ticker Engine
+ */
+document.addEventListener("DOMContentLoaded", () => {
+    initScrollTriggerCounters();
+});
+
+function initScrollTriggerCounters() {
+    const gridStage = document.getElementById("countersGridStage");
+    if (!gridStage) return;
+
+    const intersectionObserver = new IntersectionObserver((entries, observer) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                const parentNode = entry.target;
+                const interiorCards = parentNode.querySelectorAll(".reveal-cascade-node");
+
+                // 1. ONE-BY-ONE SCROLL CASCADE: Staggers cards arrival delays by 200ms increments
+                interiorCards.forEach((card, index) => {
+                    setTimeout(() => {
+                        card.classList.add("reveal-activated");
+                        
+                        // Trigger numeric ticker counter calculations once current card settles into position
+                        const tickerNode = card.querySelector(".count-ticker");
+                        if (tickerNode) {
+                            runIncrementalTicker(tickerNode);
+                        }
+                    }, index * 200);
+                });
+
+                // Terminate observation stream on current node stage to lock animation positions
+                observer.unobserve(parentNode);
+            }
+        });
+    }, { root: null, threshold: 0.15 });
+
+    intersectionObserver.observe(gridStage);
+}
+
+/**
+ * 2. RUNTIME AUTOMATIC TICKER LOGIC
+ * Counts values dynamically up from zero and halts right at the maximum limit boundary
+ */
+function runIncrementalTicker(element) {
+    const maximumLimitTarget = parseInt(element.getAttribute("data-target"), 10);
+    const totalDurationMs = 2000; // Strict 2-second timing window for counter updates
+    const calculationFramesPerSecond = 60; 
+    const totalFramesCount = Math.round(totalDurationMs / (1000 / calculationFramesPerSecond));
+    
+    let currentFrameIndex = 0;
+
+    function executionFrameStepTick() {
+        currentFrameIndex++;
+        
+        // Quad easeOut timing math factor to slow down numbers fluidly as they near completion
+        const progressiveProgressFactor = currentFrameIndex / totalFramesCount;
+        const easeOutMultiplier = progressiveProgressFactor * (2 - progressiveProgressFactor);
+        
+        // For large numbers like 4000, we scale the display appropriately so it counts up beautifully
+        let temporaryCurrentCountValue = Math.floor(easeOutMultiplier * maximumLimitTarget);
+        
+        // If it's a "4K+" layout target, display the absolute count values directly during operation
+        if (maximumLimitTarget === 4000) {
+            // Optional optimization: If you want it to explicitly show "4" instead of "4000", modify formatting. 
+            // This setup matches the image showing "4" with "K+" suffix by scaling the display logic:
+            temporaryCurrentCountValue = Math.floor(easeOutMultiplier * 4);
+        }
+
+        if (currentFrameIndex < totalFramesCount) {
+            element.textContent = temporaryCurrentCountValue;
+            requestAnimationFrame(executionFrameStepTick);
+        } else {
+            // Hard lock value output directly onto maximum limit configuration setting to secure data layers
+            element.textContent = (maximumLimitTarget === 4000) ? 4 : maximumLimitTarget;
+        }
+    }
+
+    // Fire timing frame sequence array loops loop hooks natively via browser loops
+    requestAnimationFrame(executionFrameStepTick);
+}
+
+</script>
+</body>
+</html>
