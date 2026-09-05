@@ -1,0 +1,765 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stackly - Creative Childcare Services</title>
+    <!-- Linking external CSS styles -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- PRELOADER SCREEN OVERLAY -->
+    <div id="preloader">
+        <!-- Interactive Entrance Button (Ensures sound is allowed by web browsers) -->
+        <div class="start-gate" id="startGate">
+            <button class="start-btn" onclick="initiatePreloader()">✨ Enter Stackly</button>
+        </div>
+
+        <!-- Main Loading Assets Container (Triggered on click) -->
+        <div class="loading-assets" id="loadingAssets">
+            <!-- Vector Graphic: Childcare Stacking Blocks Layer -->
+            <div class="vector-container">
+                <svg viewBox="0 0 100 100" width="100%" height="100%">
+                    <!-- Base Block -->
+                    <rect class="block block-bottom" x="15" y="70" width="70" height="20" rx="4" />
+                    <!-- Middle Block -->
+                    <rect class="block block-middle" x="27.5" y="45" width="45" height="20" rx="4" />
+                    <!-- Top Triangle Block -->
+                    <polygon class="block block-top" points="50,15 35,38 65,38" />
+                </svg>
+            </div>
+
+            <!-- Brand Logo Header Text -->
+            <h1 class="brand-name">Stackly<span>.</span></h1>
+
+            <!-- Loading Timing Bar Indicator -->
+            <div class="progress-track">
+                <div class="progress-bar" id="progressBar"></div>
+            </div>
+        </div>
+    </div>
+
+
+
+    <!-- Linking external Javascript behaviors -->
+    <script>
+
+        // --- NATIVE AUDIO SYNTHESIZER (Web Audio API) ---
+// Generates a bright, warm, browser-safe chime sequence dynamically without external dependencies.
+function playChimeSound() {
+    try {
+        const AudioContext = window.AudioContext || window.webkitAudioContext;
+        const ctx = new AudioContext();
+        
+        // Note One: Bright Introduction Core Base
+        let osc1 = ctx.createOscillator();
+        let gain1 = ctx.createGain();
+        osc1.type = 'triangle'; 
+        osc1.frequency.setValueAtTime(523.25, ctx.currentTime); // C5 Note
+        gain1.gain.setValueAtTime(0.15, ctx.currentTime);
+        gain1.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.6);
+        osc1.connect(gain1);
+        gain1.connect(ctx.destination);
+        osc1.start();
+        osc1.stop(ctx.currentTime + 0.6);
+
+        // Note Two: Upbeat Harmonizing Accent delayed by 150 milliseconds
+        setTimeout(() => {
+            let osc2 = ctx.createOscillator();
+            let gain2 = ctx.createGain();
+            osc2.type = 'sine';
+            osc2.frequency.setValueAtTime(659.25, ctx.currentTime); // E5 Note
+            gain2.gain.setValueAtTime(0.2, ctx.currentTime);
+            gain2.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.8);
+            osc2.connect(gain2);
+            gain2.connect(ctx.destination);
+            osc2.start();
+            osc2.stop(ctx.currentTime + 0.8);
+        }, 150);
+
+    } catch (error) {
+        console.warn("Audio presentation skipped due to client system security rules:", error);
+    }
+}
+
+// --- STATE COORDINATION RUNNER ---
+function initiatePreloader() {
+    // 1. Fire Audio Chime Module
+    playChimeSound();
+
+    // 2. Tear down the static start interaction gate
+    document.getElementById('startGate').style.display = 'none';
+    
+    // 3. Reveal Animated Loading elements 
+    const loadingAssets = document.getElementById('loadingAssets');
+    loadingAssets.style.display = 'flex';
+
+    // 4. Trigger 2-Second Linear Track filling
+    const bar = document.getElementById('progressBar');
+    setTimeout(() => {
+        bar.style.width = '100%';
+    }, 50);
+
+    // 5. Exit Preloader View and Introduce Main Landing Layout after exactly 2 seconds
+    setTimeout(() => {
+        const preloader = document.getElementById('preloader');
+        const mainContent = document.getElementById('main-content');
+        
+        // Smooth Outward Transitions
+        preloader.style.opacity = '0';
+        preloader.style.transform = 'scale(1.05)';
+        
+        setTimeout(() => {
+            preloader.style.display = 'none';
+            // Smoothly ease in your main app canvas elements
+            mainContent.classList.add('loaded');
+        }, 500); // 500ms aligns with CSS exit style limits
+
+    }, 2000); // Strict 2000ms duration requirement
+}
+
+    </script>
+
+    <!-- FLOATING STICKY HEADER Component -->
+<header class="floating-header">
+    <div class="header-container">
+        
+        <!-- Brand Logo (Refreshes Page on Click) -->
+        <div class="logo-wrapper" onclick="refreshPage()">
+            <img src="https://placehold.co" alt="Stackly Logo" class="brand-img">
+        </div>
+
+        <!-- Mobile Hamburger Menu Icon Toggle -->
+        <div class="hamburger-menu" id="hamburgerToggle" onclick="toggleMobileMenu()">
+            <span class="bar"></span>
+            <span class="bar"></span>
+            <span class="bar"></span>
+        </div>
+
+        <!-- Centered Navigation Menu Layout -->
+        <nav class="nav-menu" id="navMenu">
+            <a href="index.html" class="nav-item active">Home</a>
+            <a href="programs.html" class="nav-item">Programs</a>
+            <a href="about.html" class="nav-item">About Us</a>
+            <a href="blogs.html" class="nav-item">Our Team</a>
+            <a href="contact.html" class="nav-item">Contact</a>
+        </nav>
+
+        <!-- Right-Aligned Authentication Action Element -->
+        <div class="auth-actions">
+            <button class="auth-btn">Parent Portal</button>
+        </div>
+        
+    </div>
+</header>
+
+<script>
+    // --- LOGO PAGE REFRESH FUNCTION ---
+function refreshPage() {
+    window.location.reload();
+}
+
+// --- HAMBURGER MENU DRAWER INTERACTION ---
+function toggleMobileMenu() {
+    const hamburger = document.getElementById('hamburgerToggle');
+    const navMenu = document.getElementById('navMenu');
+    
+    hamburger.classList.toggle('active');
+    navMenu.classList.toggle('active');
+}
+
+// Automatically close responsive drawer if any nav link is selected
+document.querySelectorAll('.nav-item').forEach(item => {
+    item.addEventListener('click', () => {
+        document.getElementById('hamburgerToggle').classList.remove('active');
+        document.getElementById('navMenu').classList.remove('active');
+    });
+});
+
+</script>
+
+
+<!-- FRESH FULL-WIDTH BLOG HERO PROFILE BANNER -->
+<section class="blog-hero-section">
+    <div class="blog-hero-container">
+        
+        <!-- LEFT COLUMN: COPYWRITING FIELD (SCROLL REVEALED) -->
+        <div class="blog-hero-content">
+            <!-- Sentence-by-Sentence Scroll Revealed Heading Matrix -->
+            <h1 class="blog-hero-title" id="blogHeroTitle">
+                <span class="blog-sentence">Stories From Stackly.</span>
+                <span class="blog-sentence">Parenting Growth Insights.</span>
+                <span class="blog-sentence highlight">Early Discovery Shared.</span>
+            </h1>
+            
+            <p class="blog-hero-subtitle">
+                Explore expert parenting advice, childhood milestone updates, and fun learning activities crafted by our certified caregivers to help your little ones grow.
+            </p>
+            
+            <!-- Dual Interactive Floating Action Buttons -->
+            <div class="blog-hero-actions">
+                <button class="blog-hero-btn primary-blog-cta float-action-node-1">Explore Articles ✨</button>
+                <button class="blog-hero-btn secondary-blog-cta float-action-node-2">Subscribe Now ➔</button>
+            </div>
+        </div>
+
+        <!-- RIGHT COLUMN: AUTOMATED TRANSITION FRAMES SLIDESHOW (2-SECOND TICK) -->
+        <div class="blog-hero-media">
+            <div class="asymmetric-slideshow-window">
+                <div class="blog-slideshow-track" id="blogHeroSlideshow">
+                    <img src="https://unsplash.com" alt="Child reading a colorful book" class="blog-hero-img active">
+                    <img src="https://unsplash.com" alt="Creative finger painting artwork class" class="blog-hero-img">
+                    <img src="https://unsplash.com" alt="Tactile blocks building milestones" class="blog-hero-img">
+                </div>
+                <!-- Small Floating Vector Sun Graphic Badge Accent -->
+                <div class="blog-hero-vector-accent float-action-node-2">
+                    <svg viewBox="0 0 24 24" width="38" height="38" fill="#FFB400">
+                        <path d="M12,2 L14.8,8.6 L22,9.2 L16.5,14 L18.2,21 L12,17.3 L5.8,21 L7.5,14 L2,9.2 L9.2,8.6 Z"/>
+                    </svg>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</section>
+
+<style>
+    /* --- SITE CONTEXT DESIGN TOKENS --- */
+:root {
+    --primary-color: #FF5A5F;   /* Bright Coral */
+    --secondary-color: #FFB400; /* Warm Yellow */
+    --accent-color: #00A699;    /* Fresh Teal Green */
+    --text-main: #2B2B2B;       /* Deep Charcoal */
+    --surface-white: #FFFFFF;
+}
+
+/* --- OVERALL HERO CANVAS HOUSING --- */
+.blog-hero-section {
+    width: 100%;
+    background: linear-gradient(180deg, #FFFFFF 0%, #FAFDFD 100%);
+    /* TARGET PARAMETER DESIGN PADDINGS: 50px Top, 30px Bottom */
+    padding: 130px 20px 30px 20px !important;
+    overflow: hidden;
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.blog-hero-container {
+    width: 100%;
+    max-width: 1240px;
+    margin: 0 auto;
+    display: grid;
+    /* Aligns copywriting left, interchanging slider panels right */
+    grid-template-columns: 1.12fr 0.88fr;
+    gap: 55px;
+    align-items: center;
+}
+
+/* ================= LEFT COLUMN: WORD REVEALS & FLOATING CTAS ================= */
+.blog-hero-content {
+    text-align: left;
+}
+
+.blog-hero-title {
+    font-size: 3.4rem;
+    font-weight: 900;
+    line-height: 1.18;
+    color: var(--text-main);
+    letter-spacing: -1.5px;
+    margin-bottom: 22px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+/* Sentence-by-sentence scroll reveal default anchors */
+.blog-sentence {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.6s cubic-bezier(0.215, 0.610, 0.355, 1), 
+                transform 0.6s cubic-bezier(0.215, 0.610, 0.355, 1);
+}
+
+.blog-sentence.revealed-line {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.blog-hero-title .highlight {
+    color: var(--accent-color);
+}
+
+.blog-hero-subtitle {
+    font-size: 1.15rem;
+    line-height: 1.65;
+    color: #555555;
+    max-width: 550px;
+    margin-bottom: 35px;
+}
+
+/* --- CALL INTERACTIVE BUTTON HOOKS SYSTEM --- */
+.blog-hero-actions {
+    display: flex;
+    gap: 16px;
+    align-items: center;
+}
+
+.blog-hero-btn {
+    padding: 16px 36px;
+    font-size: 1.05rem;
+    font-weight: 700;
+    border-radius: 16px;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.2s, box-shadow 0.2s;
+}
+
+.primary-blog-cta {
+    background-color: var(--primary-color);
+    color: #FFFFFF;
+    box-shadow: 0 5px 15px rgba(255, 90, 95, 0.25);
+}
+.primary-blog-cta:hover { background-color: #E04449; }
+
+.secondary-blog-cta {
+    background-color: #FFFFFF;
+    color: var(--text-main);
+    border: 2px solid #E2E8F0;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.02);
+}
+.secondary-blog-cta:hover { background-color: #F8FAFB; }
+
+/* Continuous Infinite Element Floating Rhythm Physics Loops */
+.float-action-node-1 { animation: blogFloatMotion 4.5s ease-in-out infinite alternate; }
+.float-action-node-2 { animation: blogFloatMotion 4.5s ease-in-out infinite alternate-reverse; animation-delay: 0.6s; }
+
+@keyframes blogFloatMotion {
+    0% { transform: translateY(0); }
+    100% { transform: translateY(-7px); }
+}
+
+.blog-hero-btn:hover {
+    transform: translateY(-4px) scale(1.02);
+    box-shadow: 0 10px 22px rgba(43, 43, 43, 0.12);
+}
+
+/* ================= RIGHT COLUMN: AUTOMATED TIMED TRANSITION SLIDESHOW ================= */
+.blog-hero-media {
+    display: flex;
+    justify-content: center;
+    position: relative;
+    width: 100%;
+}
+
+/* High-end non-square fluid profile masking frame */
+.asymmetric-slideshow-window {
+    position: relative;
+    width: 100%;
+    max-width: 440px;
+    aspect-ratio: 1 / 1;
+    overflow: visible; /* Permits vector overlay badges to float outwards comfortably */
+    border-radius: 40% 60% 30% 70% / 60% 40% 60% 40%;
+    box-shadow: 0 20px 45px rgba(43, 43, 43, 0.06);
+    background-color: #FFEBEB;
+    z-index: 5;
+}
+
+.blog-slideshow-track {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    overflow: hidden;
+    border-radius: inherit; /* Inherits the fluid mask curvature natively */
+}
+
+.blog-hero-img {
+    position: absolute;
+    top: 0; left: 0; width: 100%; height: 100%;
+    object-fit: cover;
+    opacity: 0;
+    transform: scale(1.05);
+    /* High-performance hardware-accelerated crossfade transitions */
+    transition: opacity 0.6s cubic-bezier(0.4, 0, 0.2, 1), 
+                transform 1s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.blog-hero-img.active {
+    opacity: 1;
+    transform: scale(1);
+    z-index: 2;
+}
+
+.blog-hero-vector-accent {
+    position: absolute;
+    bottom: -15px;
+    left: -15px;
+    z-index: 10;
+}
+
+/* ================= COMPREHENSIVE HIGH-UTILITY RESPONSIVE INTERFACE ================= */
+@media (max-width: 1024px) {
+    .blog-hero-section { padding-top: 30px !important; }
+    .blog-hero-container {
+        grid-template-columns: 1fr;
+        gap: 50px;
+        text-align: center;
+    }
+    .blog-hero-content { display: flex; flex-direction: column; align-items: center; text-align: center; }
+    .blog-hero-title { font-size: 2.6rem; align-items: center; }
+    .blog-hero-subtitle { margin-left: auto; margin-right: auto; }
+    .asymmetric-slideshow-window { max-width: 360px; }
+}
+
+@media (max-width: 480px) {
+    .blog-hero-title { font-size: 2.1rem; }
+    .blog-hero-actions { flex-direction: column; width: 100%; gap: 12px; }
+    .blog-hero-btn { width: 100%; text-align: center; }
+}
+
+</style>
+
+<script>
+    /**
+ * Stackly Childcare Website - Blog Hero Sequence Rotator Engine
+ */
+document.addEventListener("DOMContentLoaded", () => {
+    initBlogTitleScrollReveal();
+    initAutomatedTwoSecondBlogSlideshow();
+});
+
+// 1. SCROLL ENGINE: Triggers sequential sentence-by-sentence text reveals
+function initBlogTitleScrollReveal() {
+    const headingBlock = document.getElementById("blogHeroTitle");
+    if (!headingBlock) return;
+
+    const revealObserver = new IntersectionObserver((entries, observer) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                const parent = entry.target;
+                const sentenceLines = parent.querySelectorAll(".blog-sentence");
+
+                // Stagger individual lines sequence reveals cleanly by 240ms delay gaps
+                sentenceLines.forEach((line, index) => {
+                    setTimeout(() => {
+                        line.classList.add("revealed-line");
+                    }, index * 240);
+                });
+
+                // Clear observer to conserve background browser runtime threads footprints
+                observer.unobserve(parent);
+            }
+        });
+    }, { root: null, threshold: 0.2 });
+
+    revealObserver.observe(headingBlock);
+}
+
+// 2. SLIDESHOW TIMER: Rotates featured cover images precisely every 2000ms (2 seconds)
+function initAutomatedTwoSecondBlogSlideshow() {
+    const images = document.querySelectorAll(".blog-slideshow-track .blog-hero-img");
+    if (images.length === 0) return;
+
+    let activeTrackIndex = 0;
+
+    setInterval(() => {
+        // Demote active parameters from current displaying image layer
+        images[activeTrackIndex].classList.remove("active");
+        
+        // Advance structural indexing loops safely across parameters bounds
+        activeTrackIndex = (activeTrackIndex + 1) % images.length;
+        
+        // Elevate active properties on chosen next selection target
+        images[activeTrackIndex].classList.add("active");
+    }, 2000); // 2-second automated ticker crossfade intervals
+}
+
+</script>
+
+<!-- DYNAMIC EDITORIAL ARTICLES SECTION -->
+<section class="blog-articles-section" id="latest-insights">
+    <div class="articles-main-container">
+        
+        <!-- HEADER LAYER FOR SCANNABILITY -->
+        <div class="articles-grid-header">
+            <span class="articles-mini-badge">Our Journal</span>
+            <h2 class="articles-main-title">Latest Knowledge Sheets</h2>
+        </div>
+
+        <!-- THREE-COLUMN INTERACTIVE CARD PROFILE DECK -->
+        <div class="articles-cards-deck">
+            
+            <!-- Article Card 1 -->
+            <div class="article-editorial-card">
+                <div class="article-media-cover">
+                    <img src="https://unsplash.com" alt="Child reading a colorful workbook" class="article-cover-img">
+                    <span class="article-category-pill pill-pink">Parenting advice</span>
+                </div>
+                <div class="article-body-panel">
+                    <div class="article-timestamp">September 5, 2026</div>
+                    <h3>Understanding Early Speech Milestones</h3>
+                    <p class="article-excerpt">Discover how play-based conversation blocks and sensory tracking reinforce organic vocabulary building during toddler tracks.</p>
+                    <a href="404.html" class="article-learn-more-link">Learn More</a>
+                </div>
+            </div>
+
+            <!-- Article Card 2 -->
+            <div class="article-editorial-card">
+                <div class="article-media-cover">
+                    <img src="https://unsplash.com" alt="Children building toys together" class="article-cover-img">
+                    <span class="article-category-pill pill-teal">Education</span>
+                </div>
+                <div class="article-body-panel">
+                    <div class="article-timestamp">August 28, 2026</div>
+                    <h3>The Power of Tactile Logic Blocks</h3>
+                    <p class="article-excerpt">How physical block manipulation trains geometry memory, early mathematics logic pathways, and social collaboration models naturally.</p>
+                    <a href="404.html" class="article-learn-more-link">Learn More</a>
+                </div>
+            </div>
+
+            <!-- Article Card 3 -->
+            <div class="article-editorial-card">
+                <div class="article-media-cover">
+                    <img src="https://unsplash.com" alt="Creative finger painting artwork class" class="article-cover-img">
+                    <span class="article-category-pill pill-yellow">Creative Play</span>
+                </div>
+                <div class="article-body-panel">
+                    <div class="article-timestamp">August 14, 2026</div>
+                    <h3>Art Expression & Motor Skill Growth</h3>
+                    <p class="article-excerpt">Exploring the neural connections formed when little explorers mix palettes, experiment with strokes, and build spatial models.</p>
+                    <a href="404.html" class="article-learn-more-link">Learn More</a>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+</section>
+
+<style>
+    /* --- COMPONENT THEME DESIGN TOKENS --- */
+:root {
+    --text-dark: #1C2321;
+    --text-muted: #536262;
+    --primary-pink: #FF5A5F;
+    --accent-teal: #00A699;
+    --accent-yellow: #FFB400;
+    --card-surface: #FFFFFF;
+}
+
+/* --- WORKSPACE PACKING WRAPPERS --- */
+.blog-articles-section {
+    width: 100%;
+    background-color: #FFFFFF;
+    /* TARGET PARAMETER DESIGN PADDINGS: 50px Top, 30px Bottom */
+    padding: 50px 20px 30px 20px !important;
+    overflow: hidden;
+}
+
+.articles-main-container {
+    width: 100%;
+    max-width: 1240px;
+    margin: 0 auto;
+}
+
+/* --- HEADER ROWS ARCHITECTURES --- */
+.articles-grid-header {
+    text-align: left;
+    margin-bottom: 35px;
+}
+
+.articles-mini-badge {
+    font-size: 0.88rem;
+    font-weight: 800;
+    color: var(--primary-pink);
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    display: inline-block;
+    margin-bottom: 8px;
+}
+
+.articles-main-title {
+    font-size: 2.5rem;
+    font-weight: 900;
+    color: var(--text-dark);
+    letter-spacing: -1px;
+}
+
+/* ================= 3-COLUMN EDITORIAL DECK MATRIX ================= */
+.articles-cards-deck {
+    display: grid;
+    /* Configures a balanced 3-column architecture tracking desktop layouts */
+    grid-template-columns: repeat(3, 1fr);
+    gap: 30px;
+    width: 100%;
+}
+
+.article-editorial-card {
+    background-color: var(--card-surface);
+    border: 1px solid #EBEFEF;
+    border-radius: 24px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 4px 15px rgba(28, 35, 33, 0.01);
+    transition: transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94), box-shadow 0.3s ease;
+}
+
+.article-editorial-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 28px rgba(28, 35, 33, 0.05);
+}
+
+/* Cover Image Envelopes */
+.article-media-cover {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 1.5 / 1;
+    overflow: hidden;
+    background-color: #FAFAFA;
+}
+
+.article-cover-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+}
+
+.article-editorial-card:hover .article-cover-img {
+    transform: scale(1.04);
+}
+
+/* Theme Colored Category Category Pills */
+.article-category-pill {
+    position: absolute;
+    top: 15px; left: 15px;
+    font-size: 0.78rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    padding: 5px 14px;
+    border-radius: 30px;
+    letter-spacing: 0.5px;
+    z-index: 10;
+    color: #FFFFFF;
+}
+.pill-pink { background-color: var(--primary-pink); }
+.pill-teal { background-color: var(--accent-teal); }
+.pill-yellow { background-color: #E68A00; }
+
+/* Content panels text blocks */
+.article-body-panel {
+    padding: 24px 20px;
+    text-align: left;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+}
+
+.article-timestamp {
+    font-size: 0.82rem;
+    font-weight: 700;
+    color: var(--text-muted);
+    margin-bottom: 8px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.article-body-panel h3 {
+    font-size: 1.3rem;
+    font-weight: 800;
+    color: var(--text-dark);
+    line-height: 1.3;
+    margin-bottom: 12px;
+}
+
+.article-excerpt {
+    font-size: 0.92rem;
+    line-height: 1.55;
+    color: var(--text-muted);
+    margin-bottom: 22px;
+    flex-grow: 1;
+}
+
+/* --- THE MANDATED INTERACTIVE "LEARNING MORE" LINK NODE --- */
+.article-learn-more-link {
+    font-size: 0.95rem;
+    font-weight: 800;
+    color: var(--text-dark);
+    text-decoration: none;
+    align-self: flex-start;
+    border-bottom: 2px solid var(--text-dark);
+    padding-bottom: 2px;
+    transition: color 0.15s dynamic, border-color 0.15s ease;
+}
+
+.article-learn-more-link:hover {
+    color: var(--primary-pink);
+    border-color: var(--primary-pink);
+}
+
+/* ================= ADAPTIVE RESPONSIVE GRID CONFIGURATIONS ================= */
+@media (max-width: 992px) {
+    .articles-main-title { font-size: 2.1rem; }
+    /* Flips to a 2-column or stacked format layout natively on tablet widths */
+    .articles-cards-deck { grid-template-columns: repeat(2, 1fr); gap: 20px; }
+}
+
+@media (max-width: 650px) {
+    .articles-grid-header { text-align: center; }
+    .articles-cards-deck { grid-template-columns: 1fr; gap: 20px; } /* Clean rows stack mapping on phone screens */
+    .article-editorial-card { max-width: 350px; margin: 0 auto; width: 100%; }
+}
+
+
+</style>
+
+<script>
+    /**
+ * Stackly Childcare Website - Articles Grid Reveal Engine
+ */
+document.addEventListener("DOMContentLoaded", () => {
+    initBlogArticlesCascadeReveal();
+});
+
+/**
+ * One-by-One Scroll Reveal Core
+ * Cascades article cards into view sequentially with a 150ms stagger window
+ */
+function initBlogArticlesCascadeReveal() {
+    const trackDeck = document.querySelector(".articles-cards-deck");
+    if (!trackDeck) return;
+
+    // Prefire configuration: Apply baseline hidden classes to all child cards natively
+    const cards = trackDeck.querySelectorAll(".article-editorial-card");
+    cards.forEach(card => {
+        card.style.opacity = "0";
+        card.style.transform = "translateY(25px)";
+        card.style.transition = "opacity 0.6s cubic-bezier(0.215, 0.610, 0.355, 1), transform 0.6s cubic-bezier(0.215, 0.610, 0.355, 1)";
+    });
+
+    const intersectionObserver = new IntersectionObserver((entries, observer) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                const parent = entry.target;
+                const interiorCards = parent.querySelectorAll(".article-editorial-card");
+
+                // Stagger column arrival intervals cleanly by 150 milliseconds
+                interiorCards.forEach((card, index) => {
+                    setTimeout(() => {
+                        card.style.opacity = "1";
+                        card.style.transform = "translateY(0)";
+                    }, index * 150);
+                });
+
+                // Clear operational observer loop to safeguard thread space metrics
+                observer.unobserve(parent);
+            }
+        });
+    }, { root: null, threshold: 0.12 });
+
+    intersectionObserver.observe(trackDeck);
+}
+
+</script>

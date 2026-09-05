@@ -1,0 +1,3121 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stackly - Creative Childcare Services</title>
+    <!-- Linking external CSS styles -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- PRELOADER SCREEN OVERLAY -->
+    <div id="preloader">
+        <!-- Interactive Entrance Button (Ensures sound is allowed by web browsers) -->
+        <div class="start-gate" id="startGate">
+            <button class="start-btn" onclick="initiatePreloader()">✨ Enter Stackly</button>
+        </div>
+
+        <!-- Main Loading Assets Container (Triggered on click) -->
+        <div class="loading-assets" id="loadingAssets">
+            <!-- Vector Graphic: Childcare Stacking Blocks Layer -->
+            <div class="vector-container">
+                <svg viewBox="0 0 100 100" width="100%" height="100%">
+                    <!-- Base Block -->
+                    <rect class="block block-bottom" x="15" y="70" width="70" height="20" rx="4" />
+                    <!-- Middle Block -->
+                    <rect class="block block-middle" x="27.5" y="45" width="45" height="20" rx="4" />
+                    <!-- Top Triangle Block -->
+                    <polygon class="block block-top" points="50,15 35,38 65,38" />
+                </svg>
+            </div>
+
+            <!-- Brand Logo Header Text -->
+            <h1 class="brand-name">Stackly<span>.</span></h1>
+
+            <!-- Loading Timing Bar Indicator -->
+            <div class="progress-track">
+                <div class="progress-bar" id="progressBar"></div>
+            </div>
+        </div>
+    </div>
+
+
+
+    <!-- Linking external Javascript behaviors -->
+    <script>
+
+        // --- NATIVE AUDIO SYNTHESIZER (Web Audio API) ---
+// Generates a bright, warm, browser-safe chime sequence dynamically without external dependencies.
+function playChimeSound() {
+    try {
+        const AudioContext = window.AudioContext || window.webkitAudioContext;
+        const ctx = new AudioContext();
+        
+        // Note One: Bright Introduction Core Base
+        let osc1 = ctx.createOscillator();
+        let gain1 = ctx.createGain();
+        osc1.type = 'triangle'; 
+        osc1.frequency.setValueAtTime(523.25, ctx.currentTime); // C5 Note
+        gain1.gain.setValueAtTime(0.15, ctx.currentTime);
+        gain1.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.6);
+        osc1.connect(gain1);
+        gain1.connect(ctx.destination);
+        osc1.start();
+        osc1.stop(ctx.currentTime + 0.6);
+
+        // Note Two: Upbeat Harmonizing Accent delayed by 150 milliseconds
+        setTimeout(() => {
+            let osc2 = ctx.createOscillator();
+            let gain2 = ctx.createGain();
+            osc2.type = 'sine';
+            osc2.frequency.setValueAtTime(659.25, ctx.currentTime); // E5 Note
+            gain2.gain.setValueAtTime(0.2, ctx.currentTime);
+            gain2.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.8);
+            osc2.connect(gain2);
+            gain2.connect(ctx.destination);
+            osc2.start();
+            osc2.stop(ctx.currentTime + 0.8);
+        }, 150);
+
+    } catch (error) {
+        console.warn("Audio presentation skipped due to client system security rules:", error);
+    }
+}
+
+// --- STATE COORDINATION RUNNER ---
+function initiatePreloader() {
+    // 1. Fire Audio Chime Module
+    playChimeSound();
+
+    // 2. Tear down the static start interaction gate
+    document.getElementById('startGate').style.display = 'none';
+    
+    // 3. Reveal Animated Loading elements 
+    const loadingAssets = document.getElementById('loadingAssets');
+    loadingAssets.style.display = 'flex';
+
+    // 4. Trigger 2-Second Linear Track filling
+    const bar = document.getElementById('progressBar');
+    setTimeout(() => {
+        bar.style.width = '100%';
+    }, 50);
+
+    // 5. Exit Preloader View and Introduce Main Landing Layout after exactly 2 seconds
+    setTimeout(() => {
+        const preloader = document.getElementById('preloader');
+        const mainContent = document.getElementById('main-content');
+        
+        // Smooth Outward Transitions
+        preloader.style.opacity = '0';
+        preloader.style.transform = 'scale(1.05)';
+        
+        setTimeout(() => {
+            preloader.style.display = 'none';
+            // Smoothly ease in your main app canvas elements
+            mainContent.classList.add('loaded');
+        }, 500); // 500ms aligns with CSS exit style limits
+
+    }, 2000); // Strict 2000ms duration requirement
+}
+
+    </script>
+
+    <!-- FLOATING STICKY HEADER Component -->
+<header class="floating-header">
+    <div class="header-container">
+        
+        <!-- Brand Logo (Refreshes Page on Click) -->
+        <div class="logo-wrapper" onclick="refreshPage()">
+            <img src="https://placehold.co" alt="Stackly Logo" class="brand-img">
+        </div>
+
+        <!-- Mobile Hamburger Menu Icon Toggle -->
+        <div class="hamburger-menu" id="hamburgerToggle" onclick="toggleMobileMenu()">
+            <span class="bar"></span>
+            <span class="bar"></span>
+            <span class="bar"></span>
+        </div>
+
+        <!-- Centered Navigation Menu Layout -->
+        <nav class="nav-menu" id="navMenu">
+            <a href="index.html" class="nav-item ">Home</a>
+            <a href="programs.html" class="nav-item active">Programs</a>
+            <a href="about.html" class="nav-item">About Us</a>
+            <a href="blogs.html" class="nav-item">Our Team</a>
+            <a href="contact.html" class="nav-item">Contact</a>
+        </nav>
+
+        <!-- Right-Aligned Authentication Action Element -->
+        <div class="auth-actions">
+            <button class="auth-btn">Parent Portal</button>
+        </div>
+        
+    </div>
+</header>
+
+<script>
+    // --- LOGO PAGE REFRESH FUNCTION ---
+function refreshPage() {
+    window.location.reload();
+}
+
+// --- HAMBURGER MENU DRAWER INTERACTION ---
+function toggleMobileMenu() {
+    const hamburger = document.getElementById('hamburgerToggle');
+    const navMenu = document.getElementById('navMenu');
+    
+    hamburger.classList.toggle('active');
+    navMenu.classList.toggle('active');
+}
+
+// Automatically close responsive drawer if any nav link is selected
+document.querySelectorAll('.nav-item').forEach(item => {
+    item.addEventListener('click', () => {
+        document.getElementById('hamburgerToggle').classList.remove('active');
+        document.getElementById('navMenu').classList.remove('active');
+    });
+});
+
+</script>
+
+<!-- PROGRAMS HERO PROFILE BANNER -->
+<section class="programs-hero-section">
+    <div class="programs-hero-container">
+        
+        <!-- LEFT COLUMN: BRAND MESSAGING CONTENT (SCROLL REVEALED) -->
+        <div class="programs-hero-content">
+            <!-- Sentence-by-Sentence Scroll Revealed Heading Matrix -->
+            <h1 class="programs-hero-title" id="programsHeroTitle">
+                <span class="hero-sentence">Specialized Classrooms.</span>
+                <span class="hero-sentence">Certified Modern Curriculum.</span>
+                <span class="hero-sentence highlight">Built For Early Childhood.</span>
+            </h1>
+            
+            <p class="programs-hero-subtitle">
+                Explore our purposefully designed age-group tracks. We blend structured play with key cognitive milestones to ensure every child discovers their potential safely.
+            </p>
+            
+            <!-- Dual Interactive Floating Call-To-Action Hooks -->
+            <div class="programs-hero-actions">
+                <button class="prog-hero-btn primary-prog-cta float-action-node">Enroll Now ✨</button>
+                <button class="prog-hero-btn secondary-prog-cta float-action-node-delayed">View Fees ➔</button>
+            </div>
+        </div>
+
+        <!-- RIGHT COLUMN: SQUARE SLIDESHOW (2-SECOND TICK) -->
+        <div class="programs-hero-media">
+            <div class="square-slideshow-container">
+                <div class="programs-slideshow-track" id="progHeroSlideshow">
+                    <img src="https://unsplash.com" alt="Creative Learning Activity" class="prog-hero-img active">
+                    <img src="https://unsplash.com" alt="Sensory Tactile Bricks Play" class="prog-hero-img">
+                    <img src="https://unsplash.com" alt="Kindergarten Reading Circle" class="prog-hero-img">
+                </div>
+                <!-- Background Decorative Glow Light Grid -->
+                <div class="prog-hero-glow-accent"></div>
+            </div>
+        </div>
+
+    </div>
+</section>
+
+<style>
+    /* --- PREMIUM BRAND SYSTEM TOKENS --- */
+:root {
+    --primary-color: #FF5A5F;   /* Bright Coral */
+    --secondary-color: #FFB400; /* Warm Yellow */
+    --accent-color: #00A699;    /* Fresh Teal Green */
+    --text-main: #2B2B2B;       /* Deep Charcoal */
+    --card-surface: #FFFFFF;
+}
+
+/* --- SECTION CONTAINER WRAPPER --- */
+.programs-hero-section {
+    width: 100%;
+    background: linear-gradient(180deg, #FFFFFF 0%, #F5FAFA 100%);
+    /* TARGET ASSIGNED PADDINGS: 50px Top, 30px Bottom */
+    padding: 130px 20px 30px 20px !important;
+    overflow: hidden;
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.programs-hero-container {
+    width: 100%;
+    max-width: 1240px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1.1fr 0.9fr;
+    gap: 50px;
+    align-items: center;
+}
+
+/* ================= LEFT COLUMN ================= */
+.programs-hero-content {
+    text-align: left;
+}
+
+.programs-hero-title {
+    font-size: 3.4rem;
+    font-weight: 800;
+    line-height: 1.2;
+    color: var(--text-main);
+    letter-spacing: -1.5px;
+    margin-bottom: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.hero-sentence {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.6s cubic-bezier(0.215, 0.610, 0.355, 1), 
+                transform 0.6s cubic-bezier(0.215, 0.610, 0.355, 1);
+}
+
+.hero-sentence.revealed-line {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.programs-hero-title .highlight {
+    color: var(--accent-color);
+}
+
+.programs-hero-subtitle {
+    font-size: 1.15rem;
+    line-height: 1.65;
+    color: #555555;
+    max-width: 540px;
+    margin-bottom: 35px;
+}
+
+.programs-hero-actions {
+    display: flex;
+    gap: 16px;
+    align-items: center;
+}
+
+.prog-hero-btn {
+    padding: 16px 34px;
+    font-size: 1.05rem;
+    font-weight: 700;
+    border-radius: 16px;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.2s, box-shadow 0.2s;
+}
+
+.primary-prog-cta {
+    background-color: var(--primary-color);
+    color: #FFFFFF;
+    box-shadow: 0 5px 15px rgba(255, 90, 95, 0.25);
+}
+.primary-prog-cta:hover { background-color: #E04449; }
+
+.secondary-prog-cta {
+    background-color: #FFFFFF;
+    color: var(--text-main);
+    border: 2px solid #E2E8F0;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.02);
+}
+.secondary-prog-cta:hover { background-color: #F8FAFB; }
+
+.float-action-node {
+    animation: heroFloatLinear 4.5s ease-in-out infinite alternate;
+}
+.float-action-node-delayed {
+    animation: heroFloatLinear 4.5s ease-in-out infinite alternate-reverse;
+    animation-delay: 0.6s;
+}
+
+@keyframes heroFloatLinear {
+    0% { transform: translateY(0); }
+    100% { transform: translateY(-8px); }
+}
+
+.prog-hero-btn:hover {
+    transform: translateY(-4px) scale(1.02);
+    box-shadow: 0 10px 22px rgba(43, 43, 43, 0.12);
+}
+
+/* ================= RIGHT COLUMN: CRISP SQUARE SHAPE MASKS ================= */
+.programs-hero-media {
+    display: flex;
+    justify-content: center;
+    position: relative;
+}
+
+/* Formed into a strict, attractive square box silhouette framework */
+.square-slideshow-container {
+    position: relative;
+    width: 100%;
+    max-width: 440px;
+    aspect-ratio: 1 / 1; /* Mandates perfect width-to-height square box balance */
+    overflow: hidden;
+    border-radius: 24px; /* Clean modern corner arcs layout */
+    box-shadow: 0 20px 45px rgba(43, 43, 43, 0.08);
+    background-color: #E6F6F5;
+    z-index: 5;
+}
+
+.programs-slideshow-track {
+    width: 100%;
+    height: 100%;
+    position: relative;
+}
+
+.prog-hero-img {
+    position: absolute;
+    top: 0; left: 0; width: 100%; height: 100%;
+    object-fit: cover;
+    opacity: 0;
+    transform: scale(1.04);
+    transition: opacity 0.6s cubic-bezier(0.4, 0, 0.2, 1), 
+                transform 1s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.prog-hero-img.active {
+    opacity: 1;
+    transform: scale(1);
+    z-index: 2;
+}
+
+.prog-hero-glow-accent {
+    position: absolute;
+    bottom: -15px; right: -15px;
+    width: 60px; height: 60px;
+    background-color: var(--secondary-color);
+    border-radius: 50%;
+    filter: blur(25px);
+    opacity: 0.4;
+    z-index: 1;
+}
+
+/* ================= RESPONSIVE INTERFACE ================= */
+@media (max-width: 992px) {
+    .programs-hero-section { padding-top: 30px !important; }
+    .programs-hero-container {
+        grid-template-columns: 1fr;
+        gap: 50px;
+        text-align: center;
+    }
+    .programs-hero-content { display: flex; flex-direction: column; align-items: center; text-align: center; }
+    .programs-hero-title { font-size: 2.5rem; align-items: center; }
+    .programs-hero-subtitle { margin-left: auto; margin-right: auto; }
+    .square-slideshow-container { max-width: 360px; }
+}
+
+@media (max-width: 480px) {
+    .programs-hero-title { font-size: 2.1rem; }
+    .programs-hero-actions { flex-direction: column; width: 100%; gap: 12px; }
+    .prog-hero-btn { width: 100%; text-align: center; }
+}
+
+</style>
+
+<script>
+    /**
+ * Stackly Childcare Website - Programs Hero Controller Engine
+ */
+document.addEventListener("DOMContentLoaded", () => {
+    initSentenceScrollReveal();
+    initAutomatedTwoSecondSlideshow();
+});
+
+function initSentenceScrollReveal() {
+    const titleBlock = document.getElementById("programsHeroTitle");
+    if (!titleBlock) return;
+
+    const revealObserver = new IntersectionObserver((entries, observer) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                const parent = entry.target;
+                const sentenceLines = parent.querySelectorAll(".hero-sentence");
+
+                sentenceLines.forEach((line, index) => {
+                    setTimeout(() => {
+                        line.classList.add("revealed-line");
+                    }, index * 240);
+                });
+
+                observer.unobserve(parent);
+            }
+        });
+    }, { root: null, threshold: 0.2 });
+
+    revealObserver.observe(titleBlock);
+}
+
+function initAutomatedTwoSecondSlideshow() {
+    const slideAssets = document.querySelectorAll(".programs-slideshow-track .prog-hero-img");
+    if (slideAssets.length === 0) return;
+
+    let activeTrackIndex = 0;
+
+    setInterval(() => {
+        slideAssets[activeTrackIndex].classList.remove("active");
+        activeTrackIndex = (activeTrackIndex + 1) % slideAssets.length;
+        slideAssets[activeTrackIndex].classList.add("active");
+    }, 2000); 
+}
+
+</script>
+
+<!-- DYNAMIC REINFORCED BRAND METRICS SECTION -->
+<section class="brand-metrics-section" id="brand-metrics">
+    <div class="metrics-main-container">
+
+        <!-- LEFT COLUMN LAYOUT: IMAGE IN ATTRACTIVE PEBBLE SHAPE -->
+        <div class="metrics-media-column">
+            <div class="organic-pebble-image-frame">
+                <!-- Raw image tag configured safely for standard image asset mapping -->
+                <img src="https://unsplash.com" alt="Child interactive creative play" class="pebble-display-img">
+                
+                <!-- Small decorative abstract green star graphic from the reference image -->
+                <div class="vector-star-badge-overlay">
+                    <svg viewBox="0 0 24 24" width="100%" height="100%" fill="#6BD0D0">
+                        <path d="M12,2 L14.8,8.6 L22,9.2 L16.5,14 L18.2,21 L12,17.3 L5.8,21 L7.5,14 L2,9.2 L9.2,8.6 Z"/>
+                    </svg>
+                </div>
+            </div>
+        </div>
+
+        <!-- RIGHT COLUMN LAYOUT: BRAND WRITING & STAGGERED COUNT-UP CARDS -->
+        <div class="metrics-content-column" id="metricsCardsStage">
+            <h2 class="metrics-headline-text">Caring. Trusted. Child-Focused.</h2>
+            
+            <p class="metrics-main-description">
+                At Stackly, we believe that every child deserves compassionate, expert care in a safe and welcoming environment. Our dedicated team of educators and caregivers is here to support your child's developmental journey — from the tiniest milestones to their early school years.
+            </p>
+            <p class="metrics-secondary-description">
+                Whether it's interactive sensory play, early language foundations, or social milestone pacing, we're here for your family — every step of the way.
+            </p>
+
+            <!-- Staggered metric card grids array -->
+            <div class="metrics-cards-grid-row">
+                
+                <!-- Card 1: Years of Experience -->
+                <div class="metric-block-node reveal-cascade-item">
+                    <div class="ticker-number-box">
+                        <span class="ticker-number" data-limit="12">0</span><span class="ticker-suffix">+</span>
+                    </div>
+                    <h4>Years of Experience</h4>
+                    <p>Caring for children with compassion and professionalism.</p>
+                </div>
+
+                <!-- Card 2: Happy Families -->
+                <div class="metric-block-node reveal-cascade-item">
+                    <div class="ticker-number-box">
+                        <span class="ticker-number" data-limit="3000">0</span><span class="ticker-suffix">+</span>
+                    </div>
+                    <h4>Happy Families</h4>
+                    <p>Who trust us with their children's growth and health.</p>
+                </div>
+
+                <!-- Card 3: Satisfaction -->
+                <div class="metric-block-node reveal-cascade-item">
+                    <div class="ticker-number-box">
+                        <span class="ticker-number" data-limit="98">0</span><span class="ticker-suffix">%</span>
+                    </div>
+                    <h4>Patient Satisfaction</h4>
+                    <p>Because every single visit matters deeply to us.</p>
+                </div>
+
+                <!-- Card 4: Specialists -->
+                <div class="metric-block-node reveal-cascade-item">
+                    <div class="ticker-number-box">
+                        <span class="ticker-number" data-limit="5">0</span>
+                    </div>
+                    <h4>Pediatric Specialists</h4>
+                    <p>Dedicated to every stage of your child's development.</p>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+</section>
+
+<style>
+    /* --- SITE STYLE SYSTEM CORES --- */
+:root {
+    --text-main-charcoal: #2B2B2B;
+    --text-muted-gray: #555555;
+    --ice-blue-card-fill: #EDF7F9; /* Authentic light blue fill color from your reference image */
+}
+
+/* --- MAIN CANVAS CONTAINER --- */
+.brand-metrics-section {
+    width: 100%;
+    background-color: #FFFFFF;
+    /* TARGET PARAMETER DESIGN PADDINGS: 50px Top, 30px Bottom */
+    padding: 50px 20px 30px 20px !important;
+    overflow: hidden;
+    position: relative;
+}
+
+.metrics-main-container {
+    width: 100%;
+    max-width: 1240px;
+    margin: 0 auto;
+    display: grid;
+    /* Aligns image on the left, copy elements cleanly on the right side */
+    grid-template-columns: 0.85fr 1.15fr;
+    gap: 50px;
+    align-items: center;
+}
+
+/* ================= LEFT SIDE: ORGANIC GEOMETRIC PEBBLE CANVAS ================= */
+.metrics-media-column {
+    display: flex;
+    justify-content: center;
+    position: relative;
+    width: 100%;
+}
+
+/* Smooth asymmetrical pebble silhouette frame exactly mimicking your shared image file */
+.organic-pebble-image-frame {
+    position: relative;
+    width: 100%;
+    max-width: 440px;
+    aspect-ratio: 0.95 / 1;
+    overflow: visible; /* Allows vector overlay badges to float outwards comfortably */
+    border-radius: 40% 60% 35% 65% / 55% 40% 60% 45%;
+    box-shadow: 0 15px 35px rgba(43, 43, 43, 0.06);
+    z-index: 5;
+}
+
+.pebble-display-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    /* Clips image natively within the dynamic organic fluid borders radius layout */
+    border-radius: inherit; 
+}
+
+/* Small graphic overlay star marker positioned at the bottom curve edge of the pebble */
+.vector-star-badge-overlay {
+    position: absolute;
+    bottom: -10px;
+    right: 30px;
+    width: 32px;
+    height: 32px;
+    z-index: 10;
+    animation: simpleWiggle 4s ease-in-out infinite alternate;
+}
+@keyframes simpleWiggle { 0% { transform: rotate(0deg); } 100% { transform: rotate(15deg) scale(1.05); } }
+
+/* ================= RIGHT SIDE: BRAND DATA COPY & SCROLL REVEALS ================= */
+.metrics-content-column {
+    text-align: left;
+}
+
+.metrics-headline-text {
+    font-size: 2.3rem;
+    font-weight: 800;
+    color: var(--text-main-charcoal);
+    letter-spacing: -1px;
+    margin-bottom: 18px;
+    line-height: 1.2;
+}
+
+.metrics-main-description {
+    font-size: 1.05rem;
+    line-height: 1.65;
+    color: var(--text-muted-gray);
+    margin-bottom: 16px;
+}
+
+.metrics-secondary-description {
+    font-size: 1.05rem;
+    line-height: 1.65;
+    color: var(--text-muted-gray);
+    margin-bottom: 30px;
+}
+
+/* --- THE 4-COLUMN INDEPENDENT COUNTERS ROWS GRID --- */
+.metrics-cards-grid-row {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 15px; /* Compact structural card separation */
+    width: 100%;
+}
+
+.metric-block-node {
+    background-color: var(--ice-blue-card-fill);
+    border-radius: 18px;
+    padding: 24px 14px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    box-shadow: 0 4px 15px rgba(0, 166, 153, 0.01);
+    
+    /* Pre-activation variables configuration maps for staggered scroll entrance effects */
+    opacity: 0;
+    transform: translateY(25px);
+    transition: opacity 0.6s cubic-bezier(0.215, 0.610, 0.355, 1), 
+                transform 0.6s cubic-bezier(0.215, 0.610, 0.355, 1);
+}
+
+/* Activated structural scroll display class appended via intersection entries indexes */
+.metric-block-node.cascaded-arrival {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.ticker-number-box {
+    font-size: 2.1rem;
+    font-weight: 900;
+    color: var(--text-main-charcoal);
+    line-height: 1;
+    margin-bottom: 8px;
+    letter-spacing: -0.5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.ticker-suffix { margin-left: 1px; }
+
+.metric-block-node h4 {
+    font-size: 0.95rem;
+    font-weight: 800;
+    color: var(--text-main-charcoal);
+    margin-bottom: 8px;
+    line-height: 1.3;
+}
+
+.metric-block-node p {
+    font-size: 0.8rem;
+    line-height: 1.4;
+    color: #5B6A68;
+    max-width: 140px;
+}
+
+/* ================= ADAPTIVE RESPONSIVE COMPACT BREAKPOINTS ================= */
+@media (max-width: 1100px) {
+    .metrics-main-container { grid-template-columns: 1fr; gap: 45px; }
+    .metrics-media-column { order: -1; } /* Automatically positions picture frame onto top row on handheld devices */
+    .organic-pebble-image-frame { max-width: 360px; }
+    .metrics-headline-text { font-size: 2rem; text-align: center; }
+    .metrics-main-description, .metrics-secondary-description { text-align: center; }
+    .metrics-cards-grid-row { grid-template-columns: repeat(2, 1fr); gap: 20px; } /* Packs into a 2x2 grid layout balance */
+}
+
+@media (max-width: 520px) {
+    .metrics-headline-text { font-size: 1.7rem; }
+    .metrics-cards-grid-row { grid-template-columns: 1fr; gap: 16px; } /* Falls back into a clean vertical array on mobile screens */
+    .metric-block-node { max-width: 320px; margin: 0 auto; width: 100%; padding: 28px 20px; }
+}
+
+</style>
+
+<script>
+    /**
+ * Stackly Childcare Website - Staggered Scroll Reveal & Count-Up Metrics Ticker Engine
+ */
+document.addEventListener("DOMContentLoaded", () => {
+    initScrollTriggerMetricsPipeline();
+});
+
+function initScrollTriggerMetricsPipeline() {
+    const stageBox = document.getElementById("metricsCardsStage");
+    if (!stageBox) return;
+
+    const intersectionObserver = new IntersectionObserver((entries, observer) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                const parent = entry.target;
+                const nodesList = parent.querySelectorAll(".reveal-cascade-item");
+
+                // 1. ONE-BY-ONE STAGGERED ARRIVAL: Cascades cards inward sequentially by 180ms delay intervals
+                nodesList.forEach((card, index) => {
+                    setTimeout(() => {
+                        card.classList.add("cascaded-arrival");
+                        
+                        // Fire automatic text count ticker arithmetic routines once box finishes sliding inward
+                        const dynamicCounterNode = card.querySelector(".ticker-number");
+                        if (dynamicCounterNode) {
+                            executeCountUpIncrementation(dynamicCounterNode);
+                        }
+                    }, index * 180);
+                });
+
+                // Clear operational observer connection once triggered successfully to lock layout positions safely
+                observer.unobserve(parent);
+            }
+        });
+    }, { root: null, threshold: 0.15 });
+
+    intersectionObserver.observe(stageBox);
+}
+
+/**
+ * 2. AUTOMATIC COUNT UP TICKER MATHEMATICS
+ * Counts values dynamically up from zero and halts right at the maximum limit boundary setting safely
+ */
+function executeCountUpIncrementation(element) {
+    const hardLimitValue = parseInt(element.getAttribute("data-limit"), 10);
+    const timeDurationIntervalMs = 1800; // Calibrated 1.8 second count duration window
+    const targetFramesPerSecond = 60;
+    const computationalTotalFrames = Math.round(timeDurationIntervalMs / (1000 / targetFramesPerSecond));
+    
+    let loopFrameIndex = 0;
+
+    function renderFrameTickStep() {
+        loopFrameIndex++;
+        
+        // Quad easeOut timing math factor to smooth out values progression speed curves fluidly
+        const linearProgressRatio = loopFrameIndex / computationalTotalFrames;
+        const quadraticEaseOutFactor = linearProgressRatio * (2 - linearProgressRatio);
+        
+        // Calculate the current active frame total counts output
+        const runningIntermediateCount = Math.floor(quadraticEaseOutFactor * hardLimitValue);
+
+        if (loopFrameIndex < computationalTotalFrames) {
+            // If handling the larger number like 3000, we apply clear localized formatting delimiters
+            if (hardLimitValue === 3000) {
+                element.textContent = runningIntermediateCount.toLocaleString();
+            } else {
+                element.textContent = runningIntermediateCount;
+            }
+            requestAnimationFrame(renderFrameTickStep);
+        } else {
+            // Absolute terminal hard lock assignation to prevent numeric overflow tracks
+            element.textContent = (hardLimitValue === 3000) ? "3,000" : hardLimitValue;
+        }
+    }
+
+    // Fire timing loop request hooks natively via window frame channels
+    requestAnimationFrame(renderFrameTickStep);
+}
+
+</script>
+
+<!-- DYNAMIC NURSERY AGE GROUPS CAROUSEL SECTION -->
+<section class="nursery-carousel-section" id="nursery-tracks">
+    <div class="nursery-carousel-container">
+        
+        <!-- ================= TOP HEADER ROW ================= -->
+        <div class="nursery-header-block">
+            <div class="header-left-copy">
+                <span class="mini-explore-badge">Explore</span>
+                <h2 class="nursery-main-heading">Our Nursery</h2>
+                <p class="nursery-subheading-text">Six rooms, thoughtfully designed around children's stages of development. From tiny beginnings to big adventures.</p>
+            </div>
+            
+            <!-- RIGHT SIDE CORNER BRAND LOGO ADAPTER MAP -->
+            <div class="header-right-logo-pod">
+                <img src="https://placehold.co" alt="Stackly Day Nursery Logo" class="nursery-corner-logo-img">
+            </div>
+        </div>
+
+        <!-- ================= BOTTOM INTERACTIVE CAROUSEL TRACK DECK ================= -->
+        <div class="carousel-slider-viewport">
+            <div class="carousel-slider-track" id="nurseryTrackRunner">
+                
+                <!-- CARD 1: BABIES 1 -->
+                <div class="nursery-age-card">
+                    <div class="card-meta-header">
+                        <span class="age-group-badge">Babies 1</span>
+                        <h3>Birth to walking</h3>
+                    </div>
+                    <p class="card-description-text">A nurturing first environment where babies develop secure attachments, communication, movement and confidence at their own pace.</p>
+                    
+                    <div class="card-wavy-image-shell">
+                        <img src="https://unsplash.com" alt="Babies 1 Room Track" class="card-raw-photo-img">
+                    </div>
+                </div>
+
+                <!-- CARD 2: BABIES 2 -->
+                <div class="nursery-age-card">
+                    <div class="card-meta-header">
+                        <span class="age-group-badge">Babies 2</span>
+                        <h3>Walking to 22 months</h3>
+                    </div>
+                    <p class="card-description-text">As children become more mobile and independent, they are encouraged to explore, communicate and develop their growing sense of self.</p>
+                    
+                    <div class="card-wavy-image-shell">
+                        <img src="https://unsplash.com" alt="Babies 2 Room Track" class="card-raw-photo-img">
+                    </div>
+                </div>
+
+                <!-- CARD 3: TWEENIES -->
+                <div class="nursery-age-card">
+                    <div class="card-meta-header">
+                        <span class="age-group-badge">Tweenies</span>
+                        <h3>22 to 29 months</h3>
+                    </div>
+                    <p class="card-description-text">Children's curiosity, language, independence and emotional development become increasingly important as they begin to discover what they can do.</p>
+                    
+                    <div class="card-wavy-image-shell">
+                        <img src="https://unsplash.com" alt="Tweenies Room Track" class="card-raw-photo-img">
+                    </div>
+                </div>
+
+                <!-- CARD 4: TODDLERS -->
+                <div class="nursery-age-card">
+                    <div class="card-meta-header">
+                        <span class="age-group-badge">Toddlers</span>
+                        <h3>29 to 36 months</h3>
+                    </div>
+                    <p class="card-description-text">Children are supported to develop their confidence, communication, friendships, independence and ability to manage their emotions.</p>
+                    
+                    <div class="card-wavy-image-shell">
+                        <img src="https://unsplash.com" alt="Toddlers Room Track" class="card-raw-photo-img">
+                    </div>
+                </div>
+
+                <!-- CARD 5: PRESCHOOL 1 -->
+                <div class="nursery-age-card">
+                    <div class="card-meta-header">
+                        <span class="age-group-badge">Preschool 1</span>
+                        <h3>3 to 4 years</h3>
+                    </div>
+                    <p class="card-description-text">Children are becoming increasingly confident and independent learners, developing the knowledge and skills that form the foundations for future learning.</p>
+                    
+                    <div class="card-wavy-image-shell">
+                        <img src="https://unsplash.com" alt="Preschool 1 Room Track" class="card-raw-photo-img">
+                    </div>
+                </div>
+
+                <!-- CARD 6: PRESCHOOL 2 -->
+                <div class="nursery-age-card">
+                    <div class="card-meta-header">
+                        <span class="age-group-badge">Preschool 2</span>
+                        <h3>Preparing for school</h3>
+                    </div>
+                    <p class="card-description-text">Our older preschool children are supported to become confident, resilient and independent, developing the skills and attitudes they need as they take their next big step into school.</p>
+                    
+                    <div class="card-wavy-image-shell">
+                        <img src="https://unsplash.com" alt="Preschool 2 Room Track" class="card-raw-photo-img">
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- Carousel Navigation Controller Anchors (Fires sliding tracks manually) -->
+        <div class="carousel-navigation-buttons-deck">
+            <button class="nav-arrow prev-arrow" onclick="moveCarouselLeft()" aria-label="Previous Slides">➔</button>
+            <button class="nav-arrow next-arrow" onclick="moveCarouselRight()" aria-label="Next Slides">➔</button>
+        </div>
+
+    </div>
+</section>
+
+<style>
+    /* --- BRAND CONFIG VARIABLE DESIGN SYSTEM --- */
+:root {
+    --primary-color: #FF5A5F;   /* Bright Coral */
+    --secondary-color: #FFB400; /* Warm Yellow */
+    --accent-color: #00A699;    /* Fresh Teal Green */
+    --text-main: #2B2B2B;       /* Deep Charcoal */
+    --card-bg-fill: #F4F7F6;    /* Soft Light Warm Gray Matte Card Background */
+}
+
+/* --- MAIN BRAND AREA CORES --- */
+.nursery-carousel-section {
+    width: 100%;
+    background-color: #FFFFFF;
+    /* TARGET ASSIGNED DESIGN PADDINGS: 50px Top, 30px Bottom */
+    padding: 50px 20px 30px 20px !important;
+    overflow: hidden;
+    position: relative;
+}
+
+.nursery-carousel-container {
+    width: 100%;
+    max-width: 1260px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+}
+
+/* ================= COMPONENT LAYER 1: HEADER SECTION ================= */
+.nursery-header-block {
+    display: flex;
+    justify-content: space-between;
+    align-items: start;
+    width: 100%;
+    margin-bottom: 35px;
+    gap: 40px;
+}
+
+.header-left-copy {
+    text-align: left;
+    max-width: 680px;
+}
+
+/* Playful Green Capsule Badge representation exactly from your reference screenshot file */
+.mini-explore-badge {
+    background-color: #7CB342; /* Friendly Organic Salad Olive Green Badge Color */
+    color: #FFFFFF;
+    font-size: 0.85rem;
+    font-weight: 800;
+    padding: 6px 16px;
+    border-radius: 30px;
+    display: inline-block;
+    margin-bottom: 12px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.nursery-main-heading {
+    font-size: 3.5rem;
+    font-weight: 900;
+    color: var(--text-main);
+    letter-spacing: -2px;
+    line-height: 1.1;
+    margin-bottom: 16px;
+}
+
+.nursery-subheading-text {
+    font-size: 1.1rem;
+    line-height: 1.6;
+    color: #556562;
+}
+
+/* Corner Right Side Brand Logo adapter casing box */
+.header-right-logo-pod {
+    flex-shrink: 0;
+    text-align: right;
+    display: block;
+}
+.nursery-corner-logo-img {
+    height: 65px;
+    width: auto;
+    object-fit: contain;
+}
+
+/* ================= COMPONENT LAYER 2: INTERACTIVE SWIPE SLIDER TRACK ================= */
+.carousel-slider-viewport {
+    width: 100%;
+    overflow: visible; /* Allows card box hover scaling shadows to draw outside borders cleanly */
+    padding: 15px 0;
+}
+
+.carousel-slider-track {
+    display: flex;
+    gap: 20px; /* Synchronized spacing between neighboring age nodes */
+    width: max-content;
+    /* High performance hardware accelerated translations transitions mappings */
+    transition: transform 0.5s cubic-bezier(0.25, 1, 0.5, 1);
+    will-change: transform;
+}
+
+/* --- AGE CARD STRUCTURAL LAYOUT --- */
+.nursery-age-card {
+    background-color: var(--card-bg-fill);
+    width: 280px; /* Accurate card column width matching image proportion footprint scale */
+    border-radius: 28px;
+    padding: 30px 20px 0 20px; /* Image bleeds flush right through the bottom border padding */
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    box-shadow: 0 6px 20px rgba(43, 43, 43, 0.02);
+    border: 1px solid rgba(43, 43, 43, 0.01);
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94), 
+                background-color 0.3s ease, 
+                box-shadow 0.3s ease;
+}
+
+.nursery-age-card:hover {
+    transform: translateY(-6px);
+    background-color: #FFFFFF;
+    border-color: #E2EBEA;
+    box-shadow: 0 15px 35px rgba(0, 166, 153, 0.05);
+}
+
+.card-meta-header {
+    margin-bottom: 14px;
+}
+
+/* Gray title pill badge block elements */
+.age-group-badge {
+    background-color: #EBEFEF;
+    color: #4A5554;
+    font-size: 0.82rem;
+    font-weight: 700;
+    padding: 4px 14px;
+    border-radius: 10px;
+    display: inline-block;
+    margin-bottom: 10px;
+}
+
+.nursery-age-card h3 {
+    font-size: 1.15rem;
+    font-weight: 800;
+    color: var(--text-main);
+    line-height: 1.3;
+}
+
+.card-description-text {
+    font-size: 0.88rem;
+    line-height: 1.55;
+    color: #667573;
+    margin-bottom: 25px;
+    flex-grow: 1; /* Pushes child wavy photo images flush onto the bottom card baseline */
+}
+
+/* --- CHILD PHOTOGRAPHY ENVELOPES OVERLAY WITH BOTTOM ORGANIC MASK RADII --- */
+.card-wavy-image-shell {
+    width: calc(100% + 40px); /* Bleeds flat left-to-right past inner container bounds */
+    margin-left: -20px;
+    margin-right: -20px;
+    height: 150px;
+    overflow: hidden;
+    position: relative;
+    /* Custom organic multi point wave mask bottom curve mimicking reference layout exactly */
+    border-radius: 40% 40% 0 0 / 20% 20% 0 0; 
+    background-color: #E2EBEA;
+}
+
+.card-raw-photo-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+}
+.nursery-age-card:hover class="card-raw-photo-img",
+.nursery-age-card:hover .card-raw-photo-img {
+    transform: scale(1.05);
+}
+
+/* --- SLIDER DIRECTIONAL NAVIGATION BULLETS DECK --- */
+.carousel-navigation-buttons-deck {
+    display: flex;
+    gap: 12px;
+    margin-top: 30px;
+    align-self: flex-start; /* Aligns controls to the left side directly under track profiles */
+}
+
+.nav-arrow {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background-color: #FFFFFF;
+    color: var(--text-main);
+    border: 2px solid #EBEFEF;
+    font-size: 1.1rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 10px rgba(43, 43, 43, 0.02);
+    transition: all 0.25s ease;
+}
+
+.prev-arrow { transform: rotate(180deg); } /* Rotates line vectors backward naturally */
+
+.nav-arrow:hover {
+    background-color: var(--accent-color);
+    border-color: var(--accent-color);
+    color: #FFFFFF;
+    box-shadow: 0 6px 15px rgba(0, 166, 153, 0.25);
+}
+
+/* ================= ADAPTIVE RESPONSIVE COMPACT LAYOUT INTERFACE ================= */
+@media (max-width: 992px) {
+    .nursery-carousel-section { padding-top: 40px !important; }
+    .nursery-main-heading { font-size: 2.6rem; }
+    .nursery-header-block { flex-direction: column; align-items: start; gap: 20px; }
+    .header-right-logo-pod { display: none; } /* Pull out secondary decorative details on handheld devices */
+}
+
+@media (max-width: 480px) {
+    .nursery-main-heading { font-size: 2.1rem; }
+    .nursery-subheading-text { font-size: 0.95rem; }
+    .nursery-age-card { width: 250px; padding: 25px 16px 0 16px; }
+    .card-wavy-image-shell { width: calc(100% + 32px); margin-left: -16px; margin-right: -16px; height: 130px; }
+}
+
+</style>
+
+<script>
+    /**
+ * Stackly Childcare Website - Interactive Nursery Swipe Carousel Engine
+ */
+let globalScrollPositionOffset = 0;
+
+document.addEventListener("DOMContentLoaded", () => {
+    initTouchSwipeInteractionSupport();
+});
+
+/**
+ * 1. MANUAL TRACK NAVIGATION DISPATCHERS
+ * Calculates horizontal bounding parameters shifts to transition sliders
+ */
+function moveCarouselRight() {
+    const trackRunner = document.getElementById("nurseryTrackRunner");
+    const singleCardWidth = 300; // Account for card width (280px) + gap boundaries (20px)
+    
+    if (!trackRunner) return;
+
+    const computedTotalWidthLimit = trackRunner.offsetWidth;
+    const parentCasingViewportWidth = trackRunner.parentElement.offsetWidth;
+    const maxCalculatedNegativeTranslateOffset = -(computedTotalWidthLimit - parentCasingViewportWidth);
+
+    // Subtract steps from offset parameters loop
+    globalScrollPositionOffset -= singleCardWidth;
+
+    // Secure offset parameters floor boundaries ceilings safely
+    if (globalScrollPositionOffset < maxCalculatedNegativeTranslateOffset) {
+        globalScrollPositionOffset = maxCalculatedNegativeTranslateOffset;
+    }
+
+    trackRunner.style.transform = `translateX(${globalScrollPositionOffset}px)`;
+}
+
+function moveCarouselLeft() {
+    const trackRunner = document.getElementById("nurseryTrackRunner");
+    const singleCardWidth = 300;
+
+    if (!trackRunner || globalScrollPositionOffset === 0) return;
+
+    // Add steps forward to position layout tracks
+    globalScrollPositionOffset += singleCardWidth;
+
+    if (globalScrollPositionOffset > 0) {
+        globalScrollPositionOffset = 0;
+    }
+
+    trackRunner.style.transform = `translateX(${globalScrollPositionOffset}px)`;
+}
+
+/**
+ * 2. TOUCH SWIPE MOBILE GESTURE SUPPORT CORE
+ * Captures swipe inputs on hand-held responsive mobile screens natively
+ */
+function initTouchSwipeInteractionSupport() {
+    const viewportBox = document.querySelector(".carousel-slider-viewport");
+    if (!viewportBox) return;
+
+    let touchStartPointerCoordinateX = 0;
+    let touchEndPointerCoordinateX = 0;
+
+    viewportBox.addEventListener("touchstart", (e) => {
+        touchStartPointerCoordinateX = e.touches[0].clientX;
+    }, { passive: true });
+
+    viewportBox.addEventListener("touchend", (e) => {
+        touchEndPointerCoordinateX = e.changedTouches[0].clientX;
+        handleSwipeGestureEvaluationTicks();
+    }, { passive: true });
+
+    function handleSwipeGestureEvaluationTicks() {
+        const thresholdSwipeBoundaryPixels = 40;
+        const totalSwipeDistanceDifference = touchStartPointerCoordinateX - touchEndPointerCoordinateX;
+
+        if (totalSwipeDistanceDifference > thresholdSwipeBoundaryPixels) {
+            // User swiped leftward -> slide contents forward right
+            moveCarouselRight();
+        } else if (totalSwipeDistanceDifference < -thresholdSwipeBoundaryPixels) {
+            // User swiped rightward -> slide contents backward left
+            moveCarouselLeft();
+        }
+    }
+}
+
+</script>
+
+<!-- FULL WIDTH TWO-LINE CTA BANNER WRAPPER -->
+<section class="full-width-cta-banner">
+    
+    <!-- Core Background Layer Image Map driven via native <img> tag -->
+    <img src="https://unsplash.com" alt="Playful learning environment backdrop" class="banner-background-img">
+    
+    <!-- High-Trust Contrast Glassmorphism Sheet Overlay -->
+    <div class="banner-color-overlay"></div>
+
+    <div class="banner-content-container">
+        
+        <!-- Left Side: Two-Line Text Communication Matrix -->
+        <div class="banner-text-column scroll-reveal-node" id="ctaTextNode">
+            <h2 class="banner-title-line">Ready to start your child's creative learning journey?</h2>
+            <p class="banner-subtitle-line">Enroll your little ones today and watch them build their futures block by block at Stackly.</p>
+        </div>
+
+        <!-- Right Side: Action Trigger CTA Hook -->
+        <div class="banner-action-column">
+            <button class="banner-cta-trigger interactive-float-node">Schedule a Tour ✨</button>
+        </div>
+
+    </div>
+</section>
+
+<style>
+    /* --- SITE CONTEXT CONFIG PARAMETERS --- */
+:root {
+    --primary-color: #FF5A5F;   /* Bright Coral */
+    --secondary-color: #FFB400; /* Warm Yellow */
+    --accent-color: #00A699;    /* Fresh Teal */
+    --text-light: #FFFFFF;
+}
+
+/* --- FULL WINDOW SECTION WRAPPER --- */
+.full-width-cta-banner {
+    position: relative;
+    width: 100vw;
+    /* Pulls edge alignment flush past standard container margins */
+    margin-left: calc(-50vw + 50%);
+    margin-right: calc(-50vw + 50%);
+    min-height: 240px; 
+    /* TARGET PARAMETER DESIGN PADDINGS: 50px Top, 30px Bottom */
+    padding: 50px 40px 30px 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+
+/* --- BACKGROUND IMAGE ARCHITECTURE LAYERS --- */
+.banner-background-img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: 1;
+    pointer-events: none;
+    transform: scale(1.02); /* Safeguards edge bleed spaces on viewport resize tracks */
+    transition: transform 0.5s ease;
+}
+
+/* Interactive zoom parallax mapping on banner entry */
+.full-width-cta-banner:hover .banner-background-img {
+    transform: scale(1.05);
+}
+
+/* Rich, custom gradient color backdrop over raw image to guarantee text contrast */
+.banner-color-overlay {
+    position: absolute;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: linear-gradient(135deg, rgba(29, 42, 41, 0.92) 0%, rgba(0, 166, 153, 0.85) 100%);
+    z-index: 2;
+    pointer-events: none;
+}
+
+/* --- INNER ALIGNMENT CONSTRAINTS --- */
+.banner-content-container {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    display: grid;
+    /* MANDATED LAYOUT MATRIX: Left side text content, Right side call button trigger */
+    grid-template-columns: 1.25fr 0.75fr;
+    gap: 40px;
+    align-items: center;
+    position: relative;
+    z-index: 5;
+}
+
+/* --- LEFT COLUMN: COPYWRITING FIELD --- */
+.banner-text-column {
+    text-align: left;
+}
+
+.banner-title-line {
+    font-size: 2.2rem;
+    font-weight: 800;
+    line-height: 1.25;
+    color: var(--text-light);
+    letter-spacing: -1px;
+    margin-bottom: 12px;
+}
+
+.banner-subtitle-line {
+    font-size: 1.1rem;
+    line-height: 1.55;
+    color: rgba(255, 255, 255, 0.88);
+    max-width: 680px;
+}
+
+/* --- RIGHT COLUMN: CTAS ACTIONS DECK --- */
+.banner-action-column {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.banner-cta-trigger {
+    background-color: var(--secondary-color); /* Bright optimistic brand yellow matching profile */
+    color: #1D2A29;
+    border: none;
+    padding: 16px 38px;
+    font-size: 1.05rem;
+    font-weight: 800;
+    border-radius: 50px;
+    cursor: pointer;
+    box-shadow: 0 6px 20px rgba(255, 180, 0, 0.3);
+    white-space: nowrap;
+    transition: background-color 0.25s, transform 0.25s, box-shadow 0.25s;
+}
+
+.banner-cta-trigger:hover {
+    background-color: #E29E00;
+    transform: translateY(-4px) scale(1.02);
+    box-shadow: 0 10px 25px rgba(255, 180, 0, 0.45);
+}
+
+/* Continuous Infinite Levitation Loops Physics */
+.interactive-float-node {
+    animation: ctaBannerFloat 4s ease-in-out infinite alternate;
+}
+@keyframes ctaBannerFloat { 0% { transform: translateY(0); } 100% { transform: translateY(-7px); } }
+
+/* --- SCROLL REVEAL TIMING ANCHORS --- */
+.scroll-reveal-node {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.75s cubic-bezier(0.215, 0.610, 0.355, 1), 
+                transform 0.75s cubic-bezier(0.215, 0.610, 0.355, 1);
+}
+.scroll-reveal-node.activated-fade {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* ================= ADAPTIVE RESPONSIVE GRID OVERLAY ================= */
+@media (max-width: 992px) {
+    .full-width-cta-banner { padding: 45px 24px 35px 24px; }
+    .banner-title-line { font-size: 1.8rem; }
+    
+    /* Collapses fluidly into centralized stacked rows layout on medium displays */
+    .banner-content-container {
+        grid-template-columns: 1fr;
+        gap: 30px;
+        text-align: center;
+    }
+    .banner-text-column { display: flex; flex-direction: column; align-items: center; text-align: center; }
+    .banner-action-column { justify-content: center; width: 100%; }
+}
+
+@media (max-width: 520px) {
+    .banner-title-line { font-size: 1.45rem; }
+    .banner-subtitle-line { font-size: 0.95rem; }
+    .banner-cta-trigger { width: 100%; text-align: center; padding: 14px 24px; }
+}
+
+</style>
+
+<script>
+    /**
+ * Stackly Childcare Website - Full Width CTA Scroll Reveal Engine
+ */
+document.addEventListener("DOMContentLoaded", () => {
+    initBannerScrollRevealObserver();
+});
+
+// SCROLL OBSERVER: Fades text columns fluidly into layout view bounds upon approach
+function initBannerScrollRevealObserver() {
+    const textTarget = document.getElementById("ctaTextNode");
+    if (!textTarget) return;
+
+    const bannerScrollObserver = new IntersectionObserver((entries, observer) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add("activated-fade");
+                observer.unobserve(entry.target); // Sever connection loop to optimize browser runtime footprints
+            }
+        });
+    }, { root: null, threshold: 0.15 });
+
+    bannerScrollObserver.observe(textTarget);
+}
+
+</script>
+
+<!-- DYNAMIC CREATIVE WHY CHOOSE PILLARS SECTION -->
+<section class="choose-pillars-section" id="why-choose-pillars">
+    <div class="pillars-main-container">
+        
+        <!-- ================= TOP HEADER POD WITH VECTOR CURLY ACCENT ================= -->
+        <div class="pillars-header-block">
+            <!-- Decorative Vector Curly Arrow on the Left Side -->
+            <div class="vector-curly-arrow">
+                <svg viewBox="0 0 100 100" width="80" height="80" fill="none" stroke="#FF5A5F" stroke-width="3" stroke-linecap="round">
+                    <path d="M20,20 Q40,5 50,30 T30,60 Q20,80 50,85"/>
+                    <polyline points="40,80 50,85 45,95"/>
+                </svg>
+            </div>
+            
+            <span class="pillars-mini-badge">🧸 Why Choose Us</span>
+            <h2 class="pillars-main-title">Nurturing Hearts<br>Building and Dreams</h2>
+        </div>
+
+        <!-- ================= BOTTOM CONTENT WORKSPACE ================= -->
+        <div class="pillars-content-layout">
+            
+            <!-- LEFT COLUMN: TILTED MULTI-IMAGE CANVAS TRACK -->
+            <div class="pillars-media-gallery">
+                <div class="tilted-photo-frame">
+                    <!-- Standard img tag for custom brand image mapping -->
+                    <img src="https://unsplash.com" alt="Children building toys together" class="gallery-main-photo">
+                    
+                    <!-- Pinned Drawing Vector Overlay (Top-Right Profile) -->
+                    <div class="pinned-drawing-overlay">
+                        <div class="red-push-pin-vector">
+                            <svg viewBox="0 0 24 24" width="16" height="16" fill="#FF5A5F">
+                                <circle cx="12" cy="6" r="4"/>
+                                <path d="M10,10 L14,10 L13,18 L11,18 Z"/>
+                                <line x1="12" y1="18" x2="12" y2="24" stroke="#FF5A5F" stroke-width="2"/>
+                            </svg>
+                        </div>
+                        <img src="https://unsplash.com" alt="Childhood colorful house drawing mapping" class="overlay-sketch-img">
+                    </div>
+                </div>
+            </div>
+
+            <!-- RIGHT COLUMN: PASTEL VALUE BLOCKS (SCROLL REVEALED ONE-BY-ONE) -->
+            <div class="pillars-cards-column" id="pillarsListStage">
+                
+                <!-- Pillar Card 1: Care & Development (Pastel Pink) -->
+                <div class="pillar-row-card pink-tint reveal-cascade-card">
+                    <div class="pillar-vector-icon-badge pink-base">
+                        <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+                        </svg>
+                    </div>
+                    <div class="pillar-text-wrap">
+                        <h3>Care & Development</h3>
+                        <p>We focus on the complete growth of each child — emotional, social, physical, and cognitive development tracks.</p>
+                    </div>
+                </div>
+
+                <!-- Pillar Card 2: Educational Excellence (Pastel Orange) -->
+                <div class="pillar-row-card orange-tint reveal-cascade-card">
+                    <div class="pillar-vector-icon-badge orange-base">
+                        <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M22 10v6M2 10l10-5 10 5-10 5z"/>
+                            <path d="M6 12v5c0 2 2.5 3 6 3s6-1 6-3v-5"/>
+                        </svg>
+                    </div>
+                    <div class="pillar-text-wrap">
+                        <h3>Educational Excellence</h3>
+                        <p>Our learning programs are carefully crafted to support early development through play-based milestone foundations.</p>
+                    </div>
+                </div>
+
+                <!-- Pillar Card 3: Enriching Activities (Pastel Blue) -->
+                <div class="pillar-row-card blue-tint reveal-cascade-card">
+                    <div class="pillar-vector-icon-badge blue-base">
+                        <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 2 12 22Z"/>
+                            <circle cx="7.5" cy="10.5" r="1" fill="currentColor"/>
+                            <circle cx="11.5" cy="7.5" r="1" fill="currentColor"/>
+                            <circle cx="16.5" cy="9.5" r="1" fill="currentColor"/>
+                        </svg>
+                    </div>
+                    <div class="pillar-text-wrap">
+                        <h3>Enriching Activities</h3>
+                        <p>From art and music to storytelling and hands-on play, our active programs inspire creativity every day.</p>
+                    </div>
+                </div>
+
+                <!-- Pillar Card 4: Safe Facilities (Pastel Green) -->
+                <div class="pillar-row-card green-tint reveal-cascade-card">
+                    <div class="pillar-vector-icon-badge green-base">
+                        <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                        </svg>
+                    </div>
+                    <div class="pillar-text-wrap">
+                        <h3>Safe Facilities & Support</h3>
+                        <p>Our classrooms and play areas are clean, secure, and child-friendly, designed to provide absolute comfort.</p>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+</section>
+
+<style>
+    /* --- BRAND CONFIG VARIABLE DESIGN SYSTEM --- */
+:root {
+    --text-main-charcoal: #1C2321;
+    --text-muted: #536262;
+    --primary-coral: #FF5A5F;
+    --accent-teal: #00A699;
+}
+
+/* --- MAIN CONTAINER STRUCTURE WRAPPERS --- */
+.choose-pillars-section {
+    width: 100%;
+    background-color: #FFFDF9; /* Warm theme cream matte backdrop fill */
+    /* TARGET ASSIGNED DESIGN PADDINGS: 50px Top, 30px Bottom */
+    padding: 50px 20px 30px 20px !important;
+    overflow: hidden;
+    position: relative;
+}
+
+.pillars-main-container {
+    width: 100%;
+    max-width: 1240px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+}
+
+/* ================= COMPONENT LAYER 1: HEADER SECTION ================= */
+.pillars-header-block {
+    text-align: center;
+    margin-bottom: 45px;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.vector-curly-arrow {
+    position: absolute;
+    top: -25px;
+    left: calc(50% - 240px); /* Positions the vector path arrow elegantly on the left side of heading */
+    opacity: 0.8;
+}
+
+.pillars-mini-badge {
+    font-size: 0.88rem;
+    font-weight: 800;
+    color: var(--primary-coral);
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    margin-bottom: 10px;
+    display: inline-block;
+}
+
+.pillars-main-title {
+    font-size: 3.2rem;
+    font-weight: 900;
+    color: var(--text-main-charcoal);
+    line-height: 1.15;
+    letter-spacing: -1.5px;
+}
+
+/* ================= COMPONENT LAYER 2: INTERACTIVE CONTENT GRID ================= */
+.pillars-content-layout {
+    display: grid;
+    /* Aligns storytelling photo gallery on the left, value blocks row on the right */
+    grid-template-columns: 0.95fr 1.05fr;
+    gap: 60px;
+    align-items: center;
+    width: 100%;
+}
+
+/* --- LEFT SIDE: TILTED IMAGES FRAMES --- */
+.pillars-media-gallery {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+}
+
+.tilted-photo-frame {
+    position: relative;
+    width: 100%;
+    max-width: 440px;
+    aspect-ratio: 1.15 / 1;
+    background-color: #FFFFFF;
+    border-radius: 24px;
+    padding: 12px;
+    border: 2px solid #F0E6D2;
+    /* Playful tilted orange frame profile mimicking image layout */
+    transform: rotate(-3deg); 
+    box-shadow: 0 15px 35px rgba(28, 35, 33, 0.05);
+    z-index: 5;
+    transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+.tilted-photo-frame:hover { transform: rotate(0deg) scale(1.02); }
+
+.gallery-main-photo {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 16px;
+}
+
+/* Overlapping mini sketch frame panel with pin asset */
+.pinned-drawing-overlay {
+    position: absolute;
+    top: -35px;
+    right: -25px;
+    width: 140px;
+    aspect-ratio: 1 / 1;
+    background-color: #FFFFFF;
+    border-radius: 12px;
+    padding: 6px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+    transform: rotate(8deg);
+    z-index: 10;
+}
+
+.overlay-sketch-img { width: 100%; height: 100%; object-fit: cover; border-radius: 8px; }
+
+.red-push-pin-vector {
+    position: absolute;
+    top: -10px;
+    left: calc(50% - 8px);
+    z-index: 15;
+    filter: drop-shadow(0 2px 4px rgba(0,0,0,0.15));
+}
+
+/* --- RIGHT SIDE: PASTEL PILLAR ROW CARDS (SCROLL CASCADE) --- */
+.pillars-cards-column {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    width: 100%;
+}
+
+.pillar-row-card {
+    border-radius: 20px;
+    padding: 24px 28px;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    box-shadow: 0 4px 15px rgba(28, 35, 33, 0.01);
+    border: 1px solid transparent;
+    
+    /* Pre-activation parameters for staggered scroll entrance effects */
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.5s cubic-bezier(0.215, 0.610, 0.355, 1), 
+                transform 0.5s cubic-bezier(0.215, 0.610, 0.355, 1),
+                box-shadow 0.25s ease,
+                transform 0.25s ease;
+}
+
+/* Activated cascade classes handles appended via script observer indices */
+.pillar-row-card.cascade-activated {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Interactive Card Row Hover Physics Elevation States */
+.pillar-row-card:hover {
+    transform: translateX(4px);
+    box-shadow: 0 8px 24px rgba(28, 35, 33, 0.04);
+}
+
+/* Asymmetric individual pastel matte background coordinates matching reference image */
+.pink-tint { background-color: #FFF0F2; } .pink-tint:hover { border-color: rgba(255, 90, 95, 0.2); }
+.orange-tint { background-color: #FFF6EB; } .orange-tint:hover { border-color: rgba(255, 180, 0, 0.2); }
+.blue-tint { background-color: #EEF8F9; } .blue-tint:hover { border-color: rgba(107, 208, 208, 0.3); }
+.green-tint { background-color: #F3F9EE; } .green-tint:hover { border-color: rgba(124, 179, 66, 0.3); }
+
+/* Vector Badge Shell Casings */
+.pillar-vector-icon-badge {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+.pink-base { background-color: #FFD2D4; color: var(--primary-coral); }
+.orange-base { background-color: #FFE3C2; color: #E68A00; }
+.blue-base { background-color: #CBEFF0; color: var(--accent-teal); }
+.green-base { background-color: #DCF0E1; color: #558B2F; }
+
+.pillar-text-wrap { text-align: left; }
+.pillar-text-wrap h3 { font-size: 1.25rem; font-weight: 800; color: var(--text-main-charcoal); margin-bottom: 6px; }
+.pillar-text-wrap p { font-size: 0.92rem; line-height: 1.45; color: var(--text-muted); }
+
+/* ================= ADAPTIVE RESPONSIVE COMPACT LAYOUT INTERFACE ================= */
+@media (max-width: 1024px) {
+    .pillars-main-title { font-size: 2.6rem; }
+    .vector-curly-arrow { display: none; } /* Clear clutter on smaller screens */
+    
+    /* Converts grid dynamically into individual rows track layers naturally */
+    .pillars-content-layout { grid-template-columns: 1fr; gap: 45px; }
+    .pillars-media-gallery { order: -1; } /* Auto shifts picture frame to top row order on handheld viewports */
+    .tilted-photo-frame { max-width: 380px; }
+    .pillar-row-card { padding: 22px 20px; }
+}
+
+@media (max-width: 520px) {
+    .pillars-main-title { font-size: 2rem; }
+    .pillar-row-card { flex-direction: column; text-align: center; gap: 14px; }
+    .pillar-text-wrap { text-align: center; display: flex; flex-direction: column; align-items: center; }
+    .pinned-drawing-overlay { width: 105px; top: -25px; right: -15px; }
+}
+
+</style>
+
+<script>
+    /**
+ * Stackly Childcare Website - Why Choose Pillars One-by-One Reveal Engine
+ */
+document.addEventListener("DOMContentLoaded", () => {
+    initPillarsOneByOneScrollReveal();
+});
+
+// SCROLL REVEAL CONTROLLER: Animates feature cards inward one-by-one by staggered delay frames
+function initPillarsOneByOneScrollReveal() {
+    const listStage = document.getElementById("pillarsListStage");
+    if (!listStage) return;
+
+    const intersectionObserver = new IntersectionObserver((entries, observer) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                const parentBlock = entry.target;
+                const interiorCards = parentBlock.querySelectorAll(".reveal-cascade-card");
+
+                // Stagger feature card arrivals sequentially by 180ms delay loops
+                interiorCards.forEach((card, index) => {
+                    setTimeout(() => {
+                        card.classList.add("cascade-activated");
+                    }, index * 180);
+                });
+
+                // Clear operational observer connection once triggered successfully to conserve performance
+                observer.unobserve(parentBlock);
+            }
+        });
+    }, { root: null, threshold: 0.15 });
+
+    intersectionObserver.observe(listStage);
+}
+
+</script>
+
+<!-- DYNAMIC OUR TEACHERS PROFILE GRID BLOCK -->
+<section class="teachers-section" id="teachers">
+    <div class="teachers-main-container">
+        
+        <!-- Centered Scroll-Triggered Headline Frame -->
+        <div class="teachers-header-stage">
+            <span class="teachers-mini-tag">🎒 Our Teachers</span>
+            <h2 class="teachers-center-headline" id="teachersScrollTitle">
+                <span class="teach-sentence">Caring Hearts Behind</span>
+                <span class="teach-sentence highlight">Every Happy Child</span>
+            </h2>
+        </div>
+
+        <!-- Four-Column Interactive Profile Grid Array -->
+        <div class="teachers-profile-grid" id="teachersGridStage">
+            
+            <!-- Teacher Card 1 (Emma - Pink Theme) -->
+            <div class="teacher-profile-card border-pink reveal-fade-up">
+                <div class="teacher-img-wrapper">
+                    <img src="https://unsplash.com" alt="Emma Johnson Portrait" class="teacher-display-img">
+                </div>
+                <div class="teacher-info-panel">
+                    <h3>Emma Johnson</h3>
+                    <p class="teacher-designation">Senior Kindergarten Teacher</p>
+                </div>
+            </div>
+
+            <!-- Teacher Card 2 (Daniel - Yellow Theme) -->
+            <div class="teacher-profile-card border-yellow reveal-fade-up">
+                <div class="teacher-img-wrapper">
+                    <img src="https://unsplash.com" alt="Daniel Carter Portrait" class="teacher-display-img">
+                </div>
+                <div class="teacher-info-panel">
+                    <h3>Daniel Carter</h3>
+                    <p class="teacher-designation">Creative Activities Teacher</p>
+                </div>
+            </div>
+
+            <!-- Teacher Card 3 (Sophia - Blue Theme) -->
+            <div class="teacher-profile-card border-teal reveal-fade-up">
+                <div class="teacher-img-wrapper">
+                    <img src="https://unsplash.com" alt="Sophia Martinez Portrait" class="teacher-display-img">
+                </div>
+                <div class="teacher-info-panel">
+                    <h3>Sophia Martinez</h3>
+                    <p class="teacher-designation">Early Childhood Educator</p>
+                </div>
+            </div>
+
+            <!-- Teacher Card 4 (Michael - Green Theme) -->
+            <div class="teacher-profile-card border-green reveal-fade-up">
+                <div class="teacher-img-wrapper">
+                    <img src="https://unsplash.com" alt="Michael Brown Portrait" class="teacher-display-img">
+                </div>
+                <div class="teacher-info-panel">
+                    <h3>Michael Brown</h3>
+                    <p class="teacher-designation">Nursery Class Teacher</p>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+</section>
+
+<style>
+    /* --- COMPONENT TOKEN SYSTEM --- */
+:root {
+    --text-dark: #1D2A29;       /* Deep Organic Charcoal */
+    --primary-pink: #FF5A5F;     /* Pink Highlight Accent */
+    --accent-yellow: #FFB400;    /* Warm Yellow */
+    --accent-teal: #00A699;      /* Fresh Teal */
+    --accent-green: #7CB342;     /* Salad Green */
+    --card-surface: #FFFFFF;
+}
+
+/* --- MAIN CONTAINER HOUSING BLOCK --- */
+.teachers-section {
+    width: 100%;
+    background-color: #FFFDF9; /* Matches warm cream theme matte fill background */
+    /* TARGET DESIGN COMPONENT PARAMETER PADDINGS: 50px Top, 30px Bottom */
+    padding: 50px 20px 30px 20px !important;
+    overflow: hidden;
+    position: relative;
+    text-align: center;
+}
+
+.teachers-main-container {
+    width: 100%;
+    max-width: 1240px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+}
+
+/* ================= COMPONENT LAYER 1: CENTERED HEADER ROW ================= */
+.teachers-header-stage {
+    max-width: 800px;
+    margin: 0 auto 40px auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.teachers-mini-tag {
+    font-size: 0.88rem;
+    font-weight: 800;
+    color: var(--primary-pink);
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    margin-bottom: 10px;
+}
+
+.teachers-center-headline {
+    font-size: 3.2rem;
+    font-weight: 900;
+    line-height: 1.15;
+    color: var(--text-dark);
+    letter-spacing: -1.5px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+}
+
+/* Sentence-by-sentence scroll triggers baseline hooks */
+.teach-sentence {
+    opacity: 0;
+    transform: translateY(18px);
+    transition: opacity 0.6s cubic-bezier(0.215, 0.610, 0.355, 1), 
+                transform 0.6s cubic-bezier(0.215, 0.610, 0.355, 1);
+}
+
+.teach-sentence.revealed {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* ================= COMPONENT LAYER 2: INTERACTIVE PROFILE GRID DECK ================= */
+.teachers-profile-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr); /* Clean balanced 4-column framework array mapping */
+    gap: 24px;
+    width: 100%;
+}
+
+/* Base structural layout for individual teacher units cards */
+.teacher-profile-card {
+    background-color: var(--card-surface);
+    border-radius: 24px;
+    padding: 16px;
+    box-shadow: 0 6px 20px rgba(29, 42, 41, 0.02);
+    border: 3px solid transparent; /* Target anchor framework layer for colored frames */
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    
+    /* Pre-activation parameters for staggered grid reveal cascade */
+    opacity: 0;
+    transform: translateY(30px);
+    transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1), 
+                border-color 0.4s ease, 
+                box-shadow 0.4s ease,
+                opacity 0.6s ease;
+}
+
+.teacher-profile-card.grid-activated {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* --- THEME COLORS OUTLINE FRAMES (REPLICATING IMAGES LAYOUT PROFILE CORES) --- */
+.border-pink   { border-color: #FCE4EC; }
+.border-yellow { border-color: #FFF3E0; }
+.border-teal   { border-color: #E0F2F1; }
+.border-green  { border-color: #E8F5E9; }
+
+/* --- PROFILE IMAGE BOX CASING ENVELOPE --- */
+.teacher-img-wrapper {
+    width: 100%;
+    aspect-ratio: 1.05 / 1;
+    border-radius: 16px;
+    overflow: hidden;
+    background-color: #FAFDFD;
+    margin-bottom: 16px;
+}
+
+.teacher-display-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+}
+
+/* --- DATA BASE ENTRY DATA ROW --- */
+.teacher-info-panel {
+    padding: 4px 4px 12px 4px;
+    text-align: center;
+    border-top: 2px dashed #E2EBEA; /* Dashed separator baseline line element matching screenshot image */
+    padding-top: 14px;
+}
+
+.teacher-info-panel h3 {
+    font-size: 1.3rem;
+    font-weight: 800;
+    color: var(--text-dark);
+    margin-bottom: 6px;
+}
+
+.teacher-designation {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: #617371;
+}
+
+/* ================= INTERACTIVE PREMIUM HOVER & CARD GLOW ENGINES ================= */
+.teacher-profile-card:hover {
+    transform: translateY(-8px);
+}
+
+/* Custom interactive bounding lighting variables glow channels maps */
+.border-pink:hover {
+    border-color: var(--primary-pink);
+    box-shadow: 0 12px 30px rgba(255, 90, 95, 0.15);
+}
+.border-yellow:hover {
+    border-color: var(--accent-yellow);
+    box-shadow: 0 12px 30px rgba(255, 180, 0, 0.15);
+}
+.border-teal:hover {
+    border-color: var(--accent-teal);
+    box-shadow: 0 12px 30px rgba(0, 166, 153, 0.15);
+}
+.border-green:hover {
+    border-color: var(--accent-green);
+    box-shadow: 0 12px 30px rgba(124, 179, 66, 0.15);
+}
+
+.teacher-profile-card:hover .teacher-display-img {
+    transform: scale(1.04);
+}
+
+/* ================= COMPREHENSIVE ADAPTIVE RESPONSIVE INTERFACE ================= */
+@media (max-width: 1024px) {
+    .teachers-center-headline { font-size: 2.5rem; }
+    .teachers-profile-grid { grid-template-columns: repeat(2, 1fr); gap: 20px; } /* Packs into an interactive 2x2 profile block on tablets */
+}
+
+@media (max-width: 580px) {
+    .teachers-center-headline { font-size: 1.85rem; }
+    .teachers-profile-grid { grid-template-columns: 1fr; gap: 18px; } /* Falls back straight into centered stacked cards track layers on phone viewports */
+    .teacher-profile-card { max-width: 320px; margin: 0 auto; width: 100%; }
+}
+
+</style>
+
+<script>
+    /**
+ * Stackly Childcare Website - Teachers Grid Controller Engine
+ */
+document.addEventListener("DOMContentLoaded", () => {
+    initTeachersTitleScrollReveal();
+    initTeachersProfileCascadeReveal();
+});
+
+// 1. CENTERED HEADLINE SCROLL ENGINE: Unveils heading text row block sentence-by-sentence
+function initTeachersTitleScrollReveal() {
+    const scrollTitle = document.getElementById("teachersScrollTitle");
+    if (!scrollTitle) return;
+
+    const observerParams = {
+        root: null,
+        threshold: 0.25,
+        rootMargin: "0px 0px -20px 0px"
+    };
+
+    const targetObserver = new IntersectionObserver((entries, observer) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                const parent = entry.target;
+                const sentences = parent.querySelectorAll(".teach-sentence");
+                
+                sentences.forEach((sentence, index) => {
+                    setTimeout(() => {
+                        sentence.classList.add("revealed");
+                    }, index * 240); // 240ms delay gaps between line arrivals
+                });
+                observer.unobserve(parent);
+            }
+        });
+    }, observerParams);
+
+    targetObserver.observe(scrollTitle);
+}
+
+// 2. GRID PROFILE CARDS CASCADE REVEALER: Brings teacher blocks up one-by-one upon scrolling
+function initTeachersProfileCascadeReveal() {
+    const gridStage = document.getElementById("teachersGridStage");
+    if (!gridStage) return;
+
+    const gridObserver = new IntersectionObserver((entries, observer) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                const parentGrid = entry.target;
+                const profileCards = parentGrid.querySelectorAll(".teacher-profile-card");
+
+                // Staggers teacher card entry arrival cascades by 180ms delay frequencies loops
+                profileCards.forEach((card, index) => {
+                    setTimeout(() => {
+                        card.classList.add("grid-activated");
+                    }, index * 180);
+                });
+                observer.unobserve(parentGrid);
+            }
+        });
+    }, { root: null, threshold: 0.12 });
+
+    gridObserver.observe(gridStage);
+}
+
+</script>
+
+
+<!-- DYNAMIC AUTOMATED TESTIMONIALS CAROUSEL -->
+<section class="testimonials-section" id="testimonials">
+    
+    <!-- TOP ROW: TITLE AND DECORATIVE DOT MATRIX -->
+    <div class="testimonials-header-row">
+        <div class="header-text-block">
+            <span class="testimonials-mini-tag">Testimonials</span>
+            <h2 class="testimonials-main-title">Parents Talk About Our School</h2>
+        </div>
+        <!-- Right side accent pagination dots representing slider presence -->
+        <div class="decorative-dots-matrix">
+            <span class="accent-dot orange-dot"></span>
+            <span class="accent-dot teal-dot"></span>
+            <span class="accent-dot yellow-dot"></span>
+        </div>
+    </div>
+
+    <!-- BOTTOM ROW: AUTOMATED CONTINUOUS TRANSITION VIEWPORT STAGE -->
+    <div class="testimonials-carousel-window">
+        <div class="testimonials-track-runner" id="testimonialTrack">
+            
+            <!-- Review Card 1 -->
+            <div class="testimonial-bubble-card shape-blob-1">
+                <div class="parent-avatar-shell">
+                    <img src="https://unsplash.com" alt="Sarah M. Profile Avatar" class="avatar-img">
+                </div>
+                <h4 class="parent-title">Parent of Nursery Student</h4>
+                <div class="star-rating-row">⭐⭐⭐⭐⭐</div>
+                <p class="parent-quote">"This school has provided a safe, caring, and joyful environment for my child. The teachers are very supportive and attentive."</p>
+            </div>
+
+            <!-- Review Card 2 -->
+            <div class="testimonial-bubble-card shape-blob-2">
+                <div class="parent-avatar-shell">
+                    <img src="https://unsplash.com" alt="David K. Profile Avatar" class="avatar-img">
+                </div>
+                <h4 class="parent-title">Parent of Toddler Student</h4>
+                <div class="star-rating-row">⭐⭐⭐⭐⭐</div>
+                <p class="parent-quote">"Stackly completely transformed our daily daycare routine. The play-based spatial blocks helped my son build social logic confidence!"</p>
+            </div>
+
+            <!-- Review Card 3 -->
+            <div class="testimonial-bubble-card shape-blob-3">
+                <div class="parent-avatar-shell">
+                    <img src="https://unsplash.com" alt="Elena R. Profile Avatar" class="avatar-img">
+                </div>
+                <h4 class="parent-title">Parent of Kindergarten Student</h4>
+                <div class="star-rating-row">⭐⭐⭐⭐⭐</div>
+                <p class="parent-quote">"The infrastructure security is top notch. I love the transparent communication apps and the expert caregivers group."</p>
+            </div>
+
+            <!-- Review Card 4 -->
+            <div class="testimonial-bubble-card shape-blob-1">
+                <div class="parent-avatar-shell">
+                    <img src="https://unsplash.com" alt="Marcus T. Profile Avatar" class="avatar-img">
+                </div>
+                <h4 class="parent-title">Parent of Pre-K Student</h4>
+                <div class="star-rating-row">⭐⭐⭐⭐⭐</div>
+                <p class="parent-quote">"Nurturing early childhood discovery is an art, and Stackly has perfected it. The class environments are incredibly clean and bright."</p>
+            </div>
+
+            <!-- Review Card 5 (Clone 1 for seamless infinite loop tracks) -->
+            <div class="testimonial-bubble-card shape-blob-1">
+                <div class="parent-avatar-shell">
+                    <img src="https://unsplash.com" alt="Sarah M. Profile Avatar" class="avatar-img">
+                </div>
+                <h4 class="parent-title">Parent of Nursery Student</h4>
+                <div class="star-rating-row">⭐⭐⭐⭐⭐</div>
+                <p class="parent-quote">"This school has provided a safe, caring, and joyful environment for my child. The teachers are very supportive and attentive."</p>
+            </div>
+
+            <!-- Review Card 6 (Clone 2 for seamless infinite loop tracks) -->
+            <div class="testimonial-bubble-card shape-blob-2">
+                <div class="parent-avatar-shell">
+                    <img src="https://unsplash.com" alt="David K. Profile Avatar" class="avatar-img">
+                </div>
+                <h4 class="parent-title">Parent of Toddler Student</h4>
+                <div class="star-rating-row">⭐⭐⭐⭐⭐</div>
+                <p class="parent-quote">"Stackly completely transformed our daily daycare routine. The play-based spatial blocks helped my son build social logic confidence!"</p>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+<style>
+
+    /* --- COMPONENT TEMPLATE DESIGN TOKENS --- */
+:root {
+    --text-main: #1D2A29;       /* Deep Charcoal Charcoal Profile */
+    --primary-color: #FF5A5F;   /* Bright Coral */
+    --secondary-color: #FFB400; /* Warm Yellow */
+    --accent-color: #00A699;    /* Fresh Teal */
+    --bubble-bg: #FFF9ED;       /* Creamy Soft Speech Bubble Fill from image source */
+}
+
+/* --- MAIN SECTION HOUSING BLOCK --- */
+.testimonials-section {
+    width: 100%;
+    background-color: #FAFDFD;
+    /* TARGET PARAMETER ASSIGNED PADDINGS: 50px Top, 30px Bottom */
+    padding: 50px 20px 30px 20px;
+    overflow: hidden;
+    position: relative;
+}
+
+/* ================= TOP LAYER: HEADER ROW ALIGNMENTS ================= */
+.testimonials-header-row {
+    width: 100%;
+    max-width: 1220px;
+    margin: 0 auto 40px auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+}
+
+.header-text-block {
+    text-align: left;
+}
+
+.testimonials-mini-tag {
+    font-size: 0.85rem;
+    font-weight: 800;
+    color: var(--primary-color);
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    display: inline-block;
+    margin-bottom: 8px;
+}
+
+.testimonials-main-title {
+    font-size: 2.6rem;
+    font-weight: 900;
+    color: var(--text-main);
+    letter-spacing: -1.2px;
+    line-height: 1.2;
+}
+
+/* Accent top-right dot groupings representing sliders presence */
+.decorative-dots-matrix {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 15px;
+}
+.accent-dot { width: 10px; height: 10px; border-radius: 50%; display: inline-block; }
+.orange-dot { background-color: var(--primary-color); }
+.teal-dot { background-color: var(--accent-color); opacity: 0.4; }
+.yellow-dot { background-color: var(--secondary-color); opacity: 0.4; }
+
+/* ================= BOTTOM LAYER: RUNTIME HARDWARE CAROUSEL SLIDER ================= */
+.testimonials-carousel-window {
+    width: 100%;
+    position: relative;
+    overflow: hidden;
+    padding: 20px 0;
+}
+
+/* Continuous smooth auto glider runner animation frame tracks */
+.testimonials-track-runner {
+    display: flex;
+    gap: 30px;
+    width: max-content;
+    animation: autoGlideCarousel 25s linear infinite;
+    will-change: transform;
+}
+
+/* Pause gliding transition maps when parents place cursor onto a review card */
+.testimonials-carousel-window:hover .testimonials-track-runner {
+    animation-play-state: paused;
+}
+
+/* --- CARDS SPEECH BUBBLE SHAPE LAYOUT MATRIX --- */
+.testimonial-bubble-card {
+    background-color: var(--bubble-bg);
+    width: 380px;
+    padding: 40px 30px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    box-shadow: 0 8px 24px rgba(29, 42, 41, 0.02);
+    position: relative;
+    transition: transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94), background-color 0.3s ease;
+}
+
+/* Playful custom organic speech bubble profiles (strictly non rectangular bounds) */
+.shape-blob-1 { border-radius: 50px 50px 50px 10px; }
+.shape-blob-2 { border-radius: 50px 50px 15px 50px; }
+.shape-blob-3 { border-radius: 15px 50px 50px 50px; }
+
+.testimonial-bubble-card:hover {
+    transform: translateY(-6px) scale(1.01);
+    background-color: #FFF4E3;
+}
+
+/* Profile Picture Shell Casing with raw <img> hooks */
+.parent-avatar-shell {
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    overflow: hidden;
+    border: 4px solid #FFFFFF;
+    box-shadow: 0 4px 12px rgba(29, 42, 41, 0.08);
+    margin-bottom: 16px;
+}
+
+.avatar-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.parent-title {
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: #5B6A68;
+    margin-bottom: 6px;
+}
+
+.star-rating-row {
+    font-size: 0.85rem;
+    margin-bottom: 14px;
+    letter-spacing: 2px;
+}
+
+.parent-quote {
+    font-size: 1rem;
+    line-height: 1.55;
+    color: var(--text-main);
+    font-weight: 500;
+}
+
+/* Infinite linear loop translation endpoints calculation mappings */
+@keyframes autoGlideCarousel {
+    0% { transform: translateX(0); }
+    100% { 
+        /* Shifts translate positions backward by exactly half the track width (the width of unique cards) */
+        transform: translateX(calc(-50% - 15px)); 
+    }
+}
+
+/* ================= ADAPTIVE RESPONSIVE COMPACT LAYOUT INTERFACE ================= */
+@media (max-width: 992px) {
+    .testimonials-header-row { flex-direction: column; align-items: center; text-align: center; gap: 15px; }
+    .header-text-block { display: flex; flex-direction: column; align-items: center; }
+    .testimonials-main-title { font-size: 2.1rem; }
+    .decorative-dots-matrix { display: none; } /* Pull out secondary details on small viewports */
+    
+    .testimonial-bubble-card { width: 320px; padding: 35px 24px; }
+    .parent-quote { font-size: 0.95rem; }
+}
+
+@media (max-width: 480px) {
+    .testimonials-main-title { font-size: 1.75rem; }
+    .testimonial-bubble-card { width: 280px; }
+}
+
+</style>
+
+<script>
+
+    /**
+ * Stackly Childcare Website - Interactive Testimonials Module Engine
+ */
+document.addEventListener("DOMContentLoaded", () => {
+    initCarouselPaginationDotTracker();
+    initTestimonialClickPopEffect();
+});
+
+/**
+ * 1. Dynamic Pagination Dot Tracker
+ * Synchronizes the decorative dot matrix to illuminate based on the slider scroll position
+ */
+function initCarouselPaginationDotTracker() {
+    const track = document.getElementById("testimonialTrack");
+    const dots = document.querySelectorAll(".decorative-dots-matrix .accent-dot");
+    
+    if (!track || dots.length === 0) return;
+
+    // Convert the node list into an active operational array chain
+    const dotsArray = Array.from(dots);
+    let dotIntervalIndex = 0;
+
+    // Periodically transition the opacity highlights to mimic step pagination indicators
+    setInterval(() => {
+        // Skip updating indicators if parents are actively hovering over and reading a review card
+        const isPaused = window.getComputedStyle(track).animationPlayState === "paused";
+        if (isPaused) return;
+
+        // Clear highlight profiles from all dots loop arrays
+        dotsArray.forEach(dot => dot.style.opacity = "0.4");
+
+        // Ignite illumination values on current calculated dot anchor index frame
+        dotIntervalIndex = (dotIntervalIndex + 1) % dotsArray.length;
+        dotsArray[dotIntervalIndex].style.opacity = "1";
+
+    }, 3500); // Transitions step indicators sequentially every 3.5 seconds
+}
+
+/**
+ * 2. Tactile Card Click Pop Interaction
+ * Introduces micro-bounces and children's media chime sounds to clicks
+ */
+function initTestimonialClickPopEffect() {
+    const bubbleCards = document.querySelectorAll(".testimonial-bubble-card");
+    
+    bubbleCards.forEach(card => {
+        card.addEventListener("click", () => {
+            // Apply instant playful structural scale bounce pop feedback
+            card.style.transform = "scale(0.96) translateY(-4px)";
+            playSoftBubblePopSound();
+
+            // Relieve scale compression smoothly to transition items back safely
+            setTimeout(() => {
+                card.style.transform = "";
+            }, 180);
+        });
+    });
+}
+
+/**
+ * Natively synthesizes a soft, clean bubble pop audio wave frequency node
+ * utilizing the Web Audio API with zero external cloud dependencies.
+ */
+function playSoftBubblePopSound() {
+    try {
+        const AudioContext = window.AudioContext || window.webkitAudioContext;
+        if (!AudioContext) return;
+
+        const ctx = new AudioContext();
+        const osc = ctx.createOscillator();
+        const gain = ctx.createGain();
+
+        // High velocity triangle frequency sweep mimicking an organic toy rattle pop
+        osc.type = "triangle";
+        osc.frequency.setValueAtTime(440, ctx.currentTime);
+        osc.frequency.exponentialRampToValueAtTime(1600, ctx.currentTime + 0.12);
+
+        gain.gain.setValueAtTime(0.1, ctx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.12);
+
+        osc.connect(gain);
+        gain.connect(ctx.destination);
+
+        osc.start();
+        osc.stop(ctx.currentTime + 0.12);
+    } catch (e) {
+        console.warn("Media synthesis blocked or bypassed due to system state configurations.");
+    }
+}
+
+</script>
+
+<!-- FULL WIDTH SINGLE-LINE CTA BANNER -->
+<section class="single-line-cta-banner">
+    
+    <!-- Background Layer Image driven via native <img> tag -->
+    <img src="https://unsplash.com" alt="Childcare playful setting backdrop" class="single-banner-bg-img">
+    
+    <!-- Deep Contrast Color Overlay Sheet -->
+    <div class="single-banner-overlay"></div>
+
+    <div class="single-banner-content-container">
+        
+        <!-- Left Side: Single-Line Text Communication -->
+        <div class="single-banner-text-wrap scroll-fade-node" id="singleCtaText">
+            <h2 class="single-banner-title">Join the Stackly family today and give your child the brightest start!</h2>
+        </div>
+
+        <!-- Right Side: Action Trigger CTA Button -->
+        <div class="single-banner-action-wrap">
+            <button class="single-banner-btn horizontal-float-node">Enroll Today ✨</button>
+        </div>
+
+    </div>
+</section>
+
+<style>
+    /* --- SITE STYLE SYSTEM TOKENS --- */
+:root {
+    --primary-color: #FF5A5F;   /* Bright Coral */
+    --secondary-color: #FFB400; /* Warm Yellow */
+    --accent-color: #00A699;    /* Fresh Teal */
+    --text-light: #FFFFFF;
+}
+
+/* --- FULL WINDOW SECTION WRAPPER --- */
+.single-line-cta-banner {
+    position: relative;
+    width: 100vw;
+    /* Pulls edge alignment flush past standard container margins */
+    margin-left: calc(-50vw + 50%);
+    margin-right: calc(-50vw + 50%);
+    min-height: 160px; 
+    /* TARGET PARAMETER DESIGN PADDINGS: 50px Top, 30px Bottom */
+    padding: 50px 40px 30px 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+
+/* --- BACKGROUND IMAGE LAYERS --- */
+.single-banner-bg-img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: 1;
+    pointer-events: none;
+    transform: scale(1.02);
+    transition: transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+/* Zoom effect on banner hover */
+.single-line-cta-banner:hover .single-banner-bg-img {
+    transform: scale(1.05);
+}
+
+/* Deep gradient backdrop overlay over raw image to guarantee text contrast */
+.single-banner-overlay {
+    position: absolute;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: linear-gradient(135deg, rgba(0, 166, 153, 0.92) 0%, rgba(29, 42, 41, 0.85) 100%);
+    z-index: 2;
+    pointer-events: none;
+}
+
+/* --- INNER ALIGNMENT CONSTRAINTS --- */
+.single-banner-content-container {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    /* MANDATED LAYOUT: Single-line row structure, content left, action right */
+    justify-content: space-between;
+    align-items: center;
+    gap: 40px;
+    position: relative;
+    z-index: 5;
+}
+
+/* --- LEFT COLUMN: CONTENT WRAP --- */
+.single-banner-text-wrap {
+    text-align: left;
+    flex-grow: 1;
+}
+
+.single-banner-title {
+    font-size: 1.8rem;
+    font-weight: 800;
+    line-height: 1.3;
+    color: var(--text-light);
+    letter-spacing: -0.5px;
+}
+
+/* --- RIGHT COLUMN: CTA ACTION DECK --- */
+.single-banner-action-wrap {
+    display: flex;
+    justify-content: flex-end;
+    flex-shrink: 0;
+}
+
+.single-banner-btn {
+    background-color: var(--secondary-color); /* Bright optimistic brand yellow */
+    color: #1D2A29;
+    border: none;
+    padding: 16px 38px;
+    font-size: 1.05rem;
+    font-weight: 800;
+    border-radius: 50px;
+    cursor: pointer;
+    box-shadow: 0 6px 20px rgba(255, 180, 0, 0.3);
+    white-space: nowrap;
+    transition: background-color 0.25s, transform 0.25s, box-shadow 0.25s;
+}
+
+.single-banner-btn:hover {
+    background-color: #E29E00;
+    transform: translateY(-4px) scale(1.02);
+    box-shadow: 0 10px 25px rgba(255, 180, 0, 0.45);
+}
+
+/* Continuous Infinite Levitation Loop Physics */
+.horizontal-float-node {
+    animation: ctaSingleFloat 4s ease-in-out infinite alternate;
+}
+@keyframes ctaSingleFloat { 0% { transform: translateY(0); } 100% { transform: translateY(-6px); } }
+
+/* --- SCROLL REVEAL TIMING ANCHORS --- */
+.scroll-fade-node {
+    opacity: 0;
+    transform: translateY(15px);
+    transition: opacity 0.75s cubic-bezier(0.215, 0.610, 0.355, 1), 
+                transform 0.75s cubic-bezier(0.215, 0.610, 0.355, 1);
+}
+.scroll-fade-node.activated-fade-line {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* ================= ADAPTIVE RESPONSIVE GRID OVERLAY ================= */
+@media (max-width: 992px) {
+    .single-line-cta-banner { padding: 45px 24px 35px 24px; }
+    .single-banner-title { font-size: 1.5rem; text-align: center; }
+    
+    /* Collapses fluidly into centralized stacked rows layout on medium/small displays */
+    .single-banner-content-container {
+        flex-direction: column;
+        gap: 25px;
+        text-align: center;
+    }
+    .single-banner-text-wrap { display: flex; justify-content: center; }
+    .single-banner-action-wrap { justify-content: center; width: 100%; }
+}
+
+@media (max-width: 520px) {
+    .single-banner-title { font-size: 1.25rem; }
+    .single-banner-btn { width: 100%; text-align: center; padding: 14px 24px; }
+}
+
+</style>
+<script>
+    /**
+ * Stackly Childcare Website - Single Line CTA Scroll Reveal Engine
+ */
+document.addEventListener("DOMContentLoaded", () => {
+    initSingleBannerObserver();
+});
+
+// SCROLL OBSERVER: Fades text column smoothly into view upon viewport entry approach
+function initSingleBannerObserver() {
+    const textTarget = document.getElementById("singleCtaText");
+    if (!textTarget) return;
+
+    const scrollObserver = new IntersectionObserver((entries, observer) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add("activated-fade-line");
+                observer.unobserve(entry.target); // Unobserve to optimize page performance runtime metrics
+            }
+        });
+    }, { root: null, threshold: 0.15 });
+
+    scrollObserver.observe(textTarget);
+}
+
+</script>
+
+<!-- ELEPHANT ANIMATION STAGE SECTION -->
+<section class="elephant-stage">
+    
+    <!-- Seamless Background Landscape Hills -->
+    <div class="stage-backdrop">
+        <svg viewBox="0 0 1440 200" preserveAspectRatio="none" width="100%" height="100%">
+            <path d="M0,160 Q360,100 720,150 T1440,120 L1440,200 L0,200 Z" fill="#F4F9F9"/>
+            <path d="M0,180 Q400,140 800,170 T1440,150 L1440,200 L0,200 Z" fill="#EBF4F6"/>
+        </svg>
+    </div>
+
+    <!-- The Adaptive Moving Layout Container -->
+    <div class="elephant-container">
+        <div class="dancing-elephant">
+            <svg viewBox="0 0 120 90" width="100%" height="100%">
+                <!-- Main Body Outline Shadow -->
+                <ellipse cx="65" cy="50" rx="28" ry="22" fill="#A0B2C6" />
+                
+                <!-- Head & Snout -->
+                <circle cx="42" cy="42" r="16" fill="#B3C5D7" />
+                <ellipse cx="65" cy="48" rx="26" ry="20" fill="#B3C5D7" />
+                
+                <!-- Big Childish Ear -->
+                <ellipse cx="68" cy="42" rx="11" ry="14" fill="#C5D6E7" />
+                <ellipse cx="66" cy="42" rx="7" ry="10" fill="#FFB400" opacity="0.4" />
+                
+                <!-- Trunk / Snout (Happy Upward Curl) -->
+                <path d="M32,44 Q20,44 18,32 Q16,24 22,24 Q24,24 23,28 Q20,36 30,38 Z" fill="#B3C5D7" />
+                
+                <!-- Cute Happy Eye Details -->
+                <circle cx="36" cy="38" r="2.5" fill="#2B2B2B" />
+                <circle cx="37" cy="37" r="0.8" fill="#FFFFFF" />
+                
+                <!-- Calibrated Slow-Motion Legs -->
+                <rect class="leg leg-1" x="45" y="65" width="8" height="16" rx="3" fill="#A0B2C6" />
+                <rect class="leg leg-2" x="57" y="66" width="8" height="16" rx="3" fill="#B3C5D7" />
+                <rect class="leg leg-3" x="72" y="65" width="8" height="16" rx="3" fill="#A0B2C6" />
+                <rect class="leg leg-4" x="82" y="66" width="8" height="16" rx="3" fill="#B3C5D7" />
+            </svg>
+        </div>
+    </div>
+</section>
+
+<style>
+    /* --- CONFIGURATION REFERENCE TARGETS --- */
+:root {
+    --header-height: 80px; /* Synchronizes with the main header footprint */
+}
+
+/* --- ELEPHANT CANVAS AREA --- */
+.elephant-stage {
+    position: relative;
+    width: 100%;
+    height: 70px;
+    /* REDUCED SPACE AT TOP: Pulls it right beneath the floating header */
+    margin-top: calc(var(--header-height) + 5px); 
+    padding-top: 0 !important;
+    overflow: hidden;
+    background-color: transparent;
+}
+
+/* Vector Landscape Backdrop Layer */
+.stage-backdrop {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    pointer-events: none;
+}
+
+/* --- THE PACING STRUCTURAL RUNNER --- */
+.elephant-container {
+    position: absolute;
+    bottom: -5px;
+    left: -120px;
+    width: 110px;
+    height: 95px;
+    z-index: 2;
+    cursor: pointer;
+    /* Linear loop path across the canvas area */
+    animation: walkAcrossSlow 26s linear infinite;
+}
+
+/* --- THE GENTLE DANCING CORE ENGINE --- */
+.dancing-elephant {
+    width: 100%;
+    height: 100%;
+    transform-origin: bottom center;
+    /* Bouncing cycle set to a relaxed 1.2s execution rate */
+    animation: gentleDance 1.2s ease-in-out infinite alternate;
+}
+
+/* Micro Leg Transform States */
+.dancing-elephant .leg {
+    transform-origin: top center;
+}
+.dancing-elephant .leg-1, .dancing-elephant .leg-3 {
+    animation: legSwingSlow 0.6s ease-in-out infinite alternate;
+}
+.dancing-elephant .leg-2, .dancing-elephant .leg-4 {
+    animation: legSwingSlow 0.6s ease-in-out infinite alternate-reverse;
+}
+
+/* --- HARDWARE-ACCELERATED PHYSICS LAYOUT --- */
+
+/* Horizontal Run Pacing Paths with correct directional flipping */
+@keyframes walkAcrossSlow {
+    /* 1. Moving Left to Right (Flipped scaleX(-1) so it looks forward) */
+    0% { left: -120px; transform: scaleX(-1); }
+    45% { left: calc(100% + 20px); transform: scaleX(-1); }
+    
+    /* 2. Instant Pivot Turn at the right border edge */
+    46% { left: calc(100% + 20px); transform: scaleX(1); }
+    
+    /* 3. Moving Right to Left (Normal scaleX(1) facing forward left) */
+    95% { left: -120px; transform: scaleX(1); }
+    
+    /* 4. Instant Pivot Turn back to start configuration */
+    100% { left: -120px; transform: scaleX(-1); }
+}
+
+/* Slower Vertical Dance Bounce Physics */
+@keyframes gentleDance {
+    0% { transform: translateY(0) rotate(-2deg); }
+    100% { transform: translateY(-10px) rotate(3deg); }
+}
+
+/* Soft Leg Swing Bounds */
+@keyframes legSwingSlow {
+    0% { transform: rotate(-8deg); }
+    100% { transform: rotate(8deg); }
+}
+
+/* --- MOBILE RESPONSIVE ADAPTATION INTERFACE --- */
+@media (max-width: 992px) {
+    .elephant-stage {
+        margin-top: 75px; /* Extremely tight layout tuning for small devices */
+        height: 110px;
+    }
+    .elephant-container {
+        width: 85px;
+        height: 65px;
+    }
+}
+
+</style>
+
+<script>
+    /**
+ * Stackly Childcare Website - Slower Interactive Elephant Engine
+ */
+document.addEventListener("DOMContentLoaded", () => {
+    initSlowerElephant();
+});
+
+function initSlowerElephant() {
+    const container = document.querySelector(".elephant-container");
+    const elephant = document.querySelector(".dancing-elephant");
+
+    if (!container || !elephant) return;
+
+    // Creative Speed Modulator (Dances slightly faster when users hover over the runner)
+    container.addEventListener("mouseenter", () => {
+        // Increases vertical dance frequency bounce safely
+        elephant.style.animationDuration = "0.4s";
+        
+        // Speeds up matching limb movements smoothly
+        document.querySelectorAll(".dancing-elephant .leg").forEach(leg => {
+            leg.style.animationDuration = "0.2s";
+        });
+    });
+
+    // Restores default relaxed 1.2s dance tempo upon cursor exit
+    container.addEventListener("mouseleave", () => {
+        elephant.style.animationDuration = "1.2s";
+        document.querySelectorAll(".dancing-elephant .leg").forEach(leg => {
+            leg.style.animationDuration = "0.6s";
+        });
+    });
+}
+
+</script>
+<!-- FRESH PREMIUM FULL-WIDTH GREEN FOOTER -->
+<footer class="stackly-premium-green-footer">
+    <div class="footer-premium-wrapper">
+        
+        <!-- ================= ROW 1: PRIMARY FOUR-COLUMN MATRIX ================= -->
+        <div class="footer-premium-grid">
+            
+            <!-- COLUMN 1: BRAND LOGO AREA & BRIEF -->
+            <div class="premium-brand-column">
+                <!-- Brand logo image triggers smooth scroll back to top -->
+                <div class="premium-logo-wrap" onclick="scrollToTop()" title="Back to Top">
+                    <img src="https://placehold.co" alt="Stackly Brand Logo" class="premium-logo-img">
+                </div>
+                <p class="premium-brand-bio">
+                    Nurturing early curiosity, building structural foundational strengths, and creating certified safe childcare environments designed for your little explorers.
+                </p>
+                <!-- Five solid circle dark contrast social links matching image layout footprints -->
+                <div class="premium-social-row">
+                    <a href="404.html" class="premium-social-badge" aria-label="Facebook">
+                        <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M22 12c0-5.52-4.48-10-10-10S2 6.48 2 12c0 4.84 3.44 8.87 8 9.8V15H8v-3h2V9.5C10 7.57 11.57 6 13.5 6H16v3h-2c-.55 0-1 .45-1 1v2h3v3h-3v6.95c4.56-.93 8-4.96 8-9.95z"/></svg>
+                    </a>
+                    <a href="404.html" class="premium-social-badge" aria-label="Instagram">
+                        <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771-4.919-4.919-1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.051.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 1 0 0 12.324 6.162 6.162 0 0 0 0-12.324zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.406-11.845a1.44 1.44 0 1 0 0 2.881 1.44 1.44 0 0 0 0-2.881z"/></svg>
+                    </a>
+                    <a href="404.html" class="premium-social-badge" aria-label="X / Twitter">
+                        <svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor"><path d="M18.244 2.25h3.308l-4.716 5.39 5.548 7.33H16.71l-4.343-5.678L6.27 14.99H2.96l5.004-5.717L2.5 2.25h6.916l3.829 5.064 4.999-5.064zm-1.161 10.763h1.833L7.084 4.126H5.117l11.966 8.887z"/></svg>
+                    </a>
+                    <a href="404.html" class="premium-social-badge" aria-label="LinkedIn">
+                        <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.779-1.75-1.75s.784-1.75 1.75-1.75 1.75.779 1.75 1.75-.784 1.75-1.75 1.75zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
+                    </a>
+                    <a href="404.html" class="premium-social-badge" aria-label="YouTube">
+                        <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M23.498 6.163a3.003 3.003 0 0 0-2.11-2.11C19.517 3.545 12 3.545 12 3.545s-7.517 0-9.388.508a3.003 3.003 0 0 0-2.11 2.11C0 8.033 0 12 0 12s0 3.967.502 5.837a3.003 3.003 0 0 0 2.11 2.11c1.871.508 9.388.508 9.388.508s7.517 0 9.388-.508a3.003 3.003 0 0 0 2.11-2.11C24 15.967 24 12 24 12s0-3.967-.502-5.837zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+                    </a>
+                </div>
+            </div>
+
+            <!-- COLUMN 2: EXPLOATORY PROGRAMS DIRECTORY -->
+            <div class="premium-links-column">
+                <h4>Explore Menus</h4>
+                <div class="links-anchor-stack">
+                    <a href="404.html">Infant Pod Suites</a>
+                    <a href="404.html">Nursery Milestones</a>
+                    <a href="404.html">Kinder Exploration</a>
+                    <a href="404.html">After School Hub</a>
+                </div>
+            </div>
+
+            <!-- COLUMN 3: PARENT SUPPORT DIRECTORY -->
+            <div class="premium-links-column">
+                <h4>Catering Support</h4>
+                <div class="links-anchor-stack">
+                    <a href="404.html">Safety Parameters</a>
+                    <a href="404.html">Parent Portal Track</a>
+                    <a href="404.html">Help & FAQ Center</a>
+                    <a href="404.html">Certified Teachers</a>
+                </div>
+            </div>
+
+            <!-- COLUMN 4: HEADQUARTERS ADDRESS BOUNDS -->
+            <div class="premium-links-column address-panel-column">
+                <h4>Headquarters Location</h4>
+                
+                <div class="address-vector-row">
+                    <svg class="addr-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                    <p>MMR Complex, Periyakollappatty, Chinna Thirupathi, Salem, Tamil Nadu 636008</p>
+                </div>
+                
+                <div class="address-vector-row phone-link-row">
+                    <svg class="addr-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+                    <a href="tel:+917010792745" class="tel-anchor">+91 7010792745</a>
+                </div>
+            </div>
+
+        </div>
+
+        <hr class="premium-horizontal-break">
+
+        <!-- ================= ROW 2: HORIZONTAL LEGAL DECK FOOTPRINT BANNER ================= -->
+        <div class="footer-premium-base-deck">
+            <p class="premium-copyright-text">© 2026 Stackly Industries. All learning rights reserved.</p>
+            <div class="premium-legal-anchors">
+                <a href="404.html">Privacy Policy</a>
+                <a href="404.html">Terms of Service</a>
+                <a href="404.html">Cookie Management</a>
+            </div>
+        </div>
+
+    </div>
+</footer>
+
+<style>
+    /* --- PREMIUM SYSTEM DESIGN TOKENS --- */
+:root {
+    --green-theme-bg: #00A699;     /* Bright Teal Green Theme Background */
+    --text-pure-black: #000000;    /* CRITICAL SOLID BLACK TYPOGRAPHY FILTER */
+    --border-color-dim: rgba(0, 0, 0, 0.15);
+}
+
+/* --- OVERALL COMPACT CASING WRAPPER --- */
+.premium-brand-column { display: flex; flex-direction: column; text-align: left; }
+.premium-logo-wrap { cursor: pointer; display: inline-block; margin-bottom: 18px; align-self: flex-start; }
+.premium-logo-img { height: 38px; width: auto; object-fit: contain; }
+
+.stackly-premium-green-footer {
+    position: relative;
+    width: 100vw;
+    /* Forces elements to bleed flush past standard page margin containers */
+    margin-left: calc(-50vw + 50%);
+    margin-right: calc(-50vw + 50%);
+    background-color: var(--green-theme-bg); 
+    color: var(--text-pure-black);
+    /* TARGET ASSIGNED SYSTEM PADDINGS: 50px Top, 30px Bottom */
+    padding: 50px 40px 30px 40px !important;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    overflow: hidden;
+}
+
+.footer-premium-wrapper {
+    width: 100%;
+    max-width: 1240px;
+    margin: 0 auto;
+}
+
+/* ================= COMPONENT LAYER 1: 4-COLUMN ENHANCED DIRECTORY ================= */
+.footer-premium-grid {
+    display: grid;
+    /* Clean 4-Column layout system tracking reference image scale perfectly */
+    grid-template-columns: 1.15fr 0.85fr 0.85fr 1.15fr;
+    gap: 40px;
+    align-items: start;
+    width: 100%;
+    margin-bottom: 35px;
+}
+
+/* SCALED UP DESCRIPTION TEXT IN SOLID BLACK */
+.premium-brand-bio { 
+    font-size: 0.98rem; /* SCALED UP FOR GREAT ACCESSIBILITY */
+    line-height: 1.6; 
+    color: var(--text-pure-black); 
+    margin-bottom: 22px; 
+    max-width: 300px; 
+    font-weight: 500;
+}
+
+/* Solid circular dark contrast badge stacks */
+.premium-social-row { display: flex; gap: 8px; }
+.premium-social-badge {
+    width: 34px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center;
+    background-color: rgba(0, 0, 0, 0.85); color: #FFFFFF; text-decoration: none;
+    transition: transform 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275), background-color 0.2s;
+}
+.premium-social-badge:hover { transform: translateY(-3px) scale(1.06); background-color: #000000; }
+
+/* Column 2 & 3 Link List Units */
+.premium-links-column { display: flex; flex-direction: column; text-align: left; }
+
+/* SCALED UP HEADING LABELS IN SOLID BLACK */
+.premium-links-column h4 {
+    font-size: 1.25rem; /* ENHANCED HIGHER FONT SIZE */
+    font-weight: 800; 
+    color: var(--text-pure-black); 
+    margin-bottom: 18px; 
+    position: relative; 
+    width: max-content;
+}
+/* Tiny underlying red line marker node mimicking reference screenshot image geometry exactly */
+.premium-links-column h4::after {
+    content: ''; position: absolute; bottom: -6px; left: 0; width: 28px; height: 2.5px; background-color: #FF5A5F;
+}
+
+.links-anchor-stack { display: flex; flex-direction: column; gap: 2px; }
+
+/* SCALED UP SITEMAP DIRECTORY LINKS IN SOLID BLACK */
+.premium-links-column a {
+    font-size: 1.02rem; /* SCALED UP FOR EASY NAVIGATION */
+    font-weight: 600; 
+    color: var(--text-pure-black); 
+    text-decoration: none;
+    padding: 6px 0; 
+    transition: transform 0.2s; 
+    display: inline-block; 
+    width: max-content;
+    opacity: 0.95;
+}
+.premium-links-column a:hover { opacity: 1; transform: translateX(4px); }
+
+/* Column 4 Specific Address Core Custom Panel Layouts */
+.address-panel-column { gap: 14px; }
+.address-panel-column h4 {
+    font-size: 1.25rem; font-weight: 800; color: var(--text-pure-black); margin-bottom: 18px; position: relative; width: max-content;
+}
+.address-panel-column h4::after {
+    content: ''; position: absolute; bottom: -6px; left: 0; width: 28px; height: 2.5px; background-color: #FF5A5F;
+}
+
+.address-vector-row { 
+    display: flex; 
+    align-items: start; 
+    gap: 12px; 
+    font-size: 0.98rem; /* SCALED UP FONT SIZE */
+    line-height: 1.5; 
+    color: var(--text-pure-black); 
+    text-align: left; 
+    font-weight: 600;
+}
+.addr-icon { width: 15px; height: 16px; color: var(--text-pure-black); flex-shrink: 0; margin-top: 2px; }
+.phone-link-row { align-items: center; margin-top: auto; }
+
+.tel-anchor { 
+    font-size: 1.18rem; /* SCALED UP COMPACT FOOTPRINT */
+    font-weight: 800; 
+    color: var(--text-pure-black); 
+    text-decoration: none; 
+    transition: opacity 0.2s; 
+}
+.tel-anchor:hover { opacity: 0.8; }
+
+/* Thin straight separator line */
+.premium-horizontal-break { border: none; border-top: 1px solid var(--border-color-dim); margin-bottom: 24px; }
+
+/* ================= COMPONENT LAYER 2: LEGAL COMPACT FOOTPRINT ENHANCED BASE DECK ================= */
+.footer-premium-base-deck {
+    display: flex; justify-content: space-between; align-items: center; width: 100%; 
+    font-size: 0.95rem; /* SCALED UP LEGAL BANNER */
+    color: var(--text-pure-black);
+}
+.premium-copyright-text { font-weight: 600; }
+.premium-legal-anchors { display: flex; gap: 24px; }
+.premium-legal-anchors a { color: var(--text-pure-black); text-decoration: none; transition: opacity 0.2s; font-weight: 600; }
+.premium-legal-anchors a:hover { opacity: 0.85; }
+
+/* ================= HIGH-UTILITY RESPONSIVE INTEGRATION LAYER ================= */
+@media (max-width: 1024px) {
+    .stackly-premium-green-footer { padding: 40px 24px 30px 24px !important; }
+    .footer-premium-grid { grid-template-columns: 1fr 1fr; gap: 35px 25px; }
+    .premium-brand-column { grid-column: span 2; display: flex; flex-direction: column; align-items: center; text-align: center; }
+    .premium-brand-bio { max-width: 500px; }
+    .premium-logo-wrap { align-self: center; }
+    .premium-links-column h4::after { left: 50%; transform: translateX(-50%); }
+    .premium-links-column { align-items: center; text-align: center; }
+    .address-panel-column { display: flex; flex-direction: column; align-items: center; }
+    .address-vector-row { justify-content: center; text-align: center; max-width: 320px; }
+    .phone-link-row { margin-top: 10px; }
+}
+
+@media (max-width: 600px) {
+    .footer-premium-grid { grid-template-columns: 1fr; gap: 30px; }
+    .premium-brand-column { grid-column: span 1; }
+    .footer-premium-base-deck { flex-direction: column; gap: 14px; text-align: center; }
+    .premium-legal-anchors { flex-direction: column; gap: 10px; }
+}
+
+</style>
+
+<script>
+    /**
+ * Stackly Childcare Website - Premium Footer Controller Engine
+ */
+
+/**
+ * BACK TO TOP NAV SCROLLER
+ * Smoothly scrolls the screen viewport canvas right back up to zero index bounds on selection
+ */
+function scrollToTop() {
+    window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+    });
+}
+
+</script>
+
+</body>
+</html>
