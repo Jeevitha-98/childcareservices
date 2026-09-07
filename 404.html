@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Page Not Found - Stackly Childcare</title>
+    <link rel="stylesheet" href="404.css">
+</head>
+<body>
+
+    <!-- MASTER FULL-VIEWPORT CENTERED STAGE -->
+    <div class="error-page-macro-wrapper">
+        <div class="error-content-card">
+            
+            <!-- Playful Childcare Vector Graphic Block -->
+            <div class="error-vector-illustration">
+                <svg viewBox="0 0 200 160" width="100%" height="100%">
+                    <!-- Fluffy Cloud Accent Layout -->
+                    <path d="M30,70 Q10,65 15,45 Q15,20 42,20 Q58,5 78,12 Q100,2 115,25 Q135,25 130,52 Q140,72 120,78 Q115,95 88,90 Q62,100 42,85 Q20,90 30,70 Z" fill="#F0F9F9" stroke="#00A699" stroke-width="2" stroke-dasharray="4,4"/>
+                    
+                    <!-- Broken Play Block Towers representing the 404 digits natively -->
+                    <g transform="translate(25, 30)">
+                        <!-- Number 4 Block (Teal Green) -->
+                        <rect x="10" y="30" width="28" height="50" rx="6" fill="#E6F6F5" stroke="#00A699" stroke-width="3"/>
+                        <path d="M20,45 L20,65 M15,55 L33,55" stroke="#00A699" stroke-width="3" stroke-linecap="round"/>
+                        
+                        <!-- Number 0 Block (Warm Yellow) -->
+                        <circle cx="65" cy="55" r="24" fill="#FFF6E0" stroke="#FFB400" stroke-width="3"/>
+                        <circle cx="65" cy="55" r="10" fill="#FFFFFF" stroke="#FFB400" stroke-width="2" stroke-dasharray="3,3"/>
+                        
+                        <!-- Number 4 Block (Coral Pink) -->
+                        <rect x="105" y="30" width="28" height="50" rx="6" fill="#FFEBEB" stroke="#FF5A5F" stroke-width="3"/>
+                        <path d="M115,45 L115,65 M110,55 L128,55" stroke="#FF5A5F" stroke-width="3" stroke-linecap="round"/>
+                    </g>
+
+                    <!-- Fallen Block Pieces Accent on the baseline floor -->
+                    <path d="M40,115 L55,115 L48,102 Z" fill="#FFE3C2" stroke="#FFB400" stroke-width="2"/>
+                    <rect x="135" y="105" width="14" height="14" rx="3" fill="#E8F5E9" stroke="#7CB342" stroke-width="2" transform="rotate(15 142 112)"/>
+                    
+                    <!-- Baseline Floor Track Line -->
+                    <line x1="15" y1="120" x2="185" y2="120" stroke="#CCD7D6" stroke-width="2.5" stroke-linecap="round"/>
+                </svg>
+            </div>
+
+            <!-- Error Copy Panel -->
+            <div class="error-text-panel">
+                <h1>Blocks Misplaced!</h1>
+                <p>The page layout path module you are seeking has drifted off-grid or been safely archived by our campus administrators.</p>
+            </div>
+
+            <!-- INTERACTIVE BUTTONS PACKING ROW CONTROLLERS -->
+            <div class="error-action-buttons-row">
+                
+                <!-- BUTTON 1: BACK DISPATCH — Returning back to exact history scroll coordinates safely -->
+                <button type="button" class="error-btn secondary-btn" onclick="executeHistoricalPageBack()">
+                    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+                    Go Back
+                </button>
+
+                <!-- BUTTON 2: HOME DISPATCH — Clean root redirect mapping to landing page -->
+                <a href="index.html" class="error-btn primary-btn">
+                    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+                    Return Home
+                </a>
+
+            </div>
+
+        </div>
+    </div>
+
+<style>
+    /* --- COMPONENT THEME DESIGN TOKENS --- */
+:root {
+    --text-pure-black: #000000;
+    --text-charcoal: #2B2B2B;
+    --text-muted-gray: #627A78;
+    --accent-teal: #00A699;      /* Fresh Green Domain Base Palette */
+    --accent-teal-hover: #00877D;
+    --border-color-dim: #E2EBEA;
+    --surface-white: #FFFFFF;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    background-color: #FFFDF9; 
+    color: var(--text-charcoal);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100vw; height: 100vh;
+    overflow: hidden;
+}
+
+/* ================= THE MAIN MASTER CONTENT EMBED CARD ================= */
+.error-page-macro-wrapper {
+    width: 100%;
+    padding: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.error-content-card {
+    background-color: var(--surface-white);
+    border: 1px solid #FAF3E5;
+    border-radius: 28px;
+    padding: 50px 40px;
+    max-width: 480px;
+    width: 100%;
+    text-align: center;
+    box-shadow: 0 12px 35px rgba(0, 166, 153, 0.02);
+}
+
+.error-vector-illustration {
+    width: 100%;
+    max-width: 240px;
+    margin: 0 auto 30px auto;
+}
+
+.error-text-panel h1 {
+    font-size: 2.2rem;
+    font-weight: 900;
+    color: var(--text-pure-black);
+    letter-spacing: -1px;
+    margin-bottom: 12px;
+    line-height: 1.2;
+}
+
+.error-text-panel p {
+    font-size: 1rem;
+    line-height: 1.55;
+    color: var(--text-muted-gray);
+    font-weight: 500;
+    margin-bottom: 35px;
+}
+
+/* ================= INTERACTIVE ACTION DECK CONTROLS ================= */
+.error-action-buttons-row {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); 
+    gap: 16px;
+    width: 100%;
+}
+
+.error-btn {
+    padding: 14px 20px;
+    font-size: 0.95rem;
+    font-weight: 800;
+    border-radius: 12px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    text-decoration: none;
+    font-family: inherit;
+    transition: background-color 0.2s, border-color 0.2s, transform 0.2s;
+}
+
+.primary-btn {
+    background-color: var(--accent-teal);
+    color: #FFFFFF;
+    border: none;
+    box-shadow: 0 4px 12px rgba(0, 166, 153, 0.15);
+}
+.primary-btn:hover {
+    background-color: var(--accent-teal-hover);
+    transform: translateY(-1px);
+}
+
+.secondary-btn {
+    background-color: #FAFAFA;
+    color: var(--text-charcoal);
+    border: 1px solid var(--border-color-dim);
+}
+.secondary-btn:hover {
+    background-color: var(--surface-white);
+    border-color: #BCD3D1;
+    transform: translateY(-1px);
+}
+
+/* ================= ADAPTIVE RESPONSIVE COMPACT METRICS OVERLAYS ================= */
+@media (max-width: 520px) {
+    .error-content-card { padding: 35px 20px; border-radius: 20px; }
+    .error-text-panel h1 { font-size: 1.8rem; }
+    .error-text-panel p { font-size: 0.92rem; margin-bottom: 25px; }
+    
+    .error-action-buttons-row { grid-template-columns: 1fr; gap: 12px; }
+    .error-btn { width: 100%; }
+}
+
+</style>
+
+<script>
+    /**
+ * Stackly Childcare Website - Smart 404 Return Engine
+ */
+
+/**
+ * FIXED BACK DISPATCHER
+ * Pulls local state tracking URLs to return the user exactly back to their section coordinates
+ */
+function executeHistoricalPageBack() {
+    // Reads custom page/section hash coordinates snapshotted during initial navigation clicks
+    const savedSectionUrl = localStorage.getItem("stackly_last_section_url");
+
+    if (savedSectionUrl && !savedSectionUrl.includes("404.html") && !savedSectionUrl.includes("login.html")) {
+        // Forces browser window focus directly onto the saved layout path and section coordinates
+        window.location.href = savedSectionUrl;
+    } else if (document.referrer && window.history.length > 1) {
+        // Fallback option 1: standard stack pop
+        window.history.back();
+    } else {
+        // Fallback option 2: root redirect
+        window.location.href = "index.html";
+    }
+}
+
+</script>
+</body>
+</html>

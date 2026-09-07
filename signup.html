@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Account - Stackly</title>
+    <link rel="stylesheet" href="signup.css">
+</head>
+<body>
+
+    <div class="signup-split-viewport-wrapper">
+        
+        <!-- ================= LEFT HAND SIDE: DOMAIN IMAGERY & VALUE PROPOSITIONS ================= -->
+        <div class="signup-promo-left-pane">
+            <div class="promo-inner-content">
+                
+                <span class="promo-mini-badge">
+                    <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11"/></svg>
+                    Healthy & Safe Growth
+                </span>
+                
+                <h1 class="promo-main-headline">
+                    Create Your<br><span class="highlight-green">Healthy Journey.</span>
+                </h1>
+                
+                <p class="promo-subtext-para">
+                    Join our healthy childcare community and discover fresh, balanced meals, early development tracking, and custom activity cards crafted for your child's everyday lifestyle.
+                </p>
+
+                <!-- Centered Main Photo Showcase (Native img Tag) -->
+                <div class="promo-showcase-image-frame">
+                    <img src="./assests/prescl.webp" alt="Children engaging in healthy developmental activities" class="promo-showcase-img">
+                </div>
+
+                <!-- Bottom Features Checklist Matrix -->
+                <div class="promo-checklist-matrix">
+                    <div class="check-item">
+                        <span class="check-vector">✓</span> Fresh Ingredients
+                    </div>
+                    <div class="check-item">
+                        <span class="check-vector">✓</span> Balanced Meals
+                    </div>
+                    <div class="check-item">
+                        <span class="check-vector">✓</span> Event Catering
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ================= RIGHT HAND SIDE: INTERACTIVE SIGNUP REGISTRATION ENGINE ================= -->
+        <div class="signup-engine-right-pane">
+            <div class="engine-inner-content">
+                
+                <!-- FIXED ROW CONTAINER: Holds button isolated to prevent heading overlaps -->
+                <div class="back-to-login-top-row">
+                    <a href="login.html" class="back-login-anchor-link">
+                        <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="12" x2="6" y2="12"/><polyline points="12 5 5 12 12 19"/></svg>
+                        Back to Login
+                    </a>
+                </div>
+
+                <div class="auth-text-header">
+                    <h2>Create Account</h2>
+                    <p>Register your account to manage healthy childcare schedules, event bookings, and personalized tracking profiles.</p>
+                </div>
+
+                <!-- Core Form Engine Wrapper -->
+                <form class="auth-interactive-form" onsubmit="handleSecureSignupEngine(event)">
+                    
+                    <!-- Full Name Field -->
+                    <div class="auth-input-box">
+                        <label for="signupName">Your Full Name</label>
+                        <div class="auth-field-icon-shell">
+                            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                            <input type="text" id="signupName" placeholder="Enter your full name...">
+                        </div>
+                    </div>
+
+                    <!-- Email Field -->
+                    <div class="auth-input-box">
+                        <label for="signupEmail">Email Address</label>
+                        <div class="auth-field-icon-shell">
+                            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.09-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+                            <input type="email" id="signupEmail" placeholder="you@example.com">
+                        </div>
+                    </div>
+
+                    <!-- Mobile Field -->
+                    <div class="auth-input-box">
+                        <label for="signupMobile">10-Digit Mobile Number</label>
+                        <div class="auth-field-icon-shell">
+                            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+                            <input type="tel" id="signupMobile" placeholder="10-digit mobile number">
+                        </div>
+                    </div>
+
+                    <!-- Password Key Field -->
+                    <div class="auth-input-box">
+                        <label for="signupPassword">Password Key</label>
+                        <div class="auth-field-icon-shell">
+                            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+                            <input type="password" id="signupPassword" placeholder="Create a password">
+                            <button type="button" class="eye-toggle-vector" id="passToggleTrigger" onclick="toggleFieldMask('signupPassword', 'passToggleTrigger')" aria-label="Toggle password visibility">
+                                <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Confirm Password Key Field -->
+                    <div class="auth-input-box">
+                        <label for="signupConfirmPassword">Confirm Password Key</label>
+                        <div class="auth-field-icon-shell">
+                            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+                            <input type="password" id="signupConfirmPassword" placeholder="Confirm your password">
+                            <button type="button" class="eye-toggle-vector" id="confirmToggleTrigger" onclick="toggleFieldMask('signupConfirmPassword', 'confirmToggleTrigger')" aria-label="Toggle confirm password visibility">
+                                <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Alert Toast Notification Container -->
+                    <div class="auth-validation-alert-banner" id="signupValidationToast"></div>
+
+                    <!-- Form Action Submission Key Call Button -->
+                    <button type="submit" class="auth-primary-submit-btn">SIGN UP —></button>
+
+                </form>
+
+                <!-- Footer Redirection Links Arrays Navigation Layout -->
+                <div class="auth-foot-navigation-panel">
+                    <p class="redirect-prompt-line">Already have an account? <a href="login.html" class="redirect-anchor">Log In</a></p>
+                    <a href="index.html" class="return-home-anchor">Return to Home</a>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+
+  
+    <style>
+        /* --- COMPONENT THEME DESIGN TOKENS --- */
+:root {
+    --brand-green-base: #00A699;  /* Fresh brand green childcare color */
+    --brand-green-hover: #00877D;
+    --text-pure-black: #000000;
+    --text-charcoal: #2B2B2B;
+    --text-muted-gray: #657775;
+    --warning-coral: #FF5A5F;
+    --surface-white: #FFFFFF;
+    --input-field-bg: #FAFAFA;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    background-color: #FFFFFF;
+    color: var(--text-charcoal);
+    overflow-x: hidden;
+    width: 100vw; height: 100vh;
+}
+
+/* ================= THE MAIN MASTER SPLIT VIEWPORT FULL-PAGE CASING WRAPPER ================= */
+.signup-split-viewport-wrapper {
+    width: 100%; height: 100vh;
+    display: grid;
+    grid-template-columns: 1fr 1fr; 
+    align-items: stretch;
+}
+
+/* ================= LEFT PROFILE VIEWPORT SECTION: CHILDREN PROMO FIELD ================= */
+.signup-promo-left-pane {
+    background-color: #F3F9F9;
+    padding: 50px 60px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.promo-inner-content { max-width: 500px; width: 100%; text-align: left; }
+
+.promo-mini-badge {
+    background-color: #E6F6F5; color: var(--brand-green-base);
+    font-size: 0.82rem; font-weight: 800; padding: 6px 14px; border-radius: 30px;
+    display: inline-flex; align-items: center; gap: 6px; margin-bottom: 16px;
+    text-transform: uppercase; letter-spacing: 0.5px;
+}
+
+.promo-main-headline { font-size: 3rem; font-weight: 900; line-height: 1.15; color: var(--text-pure-black); letter-spacing: -1.5px; margin-bottom: 16px; }
+.promo-main-headline .highlight-green { color: var(--brand-green-base); }
+.promo-subtext-para { font-size: 1.02rem; line-height: 1.55; color: #4A5453; margin-bottom: 25px; font-weight: 500; }
+
+.promo-showcase-image-frame { width: 100%; aspect-ratio: 1.6 / 1; border-radius: 20px; overflow: hidden; box-shadow: 0 15px 35px rgba(0, 166, 153, 0.04); background-color: #E2EBEA; margin-bottom: 25px; }
+.promo-showcase-img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+.promo-checklist-matrix { display: flex; gap: 20px; flex-wrap: wrap; width: 100%; }
+.check-item { font-size: 0.88rem; font-weight: 700; color: #3A4645; display: flex; align-items: center; gap: 6px; }
+.check-vector { color: var(--brand-green-base); font-size: 1.05rem; font-weight: 900; }
+
+/* ================= RIGHT PROFILE VIEWPORT SECTION: REGISTRATION INPUT PANEL ================= */
+.signup-engine-right-pane {
+    background-color: var(--surface-white);
+    padding: 50px 60px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow-y: auto; 
+}
+
+.engine-inner-content { max-width: 440px; width: 100%; display: flex; flex-direction: column; position: relative; }
+
+/* FIXED BUTTON BOUNDS LAYER: Isolates link line completely from title text frames */
+.back-to-login-top-row {
+    width: 100%;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    min-height: 40px;
+    margin-bottom: 12px;
+}
+
+.back-login-anchor-link {
+    font-size: 0.9rem; font-weight: 700; color: var(--text-charcoal); text-decoration: none;
+    display: inline-flex; align-items: center; gap: 8px; transition: color 0.15s, border-color 0.15s;
+    background-color: #FAFAFA; border: 1px solid #EBEFEF; border-radius: 8px; padding: 6px 14px;
+}
+.back-login-anchor-link:hover { color: var(--brand-green-base); border-color: #DCEBEA; }
+
+.auth-text-header { text-align: left; margin-bottom: 24px; width: 100%; }
+.auth-text-header h2 { font-size: 2.2rem; font-weight: 900; color: var(--brand-green-base); letter-spacing: -0.5px; margin-bottom: 8px; line-height: 1.2; }
+.auth-text-header p { font-size: 0.95rem; line-height: 1.45; color: var(--text-muted-gray); font-weight: 500; }
+
+/* --- INPUT CELLS LAYOUT ENVELOPS --- */
+.auth-interactive-form { display: flex; flex-direction: column; gap: 15px; width: 100%; }
+
+.auth-input-box { display: flex; flex-direction: column; text-align: left; gap: 6px; width: 100%; }
+.auth-input-box label { font-size: 0.8rem; font-weight: 800; color: #4A5453; letter-spacing: 0.3px; text-transform: uppercase; }
+
+.auth-field-icon-shell {
+    position: relative; width: 100%; display: flex; align-items: center;
+    background-color: var(--input-field-bg); border: 1px solid #DCEBE9; border-radius: 12px;
+    color: #617876; transition: border-color 0.2s, box-shadow 0.2s;
+}
+.auth-field-icon-shell svg:not(.eye-toggle-vector svg) { position: absolute; left: 16px; pointer-events: none; flex-shrink: 0; }
+
+.auth-field-icon-shell input {
+    width: 100%; padding: 13px 46px 13px 44px; font-size: 0.95rem; background: none; border: none; font-family: inherit; color: var(--text-pure-black);
+}
+.auth-field-icon-shell input:focus { outline: none; }
+.auth-field-icon-shell:focus-within { border-color: var(--brand-green-base); box-shadow: 0 0 0 4px rgba(0, 166, 153, 0.06); }
+
+.eye-toggle-vector {
+    position: absolute; right: 16px; background: none; border: none; color: #A0AEC1; cursor: pointer; display: flex; align-items: center; justify-content: center; padding: 4px; transition: color 0.15s;
+}
+.eye-toggle-vector:hover { color: var(--brand-green-base); }
+
+.auth-validation-alert-banner { width: 100%; font-size: 0.88rem; font-weight: 700; line-height: 1.4; border-radius: 12px; padding: 12px 16px; text-align: left; display: none; }
+.auth-validation-alert-banner.error-mode { color: var(--warning-coral); background-color: #FFF2F3; border: 1px dashed rgba(255, 90, 95, 0.3); }
+.auth-validation-alert-banner.success-mode { color: #2E7D32; background-color: #E8F5E9; border: 1px dashed rgba(46, 125, 50, 0.3); }
+
+.auth-primary-submit-btn {
+    background-color: #1A1C23; color: #FFFFFF; border: none; padding: 15px 32px; font-size: 0.95rem; font-weight: 800; border-radius: 50px;
+    cursor: pointer; width: 100%; box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1); transition: background-color 0.2s, transform 0.2s; text-align: center; margin-top: 5px; letter-spacing: 0.5px;
+}
+.auth-primary-submit-btn:hover { background-color: #000000; transform: translateY(-1px); }
+
+.auth-foot-navigation-panel { display: flex; flex-direction: column; align-items: center; gap: 14px; margin-top: 25px; width: 100%; }
+.redirect-prompt-line { font-size: 0.95rem; font-weight: 600; color: var(--text-muted-gray); }
+.redirect-anchor { color: var(--text-pure-black); text-decoration: underline; font-weight: 800; text-underline-offset: 3px; }
+.redirect-anchor:hover { color: var(--brand-green-base); }
+
+.return-home-anchor { font-size: 0.92rem; font-weight: 700; color: var(--brand-green-base); text-decoration: none; }
+.return-home-anchor:hover { text-decoration: underline; }
+
+/* ================= ADAPTIVE RESPONSIVE COMPACT MEDIA OVERLAYS ================= */
+@media (max-width: 992px) {
+    .signup-split-viewport-wrapper { grid-template-columns: 1fr; height: auto; }
+    .signup-promo-left-pane { padding: 45px 24px; order: 2; }
+    .signup-engine-right-pane { padding: 75px 24px 45px 24px; order: 1; }
+    .back-to-login-top-row { min-height: auto; margin-bottom: 16px; }
+    .back-login-anchor-link { top: 30px; left: 24px; }
+    .promo-main-headline { font-size: 2.4rem; text-align: center; }
+    .promo-inner-content { display: flex; flex-direction: column; align-items: center; text-align: center; }
+    .promo-checklist-matrix { justify-content: center; }
+}
+
+    </style>
+
+    <script>
+        /**
+ * Stackly Childcare Website - Account Creation Validation & Registration Engine
+ */
+
+// 1. PASSWORD MASK DYNAMIC VISIBILITY SWITCHER
+function toggleFieldMask(fieldId, triggerId) {
+    const targetInput = document.getElementById(fieldId);
+    const triggerBtn = document.getElementById(triggerId);
+
+    if (!targetInput || !triggerBtn) return;
+
+    if (targetInput.type === "password") {
+        targetInput.type = "text";
+        triggerBtn.innerHTML = `
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.46 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"/>
+                <line x1="1" y1="1" x2="23" y2="23"/>
+            </svg>
+        `;
+    } else {
+        targetInput.type = "password";
+        triggerBtn.innerHTML = `
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+        `;
+    }
+}
+
+// 2. REGISTRATION CONTROLLER FORM ENGINE INTERCEPTOR
+function handleSecureSignupEngine(event) {
+    event.preventDefault();
+
+    const nameInput = document.getElementById("signupName");
+    const emailInput = document.getElementById("signupEmail");
+    const mobileInput = document.getElementById("signupMobile");
+    const passwordInput = document.getElementById("signupPassword");
+    const confirmInput = document.getElementById("signupConfirmPassword");
+    const toastBanner = document.getElementById("signupValidationToast");
+
+    if (!nameInput || !emailInput || !mobileInput || !passwordInput || !confirmInput || !toastBanner) return;
+
+    const nameVal = nameInput.value.trim();
+    const emailVal = emailInput.value.trim();
+    const mobileVal = mobileInput.value.trim();
+    const passVal = passwordInput.value.trim();
+    const confirmVal = confirmInput.value.trim();
+
+    toastBanner.className = "auth-validation-alert-banner";
+    toastBanner.style.display = "none";
+
+    // Blank data checks
+    if (nameVal === "" || emailVal === "" || mobileVal === "" || passVal === "" || confirmVal === "") {
+        toastBanner.textContent = "Please fill in all fields before completing registration.";
+        toastBanner.classList.add("error-mode");
+        toastBanner.style.display = "block";
+        highlightSignupErrorBorders([nameInput, emailInput, mobileInput, passwordInput, confirmInput]);
+        return;
+    }
+
+    // Syntax regex mail checks
+    const emailPatternFormat = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailPatternFormat.test(emailVal)) {
+        toastBanner.textContent = "Please enter a valid active email address format.";
+        toastBanner.classList.add("error-mode");
+        toastBanner.style.display = "block";
+        emailInput.parentElement.style.borderColor = "#FF5A5F";
+        emailInput.focus();
+        return;
+    }
+
+    // Numeric mobile constraint check (10 digits)
+    const mobilePatternFormat = /^[0-9]{10}$/;
+    if (!mobilePatternFormat.test(mobileVal)) {
+        toastBanner.textContent = "Please enter a valid 10-digit mobile phone number.";
+        toastBanner.classList.add("error-mode");
+        toastBanner.style.display = "block";
+        mobileInput.parentElement.style.borderColor = "#FF5A5F";
+        mobileInput.focus();
+        return;
+    }
+
+    // Password matching confirmation checks
+    if (passVal !== confirmVal) {
+        toastBanner.textContent = "Password verification mismatch. Confirm key must match your password.";
+        toastBanner.classList.add("error-mode");
+        toastBanner.style.display = "block";
+        confirmInput.parentElement.style.borderColor = "#FF5A5F";
+        confirmInput.focus();
+        return;
+    }
+
+    clearSignupErrorBorders([nameInput, emailInput, mobileInput, passwordInput, confirmInput]);
+
+    // Success dispatch routing track trigger
+    toastBanner.textContent = "Account successfully registered! Redirecting to login station...";
+    toastBanner.classList.add("success-mode");
+    toastBanner.style.display = "block";
+
+    setTimeout(() => {
+        window.location.href = "login.html";
+    }, 1500);
+}
+
+function highlightSignupErrorBorders(inputsArray) {
+    inputsArray.forEach(field => {
+        if (field.value.trim() === "") {
+            field.parentElement.style.borderColor = "#FF5A5F";
+        } else {
+            field.parentElement.style.borderColor = "";
+        }
+    });
+}
+
+function clearSignupErrorBorders(inputsArray) {
+    inputsArray.forEach(field => { field.parentElement.style.borderColor = ""; });
+}
+
+    </script>
+</body>
+</html>

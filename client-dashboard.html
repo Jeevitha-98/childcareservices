@@ -1,0 +1,2530 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Parent Portal - Stackly Client</title>
+    <link rel="stylesheet" href="client.css">
+</head>
+<body>
+
+    <!-- OVERALL COMPACT DASHBOARD CONTAINER MAP -->
+    <div class="dashboard-macro-layout">
+
+        <!-- ================= LAYER 1: THE HIGH-CONTRAST SIDEBAR CONTROLLER ================= -->
+        <aside class="dashboard-sidebar" id="dashboardSidebar">
+            
+            <!-- Mobile Drawer Close Cross Button -->
+            <button class="mobile-sidebar-close-btn" onclick="toggleMobileSidebar()" aria-label="Close Sidebar">
+                <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+            </button>
+
+            <!-- Sidebar Navigation Menus Stack List Links Row Arrays -->
+            <nav class="sidebar-menu-nav">
+                <!-- Menu Item 1: Kid Profile Tracking -->
+                <button class="menu-link-node active" onclick="switchDashboardSection('child-profile-panel', this)">
+                    <svg class="menu-vector-icon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="7" r="4"/><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/></svg>
+                    Child Profile
+                </button>
+
+                <!-- Menu Item 2: Activity Tracking Reports -->
+                <button class="menu-link-node" onclick="switchDashboardSection('activity-panel', this)">
+                    <svg class="menu-vector-icon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+                    Activity Reports
+                </button>
+
+                <!-- Menu Item 3: Fee Estimations Statements -->
+                <button class="menu-link-node" onclick="switchDashboardSection('billing-panel', this)">
+                    <svg class="menu-vector-icon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="2" y="4" width="20" height="16" rx="2" ry="2"/><line x1="12" y1="4" x2="12" y2="20"/><line x1="2" y1="12" x2="22" y2="12"/></svg>
+                    Fees & Billing
+                </button>
+
+                <!-- Menu Item 4: Digital Attendance Trackers -->
+                <button class="menu-link-node" onclick="switchDashboardSection('attendance-panel', this)">
+                    <svg class="menu-vector-icon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+                    Attendance Logs
+                </button>
+
+                <!-- Menu Item 5: Parent Support Desk -->
+                <button class="menu-link-node" onclick="switchDashboardSection('helpdesk-panel', this)">
+                    <svg class="menu-vector-icon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+                    Help & Support
+                </button>
+            </nav>
+
+            <!-- TERMINAL DISPATCH EXIT MODULE: Logs parent out back to login screen safely -->
+            <button class="sidebar-logout-btn" onclick="executeSecureDashboardLogout()">
+                <svg class="menu-vector-icon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+                Log Out
+            </button>
+        </aside>
+
+        <!-- Sidebar backdrop blanket shading for handheld devices overlay boundaries -->
+        <div class="mobile-sidebar-blanket" id="sidebarBlanket" onclick="toggleMobileSidebar()"></div>
+
+        <!-- ================= LAYER 2: WORKSPACE COMPONENT (HEADER + SUB PANELS) ================= -->
+        <div class="dashboard-workspace-block">
+            
+            <!-- TOP WORKSPACE NAVIGATION HEADER BAR -->
+            <header class="workspace-top-header">
+                
+                <!-- Left End Cluster: Mobile Hamburger Icon & Refresh Brand Logo -->
+                <div class="header-left-cluster">
+                    <button class="mobile-hamburger-toggle-trigger" onclick="toggleMobileSidebar()" aria-label="Open Sidebar Menu">
+                        <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+                    </button>
+                    
+                    <!-- REFRESH BRAND LOGO: Reloads page workspace status natively on click selection -->
+                    <div class="dashboard-brand-refresh-logo" onclick="refreshDashboardNatively()" title="Refresh Parent Portal Status">
+                        <img src="./assests/childcare logo.webp" alt="Stackly Client Brand Logo" class="brand-img-tag-logo">
+                    </div>
+                </div>
+
+                <!-- Right End Cluster: Alert Notification Bell & Prefix Name Display Profile -->
+                <div class="header-right-cluster">
+                    <div class="header-notification-bell-pod" onclick="window.location.href='404.html'" title="View Notifications">
+                        <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+                        <span class="notification-indicator-dot-badge"></span>
+                    </div>
+                    
+                    <!-- Profile Greeting Name: Extracted dynamically from email login coordinates value -->
+                    <div class="header-profile-user-card">
+                        <div class="avatar-circle-frame">
+                            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                        </div>
+                        <!-- AUTOMATED PARSED PREFIX TARGET INJECTOR -->
+                        <span class="profile-display-name-node" id="headerProfileGreetingName">Parent</span>
+                    </div>
+                </div>
+            </header>
+
+            <!-- MAIN WORKSPACE PORTAL CONTAINER CARDS PANELS -->
+            <main class="workspace-content-pane">
+                
+                <!-- MENU SECTION 1: CHILD PROFILE (Default Display Active Pane) -->
+              <!-- ELABORATELY ENHANCED CHILD PROFILE PORTAL -->
+<div class="dashboard-content-panel active-panel" id="child-profile-panel">
+    
+    <!-- CONSOLE HEADER ROW -->
+    <div class="panel-section-title-wrapper-card">
+        <div class="header-text-group">
+            <h2>Child Profile Dossier</h2>
+            <p class="panel-subtitle-caption">Review core enrollment parameters, check active classroom pod suites, and audit custom developmental milestone requirements.</p>
+        </div>
+        <span class="panel-tag-badge">Profile Track</span>
+    </div>
+
+    <!-- 1. DYNAMIC QUICK-STATUS MATRICES GRID -->
+    <div class="profile-summary-stats-grid">
+        <!-- Stat Item 1 -->
+        <div class="profile-macro-card border-left-teal">
+            <div class="profile-icon-badge teal-tint">
+                <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11"/></svg>
+            </div>
+            <div class="profile-meta">
+                <span class="profile-value">Active Enrolled</span>
+                <span class="profile-label">Registration Lock Status</span>
+            </div>
+        </div>
+        <!-- Stat Item 2 -->
+        <div class="profile-macro-card border-left-green">
+            <div class="profile-icon-badge green-tint">
+                <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+            </div>
+            <div class="profile-meta">
+                <span class="profile-value">100% Verified</span>
+                <span class="profile-label">Medical & Safety Checks</span>
+            </div>
+        </div>
+        <!-- Stat Item 3 -->
+        <div class="profile-macro-card border-left-pink">
+            <div class="profile-icon-badge pink-tint">
+                <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+            </div>
+            <div class="profile-meta">
+                <span class="profile-value">14 Months</span>
+                <span class="profile-label">Current Development Track</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- 2. TWO-COLUMN SPLIT DOSSIER WORKSPACE -->
+    <div class="profile-workspace-split-layout">
+        
+        <!-- LEFT SUB-PANE: METADATA INFORMATION MATRIX -->
+        <div class="profile-info-details-pane">
+            <div class="sub-pane-header">
+                <h3>Core Enrollment Parameters</h3>
+                <p>Primary data records registered within our admissions database engine.</p>
+            </div>
+            
+            <div class="metadata-fields-grid-list">
+                <div class="metadata-item-node scroll-fade-node">
+                    <span class="meta-field-label">Student Full Name</span>
+                    <p class="meta-field-value">Oliver Smith</p>
+                </div>
+                <div class="metadata-item-node scroll-fade-node">
+                    <span class="meta-field-label">Date of Birth</span>
+                    <p class="meta-field-value">July 14, 2025</p>
+                </div>
+                <div class="metadata-item-node scroll-fade-node">
+                    <span class="meta-field-label">Primary Guardian</span>
+                    <p class="meta-field-value">Jonathan Smith</p>
+                </div>
+                <div class="metadata-item-node scroll-fade-node">
+                    <span class="meta-field-label">Emergency Handle</span>
+                    <p class="meta-field-value">+1 (555) 019-2834</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- RIGHT SUB-PANE: ASSIGNED CLASSROOM POD & NOTES -->
+        <div class="profile-classroom-notes-pane">
+            <div class="sub-pane-header">
+                <h3>Classroom Pod Suite</h3>
+                <p>Active facility location parameters and assigned room caregivers contact logs.</p>
+            </div>
+
+            <div class="classroom-assignment-card-box scroll-fade-node">
+                <div class="classroom-profile-row">
+                    <div class="classroom-avatar-badge initials-pink">OS</div>
+                    <div class="classroom-text-meta text-left">
+                        <h4>Infant Pod Suite</h4>
+                        <span class="room-indicator-capsule color-p-pink">Room Suite B</span>
+                    </div>
+                </div>
+                <div class="assigned-teacher-row border-top-dashed">
+                    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" class="teacher-vector-icon"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                    <div class="teacher-meta-stack text-left">
+                        <strong>Emma Johnson</strong>
+                        <span>Senior Room Caregiver</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Custom Developmental Notes Text Box Panel -->
+            <div class="developmental-notes-wrapper-box text-left margin-top-20 scroll-fade-node">
+                <span class="notes-block-label">Developmental Needs & Care Notes</span>
+                <p class="notes-block-content">
+                    Demonstrates complete sensory verification tracking with hidden toy blocks manipulation layers. Focus on lactose-free substitutes mapping mandatory for all meals during daily catering logs intervals.
+                </p>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+<style>
+    /* --- ENHANCED DESIGN SYSTEM TOKENS --- */
+:root {
+    --text-pure-black: #000000;
+    --text-charcoal: #2B2B2B;
+    --text-muted: #5A6D6A;
+    --primary-pink: #FF5A5F;
+    --accent-teal: #00A699;
+    --accent-yellow: #FFB400;
+    --border-color-dim: #E2EBEA;
+    --surface-white: #FFFFFF;
+}
+
+.header-text-group { text-align: left; }
+.panel-subtitle-caption { font-size: 0.92rem; color: var(--text-muted); margin-top: 4px; font-weight: 500; }
+
+/* ================= 1. DYNAMIC QUICK-STATUS MATRICES GRID ================= */
+.profile-summary-stats-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    width: 100%;
+    margin-bottom: 30px;
+    margin-top: 5px;
+}
+
+.profile-macro-card {
+    background-color: var(--surface-white);
+    border: 1px solid var(--border-color-dim);
+    border-left: 4px solid transparent;
+    border-radius: 14px;
+    padding: 18px 20px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    text-align: left;
+}
+.border-left-teal { border-left-color: var(--accent-teal); }
+.border-left-green { border-left-color: #7CB342; }
+.border-left-pink { border-left-color: var(--primary-pink); }
+
+.profile-icon-badge {
+    width: 42px; height: 42px; border-radius: 10px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+}
+.teal-tint { background-color: #E6F6F5; color: var(--accent-teal); }
+.green-tint { background-color: #F1F8E9; color: #7CB342; }
+.pink-tint { background-color: #FFEBEB; color: var(--primary-pink); }
+
+.profile-meta { display: flex; flex-direction: column; gap: 2px; }
+.profile-value { font-size: 1.25rem; font-weight: 900; color: var(--text-pure-black); letter-spacing: -0.5px; }
+.profile-label { font-size: 0.82rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.3px; }
+
+/* ================= 2. TWO-COLUMN SPLIT DOSSIER WORKSPACE ================= */
+.profile-workspace-split-layout {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 30px;
+    width: 100%;
+}
+
+.profile-info-details-pane, .profile-classroom-notes-pane {
+    background-color: var(--surface-white);
+    border: 1px solid var(--border-color-dim);
+    border-radius: 20px;
+    padding: 26px 24px;
+    /* COMPLETELY BLOCKS CONTENT HIDING: Height stretches fluidly with text fields */
+    height: auto; 
+}
+
+.sub-pane-header { text-align: left; margin-bottom: 20px; border-bottom: 1px dashed var(--border-color-dim); padding-bottom: 14px; }
+.sub-pane-header h3 { font-size: 1.25rem; font-weight: 900; color: var(--text-pure-black); margin-bottom: 4px; }
+.sub-pane-header p { font-size: 0.88rem; font-weight: 500; color: var(--text-muted); line-height: 1.4; }
+
+/* --- LEFT SIDE: METADATA DATA CARD NODES --- */
+.metadata-fields-grid-list { display: flex; flex-direction: column; gap: 12px; width: 100%; }
+
+.metadata-item-node {
+    width: 100%; padding: 14px 18px; border: 1px solid var(--border-color-dim); border-radius: 12px; background-color: #FAFAFA; display: flex; flex-direction: column; gap: 4px; text-align: left;
+    opacity: 0; transform: translateY(15px);
+    transition: opacity 0.5s ease, transform 0.5s ease, border-color 0.25s ease, background-color 0.25s ease;
+}
+.metadata-item-node.reveal-node-active { opacity: 1; transform: translateY(0); }
+.metadata-item-node:hover { background-color: var(--surface-white); border-color: var(--accent-teal); }
+
+.meta-field-label { font-size: 0.8rem; font-weight: 800; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px; }
+.meta-field-value { font-size: 1.05rem; font-weight: 800; color: var(--text-pure-black); }
+
+/* --- RIGHT SIDE: ASSIGNED CLASSROOM POD & CONTACT LOGS --- */
+.classroom-assignment-card-box {
+    background-color: #FAFAFA; border: 1px solid var(--border-color-dim); border-radius: 16px; padding: 18px 20px; display: flex; flex-direction: column; gap: 14px; width: 100%;
+    opacity: 0; transform: translateY(15px);
+    transition: opacity 0.5s ease, transform 0.5s ease, border-color 0.25s ease, background-color 0.25s ease;
+}
+.classroom-assignment-card-box.reveal-node-active { opacity: 1; transform: translateY(0); }
+.classroom-assignment-card-box:hover { background-color: var(--surface-white); border-color: var(--primary-pink); }
+
+.classroom-profile-row { display: flex; align-items: center; gap: 14px; }
+.classroom-avatar-badge { width: 44px; height: 44px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1rem; font-weight: 800; color: #FFFFFF; flex-shrink: 0; }
+.initials-pink { background-color: var(--primary-pink); }
+
+.classroom-text-meta h4 { font-size: 1.15rem; font-weight: 800; color: var(--text-pure-black); margin-bottom: 4px; }
+.room-indicator-capsule { font-size: 0.78rem; font-weight: 700; padding: 3px 10px; border-radius: 6px; display: inline-block; background-color: #FFEBEB; color: var(--primary-pink); }
+
+.border-top-dashed { border-top: 1px dashed var(--border-color-dim); padding-top: 14px; display: flex; align-items: center; gap: 12px; }
+.teacher-vector-icon { color: var(--accent-teal); flex-shrink: 0; }
+.teacher-meta-stack { display: flex; flex-direction: column; gap: 1px; }
+.teacher-meta-stack strong { font-size: 0.95rem; font-weight: 800; color: var(--text-pure-black); }
+.teacher-meta-stack span { font-size: 0.82rem; font-weight: 600; color: var(--text-muted); }
+
+/* Custom Developmental Notes Text Box Panel */
+.developmental-notes-wrapper-box {
+    background-color: #FFF6E0; border: 1px solid #FFE3C2; border-radius: 16px; padding: 18px 20px; width: 100%;
+    opacity: 0; transform: translateY(15px);
+    transition: opacity 0.5s ease, transform 0.5s ease;
+}
+.developmental-notes-wrapper-box.reveal-node-active { opacity: 1; transform: translateY(0); }
+.notes-block-label { font-size: 0.8rem; font-weight: 800; color: #E68A00; text-transform: uppercase; letter-spacing: 0.5px; display: block; margin-bottom: 6px; }
+.notes-block-content { font-size: 0.92rem; line-height: 1.5; color: var(--text-charcoal); font-weight: 600; }
+
+.margin-top-20 { margin-top: 20px; }
+
+/* ================= DYNAMIC ADAPTIVE RESPONSIVE COVER INTERFACE ================= */
+@media (max-width: 1024px) {
+    .profile-summary-stats-grid { grid-template-columns: 1fr; gap: 12px; }
+    .profile-workspace-split-layout { grid-template-columns: 1fr; gap: 24px; }
+    .profile-info-details-pane, .profile-classroom-notes-pane { padding: 20px 16px; }
+}
+
+@media (max-width: 480px) {
+    .sub-pane-header h3 { font-size: 1.15rem; }
+    .meta-field-value { font-size: 0.95rem; }
+    .classroom-text-meta h4 { font-size: 1.05rem; }
+    .teacher-meta-stack strong { font-size: 0.88rem; }
+    .notes-block-content { font-size: 0.85rem; }
+}
+
+</style>
+
+<script>
+    /**
+ * Stackly Childcare Website - Child Profile Cascade Animation Sub-Engine
+ */
+document.addEventListener("DOMContentLoaded", () => {
+    initChildProfileCascadeReveal();
+});
+
+/**
+ * Sequential Node Cascade Trigger
+ * Slides dossier element nodes up into page viewports sequentially by 140ms intervals
+ */
+function initChildProfileCascadeReveal() {
+    const parentContainer = document.querySelector(".profile-workspace-split-layout");
+    if (!parentContainer) return;
+
+    const intersectionObserver = new IntersectionObserver((entries, observer) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                const parent = entry.target;
+                const animatedNodes = parent.querySelectorAll(".scroll-fade-node");
+
+                animatedNodes.forEach((node, index) => {
+                    setTimeout(() => {
+                        node.classList.add("reveal-node-active");
+                    }, index * 140); // Staggers element block arrivals sequentially by 140ms
+                });
+
+                // Clear operational runtime connections to lock active metrics state safely
+                observer.unobserve(parent);
+            }
+        });
+    }, { root: null, threshold: 0.1 });
+
+    intersectionObserver.observe(parentContainer);
+}
+
+</script>
+
+                <!-- MENU SECTION 2: ACTIVITY REPORTS -->
+            <!-- ELABORATELY ENHANCED ACTIVITY REPORTS PORTAL -->
+<div class="dashboard-content-panel active-panel" id="activity-panel">
+    
+    <!-- CONSOLE HEADER ROW -->
+    <div class="panel-section-title-wrapper-card">
+        <div class="header-text-group">
+            <h2>Daily Activity Reports</h2>
+            <p class="panel-subtitle-caption">Monitor sensory tracking metrics, review digital lesson performance files, and access early childhood breakthrough archives logs.</p>
+        </div>
+        <span class="panel-tag-badge">Daily Insights</span>
+    </div>
+
+    <!-- 1. LIVE QUICK-STATS SUMMARY BLOCKS GRID -->
+    <div class="activity-summary-stats-grid">
+        <!-- Stat Item 1 -->
+        <div class="activity-macro-card border-left-teal">
+            <div class="activity-icon-badge teal-tint">
+                <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+            </div>
+            <div class="activity-meta">
+                <span class="activity-value">04 Logged</span>
+                <span class="activity-label">Daily Sensory Tracks</span>
+            </div>
+        </div>
+        <!-- Stat Item 2 -->
+        <div class="activity-macro-card border-left-pink">
+            <div class="activity-icon-badge pink-tint">
+                <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.11 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+            </div>
+            <div class="activity-meta">
+                <span class="activity-value">02 Entries</span>
+                <span class="activity-label">Creative Art Snapshots</span>
+            </div>
+        </div>
+        <!-- Stat Item 3 -->
+        <div class="activity-macro-card border-left-yellow">
+            <div class="activity-icon-badge yellow-tint">
+                <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11"/></svg>
+            </div>
+            <div class="activity-meta">
+                <span class="activity-value">Completed</span>
+                <span class="activity-label">Core Milestone Pacing</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- 2. TWO-COLUMN SPLIT WORKSPACE INTERFACE -->
+    <div class="activity-workspace-split-layout">
+        
+        <!-- LEFT SUB-PANE: TIME-SEGMENTED DAILY FEED -->
+        <div class="activity-timeline-feed-pane">
+            <div class="sub-pane-header">
+                <h3>Today's Activity Timeline</h3>
+                <p>Staggered chronicle logs tracking milestones in action safely across day segments loops.</p>
+            </div>
+            
+            <div class="activity-timeline-stack" id="staggeredActivityTimeline">
+                
+                <!-- Log Node 1 -->
+                <div class="activity-feed-node activity-cascade-item">
+                    <span class="activity-time-marker">09:30 AM</span>
+                    <div class="activity-node-details text-left">
+                        <strong>Morning Circle & Sensory Play</strong>
+                        <p>Engaged in object permanence retention metrics tasks utilizing textured blocks. Active engagement level: Excellent.</p>
+                        <span class="activity-mini-pill badge-p-teal">Sensory</span>
+                    </div>
+                </div>
+
+                <!-- Log Node 2 -->
+                <div class="activity-feed-node activity-cascade-item">
+                    <span class="activity-time-marker">11:15 AM</span>
+                    <div class="activity-node-details text-left">
+                        <strong>Creative Palette Expression</strong>
+                        <p>Executed independent color categorization blocks. Mixed primary water bases strokes safely during group finger painting sessions.</p>
+                        <span class="activity-mini-pill badge-p-pink">Art & Craft</span>
+                    </div>
+                </div>
+
+                <!-- Log Node 3 -->
+                <div class="activity-feed-node activity-cascade-item">
+                    <span class="activity-time-marker">02:00 PM</span>
+                    <div class="activity-node-details text-left">
+                        <strong>Language Foundation Hour</strong>
+                        <p>Paced early reading comprehension logs with interactive cartoon picture matching cards panels.</p>
+                        <span class="activity-mini-pill badge-p-yellow">Cognitive</span>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- RIGHT SUB-PANE: DIGITAL SNAPSHOTS ARCHIVES GALLERY -->
+        <div class="activity-snapshots-gallery-pane">
+            <div class="sub-pane-header">
+                <h3>Creative Art & Classroom Snapshots</h3>
+                <p>Digital archive verification layers uploaded directly by room senior caregivers.</p>
+            </div>
+
+            <div class="activity-snapshots-grid-matrix">
+                <!-- Gallery Item 1 -->
+                <div class="snapshot-display-card-box activity-cascade-item">
+                    <div class="snapshot-image-frame">
+                        <img src="https://unsplash.com" alt="Finger painting breakthrough document" class="snapshot-raw-img">
+                    </div>
+                    <div class="snapshot-card-caption text-left">
+                        <h4>Finger Painting Logic Sheet</h4>
+                        <span>Uploaded at 11:45 AM</span>
+                        <button class="snapshot-download-icon-btn" onclick="window.location.href='404.html'" title="Download attachment">➔</button>
+                    </div>
+                </div>
+
+                <!-- Gallery Item 2 -->
+                <div class="snapshot-display-card-box activity-cascade-item">
+                    <div class="snapshot-image-frame">
+                        <img src="https://unsplash.com" alt="Tangible block sorting session" class="snapshot-raw-img">
+                    </div>
+                    <div class="snapshot-card-caption text-left">
+                        <h4>Tactile Block Sorting Stack</h4>
+                        <span>Uploaded at 10:15 AM</span>
+                        <button class="snapshot-download-icon-btn" onclick="window.location.href='404.html'" title="Download attachment">➔</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+<style>
+    /* --- ENHANCED DESIGN SYSTEM TOKENS --- */
+:root {
+    --text-pure-black: #000000;
+    --text-charcoal: #2B2B2B;
+    --text-muted-slate: #5A6D6A;
+    --primary-pink: #FF5A5F;
+    --accent-teal: #00A699;
+    --accent-yellow: #FFB400;
+    --border-color-dim: #E2EBEA;
+    --surface-white: #FFFFFF;
+}
+
+.header-text-group { text-align: left; }
+.panel-subtitle-caption { font-size: 0.92rem; color: var(--text-muted-slate); margin-top: 4px; font-weight: 500; }
+
+/* ================= 1. LIVE QUICK-STATS SUMMARY BLOCKS GRID ================= */
+.activity-summary-stats-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    width: 100%;
+    margin-bottom: 30px;
+    margin-top: 5px;
+}
+
+.activity-macro-card {
+    background-color: var(--surface-white);
+    border: 1px solid var(--border-color-dim);
+    border-left: 4px solid transparent;
+    border-radius: 14px;
+    padding: 18px 20px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    text-align: left;
+}
+.border-left-teal { border-left-color: var(--accent-teal); }
+.border-left-pink { border-left-color: var(--primary-pink); }
+.border-left-yellow { border-left-color: var(--accent-yellow); }
+
+.activity-icon-badge {
+    width: 42px; height: 42px; border-radius: 10px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+}
+.teal-tint { background-color: #E6F6F5; color: var(--accent-teal); }
+.pink-tint { background-color: #FFEBEB; color: var(--primary-pink); }
+.yellow-tint { background-color: #FFF6E0; color: #E68A00; }
+
+.activity-meta { display: flex; flex-direction: column; gap: 2px; }
+.activity-value { font-size: 1.25rem; font-weight: 900; color: var(--text-pure-black); letter-spacing: -0.5px; }
+.activity-label { font-size: 0.82rem; font-weight: 700; color: var(--text-muted-slate); text-transform: uppercase; letter-spacing: 0.3px; }
+
+/* ================= 2. TWO-COLUMN SPLIT PANELS VIEWPORT WORKSPACE ================= */
+.activity-workspace-split-layout {
+    display: grid;
+    grid-template-columns: 1.05fr 0.95fr;
+    gap: 30px;
+    width: 100%;
+}
+
+.activity-timeline-feed-pane, .activity-snapshots-gallery-pane {
+    background-color: var(--surface-white);
+    border: 1px solid var(--border-color-dim);
+    border-radius: 20px;
+    padding: 26px 24px;
+    /* COMPLETELY BLOCKS CONTENT HIDING: Stretches cell boundaries natively with text flow fields */
+    height: auto; 
+}
+
+.sub-pane-header { text-align: left; margin-bottom: 24px; border-bottom: 1px dashed var(--border-color-dim); padding-bottom: 14px; }
+.sub-pane-header h3 { font-size: 1.25rem; font-weight: 900; color: var(--text-pure-black); margin-bottom: 4px; }
+.sub-pane-header p { font-size: 0.88rem; font-weight: 500; color: var(--text-muted-slate); line-height: 1.4; }
+
+/* --- LEFT SIDE: STAGGERED CHRONICLE TIMELINE STACK --- */
+.activity-timeline-stack { display: flex; flex-direction: column; gap: 14px; width: 100%; position: relative; }
+
+.activity-feed-node {
+    width: 100%; padding: 16px 20px; border: 1px solid var(--border-color-dim); border-radius: 16px; background-color: #FAFAFA; display: flex; align-items: flex-start; gap: 20px; text-align: left; height: auto;
+    opacity: 0; transform: translateY(15px);
+    transition: opacity 0.5s ease, transform 0.5s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+}
+.activity-feed-node.reveal-feed-active { opacity: 1; transform: translateY(0); }
+.activity-feed-node:hover { background-color: var(--surface-white); border-color: #D2E5E4; box-shadow: 0 4px 15px rgba(0,166,153,0.02); }
+
+.activity-time-marker { font-size: 0.88rem; font-weight: 800; color: var(--accent-teal); width: 80px; flex-shrink: 0; margin-top: 2px; }
+.activity-node-details { flex-grow: 1; display: flex; flex-direction: column; align-items: flex-start; gap: 4px; }
+.activity-node-details strong { font-size: 1.02rem; font-weight: 800; color: var(--text-pure-black); display: block; }
+.activity-node-details p { font-size: 0.9rem; line-height: 1.45; color: #4A5553; font-weight: 500; margin-bottom: 6px; }
+
+/* Mini categorization label pills vectors */
+.activity-mini-pill { font-size: 0.72rem; font-weight: 800; text-transform: uppercase; padding: 2px 8px; border-radius: 4px; letter-spacing: 0.5px; color: #FFFFFF; }
+.badge-p-teal { background-color: var(--accent-teal); }
+.badge-p-pink { background-color: var(--primary-pink); }
+.badge-p-yellow { background-color: #E68A00; }
+
+/* --- RIGHT SIDE: ARCHIVE SNAPSHOTS MATRIX GALLERY --- */
+.activity-snapshots-grid-matrix { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; width: 100%; }
+
+.snapshot-display-card-box {
+    background-color: #FAFAFA; border: 1px solid var(--border-color-dim); border-radius: 18px; padding: 12px; display: flex; flex-direction: column; gap: 12px; height: auto;
+    opacity: 0; transform: translateY(15px);
+    transition: opacity 0.5s ease, transform 0.5s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+}
+.snapshot-display-card-box.reveal-feed-active { opacity: 1; transform: translateY(0); }
+.snapshot-display-card-box:hover { background-color: var(--surface-white); border-color: var(--accent-teal); box-shadow: 0 6px 15px rgba(0,166,153,0.04); }
+
+.snapshot-image-frame { width: 100%; aspect-ratio: 1.35 / 1; border-radius: 12px; overflow: hidden; background-color: #EEF4F3; }
+.snapshot-raw-img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 0.4s ease; }
+.snapshot-display-card-box:hover .snapshot-raw-img { transform: scale(1.03); }
+
+.snapshot-card-caption { display: flex; flex-direction: column; gap: 2px; position: relative; padding: 0 4px 6px 4px; }
+.snapshot-card-caption h4 { font-size: 0.95rem; font-weight: 800; color: var(--text-pure-black); line-height: 1.3; max-width: calc(100% - 32px); }
+.snapshot-card-caption span { font-size: 0.78rem; font-weight: 600; color: var(--text-muted-slate); }
+
+.snapshot-download-icon-btn { position: absolute; right: 4px; bottom: 8px; width: 28px; height: 28px; border-radius: 6px; background-color: var(--surface-white); border: 1px solid var(--border-color-dim); color: var(--text-charcoal); cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 0.8rem; font-weight: 800; transform: rotate(90deg); transition: all 0.2s ease; }
+.snapshot-download-icon-btn:hover { background-color: var(--accent-teal); color: #FFFFFF; border-color: var(--accent-teal); }
+
+/* ================= DYNAMIC HIGH-UTILITY MOBILE RESPONSIVE OVERLAYS ================= */
+@media (max-width: 1140px) {
+    .activity-snapshots-grid-matrix { grid-template-columns: 1fr; } /* Fits cards stacked vertically cleanly inside nested sidebar grids */
+}
+
+@media (max-width: 1024px) {
+    .activity-summary-stats-grid { grid-template-columns: 1fr; gap: 12px; }
+    .activity-workspace-split-layout { grid-template-columns: 1fr; gap: 24px; }
+    .activity-timeline-feed-pane, .activity-snapshots-gallery-pane { padding: 20px 16px; }
+    .activity-snapshots-grid-matrix { grid-template-columns: repeat(2, 1fr); gap: 16px; }
+    .activity-feed-node { flex-direction: column; align-items: flex-start; gap: 6px; padding: 16px; }
+    .activity-time-marker { width: 100%; font-size: 0.8rem; border-bottom: 1px dashed var(--border-color-dim); padding-bottom: 4px; }
+}
+
+@media (max-width: 580px) {
+    .activity-snapshots-grid-matrix { grid-template-columns: 1fr; }
+    .snapshot-card-caption h4 { font-size: 0.88rem; }
+}
+
+</style>
+
+<script>
+    /**
+ * Stackly Childcare Website - Activity Feed Cascade Animation Sub-Engine
+ */
+document.addEventListener("DOMContentLoaded", () => {
+    initActivityLogsCascadeReveal();
+});
+
+/**
+ * Sequential Node Cascade Observer
+ * Slides activity narrative lines and photo snapshot cards up into viewports sequentially by 150ms intervals
+ */
+function initActivityLogsCascadeReveal() {
+    const splitLayoutStage = document.querySelector(".activity-workspace-split-layout");
+    if (!splitLayoutStage) return;
+
+    const intersectionObserver = new IntersectionObserver((entries, observer) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                const parent = entry.target;
+                const activeCascadeNodes = parent.querySelectorAll(".activity-cascade-item");
+
+                activeCascadeNodes.forEach((node, index) => {
+                    setTimeout(() => {
+                        node.classList.add("reveal-feed-active");
+                    }, index * 150);
+                });
+
+                // Dismiss active runtime connection listeners to lock state parameters securely
+                observer.unobserve(parent);
+            }
+        });
+    }, { root: null, threshold: 0.1 });
+
+    intersectionObserver.observe(splitLayoutStage);
+}
+
+</script>
+<!-- ELABORATELY ENHANCED FEES & BILLING PORTAL -->
+<div class="dashboard-content-panel active-panel" id="billing-panel">
+    
+    <!-- CONSOLE HEADER ROW -->
+    <div class="panel-section-title-wrapper-card">
+        <div class="header-text-group">
+            <h2>Fees & Billing Statement</h2>
+            <p class="panel-subtitle-caption">Review active monthly tuition packages, track pending security deposits, and download historical transaction receipts.</p>
+        </div>
+        <span class="panel-tag-badge">Financial Desk</span>
+    </div>
+
+    <!-- 1. FINANCIAL QUICK-STATS MATRIX -->
+    <div class="billing-summary-stats-grid">
+        <!-- Stat Item 1: Outstanding Balance -->
+        <div class="billing-macro-card border-left-pink">
+            <div class="billing-icon-badge pink-tint">
+                <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="2" y="4" width="20" height="16" rx="2" ry="2"/><line x1="12" y1="4" x2="12" y2="20"/><line x1="2" y1="12" x2="22" y2="12"/></svg>
+            </div>
+            <div class="billing-meta">
+                <span class="billing-value">₹15,400</span>
+                <span class="billing-label">Outstanding Balance</span>
+            </div>
+        </div>
+        <!-- Stat Item 2: Safe Pinned Deposit -->
+        <div class="billing-macro-card border-left-teal">
+            <div class="billing-icon-badge teal-tint">
+                <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+            </div>
+            <div class="billing-meta">
+                <span class="billing-value">₹25,000</span>
+                <span class="billing-label">Held Security Deposit</span>
+            </div>
+        </div>
+        <!-- Stat Item 3: Year-to-Date Paid -->
+        <div class="billing-macro-card border-left-green">
+            <div class="billing-icon-badge green-tint">
+                <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+            </div>
+            <div class="billing-meta">
+                <span class="billing-value">₹1,24,000</span>
+                <span class="billing-label">YTD Total Paid</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- 2. TWO-COLUMN SPLIT LEDGER WORKSPACE OVERVIEW -->
+    <div class="billing-workspace-split-layout">
+        
+        <!-- LEFT SUB-PANE: ACTIVE INVOICES & STATEMENTS -->
+        <div class="billing-invoices-pane">
+            <div class="sub-pane-header">
+                <h3>Current Outstanding Statements</h3>
+                <p>Pending dues calculated for tuition and extra activities packages.</p>
+            </div>
+            
+            <div class="invoices-rows-stack" id="staggeredInvoicesContainer">
+                <!-- Invoice Row 1 -->
+                <div class="invoice-statement-row billing-cascade-node">
+                    <div class="invoice-profile-meta">
+                        <div class="invoice-avatar-badge initials-pink">TS</div>
+                        <div class="invoice-details-copy text-left">
+                            <strong>Monthly Tuition Package</strong>
+                            <span>Invoice: <code class="mono-code">INV-2026-089</code></span>
+                        </div>
+                    </div>
+                    <div class="invoice-status-indicator">
+                        <span class="invoice-price-tag">₹12,500</span>
+                        <span class="badge-status status-overdue">Due Sept 10</span>
+                        <button class="billing-action-btn" onclick="window.location.href='404.html'" title="Pay Outstanding Invoice">➔</button>
+                    </div>
+                </div>
+
+                <!-- Invoice Row 2 -->
+                <div class="invoice-statement-row billing-cascade-node">
+                    <div class="invoice-profile-meta">
+                        <div class="invoice-avatar-badge initials-teal">CL</div>
+                        <div class="invoice-details-copy text-left">
+                            <strong>Organic Catering Logs Fee</strong>
+                            <span>Invoice: <code class="mono-code">INV-2026-092</code></span>
+                        </div>
+                    </div>
+                    <div class="invoice-status-indicator">
+                        <span class="invoice-price-tag">₹2,900</span>
+                        <span class="badge-status status-overdue">Due Sept 10</span>
+                        <button class="billing-action-btn" onclick="window.location.href='404.html'" title="Pay Outstanding Invoice">➔</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- RIGHT SUB-PANE: DETAILED RECENT TRANSACTIONS HISTORY TABLE -->
+        <div class="billing-history-pane">
+            <div class="sub-pane-header">
+                <h3>Historical Transaction Receipts</h3>
+                <p>Verifiable ledger logs for processed digital payments.</p>
+            </div>
+
+            <div class="billing-table-scroll-viewport">
+                <table class="billing-data-table">
+                    <thead>
+                        <tr>
+                            <th>Receipt ID</th>
+                            <th>Description</th>
+                            <th>Amount</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="billing-table-row">
+                            <td><code class="mono-code">REC-8842</code></td>
+                            <td>
+                                <div class="table-desc-cell text-left">
+                                    <strong>Aug Tuition Base</strong>
+                                    <span>Paid via NetBanking</span>
+                                </div>
+                            </td>
+                            <td><span class="table-price font-bold">₹12,500</span></td>
+                            <td><span class="badge-status status-settled">Processed</span></td>
+                        </tr>
+                        <tr class="billing-table-row">
+                            <td><code class="mono-code">REC-8710</code></td>
+                            <td>
+                                <div class="table-desc-cell text-left">
+                                    <strong>Aug Catering Logs</strong>
+                                    <span>Paid via UPI</span>
+                                </div>
+                            </td>
+                            <td><span class="table-price font-bold">₹2,900</span></td>
+                            <td><span class="badge-status status-settled">Processed</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+<style>
+    /* --- ENHANCED DESIGN SYSTEM TOKENS --- */
+:root {
+    --text-pure-black: #000000;
+    --text-charcoal: #2B2B2B;
+    --text-muted: #5A6D6A;
+    --primary-pink: #FF5A5F;
+    --accent-teal: #00A699;
+    --accent-green: #7CB342;
+    --border-color-dim: #E2EBEA;
+    --surface-white: #FFFFFF;
+}
+
+.header-text-group { text-align: left; }
+.panel-subtitle-caption { font-size: 0.92rem; color: var(--text-muted); margin-top: 4px; font-weight: 500; }
+
+/* ================= 1. FINANCIAL QUICK-STATS MATRIX ================= */
+.billing-summary-stats-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    width: 100%;
+    margin-bottom: 30px;
+    margin-top: 5px;
+}
+
+.billing-macro-card {
+    background-color: var(--surface-white);
+    border: 1px solid var(--border-color-dim);
+    border-left: 4px solid transparent;
+    border-radius: 14px;
+    padding: 18px 20px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    text-align: left;
+}
+.border-left-pink { border-left-color: var(--primary-pink); }
+.border-left-teal { border-left-color: var(--accent-teal); }
+.border-left-green { border-left-color: var(--accent-green); }
+
+.billing-icon-badge {
+    width: 42px; height: 42px; border-radius: 10px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+}
+.pink-tint { background-color: #FFEBEB; color: var(--primary-pink); }
+.teal-tint { background-color: #E6F6F5; color: var(--accent-teal); }
+.green-tint { background-color: #F1F8E9; color: var(--accent-green); }
+
+.billing-meta { display: flex; flex-direction: column; gap: 2px; }
+.billing-value { font-size: 1.35rem; font-weight: 900; color: var(--text-pure-black); letter-spacing: -0.5px; }
+.billing-label { font-size: 0.82rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.3px; }
+
+/* ================= 2. TWO-COLUMN SPLIT WORKSPACE PANELS ================= */
+.billing-workspace-split-layout {
+    display: grid;
+    grid-template-columns: 1.05fr 0.95fr;
+    gap: 30px;
+    width: 100%;
+}
+
+.billing-invoices-pane, .billing-history-pane {
+    background-color: var(--surface-white);
+    border: 1px solid var(--border-color-dim);
+    border-radius: 20px;
+    padding: 26px 24px;
+    /* BLOCKS CONTENT HIDING: Height sets fluidly with column items stretch */
+    height: auto; 
+}
+
+.sub-pane-header { text-align: left; margin-bottom: 20px; border-bottom: 1px dashed var(--border-color-dim); padding-bottom: 14px; }
+.sub-pane-header h3 { font-size: 1.25rem; font-weight: 900; color: var(--text-pure-black); margin-bottom: 4px; }
+.sub-pane-header p { font-size: 0.88rem; font-weight: 500; color: var(--text-muted); line-height: 1.4; }
+
+/* --- LEFT SIDE: INVOICES STACK --- */
+.invoices-rows-stack { display: flex; flex-direction: column; gap: 12px; width: 100%; }
+
+.invoice-statement-row {
+    width: 100%; padding: 14px 18px; border: 1px solid var(--border-color-dim); border-radius: 14px; background-color: #FAFAFA; display: flex; align-items: center; justify-content: space-between; gap: 20px; height: auto;
+    opacity: 0; transform: translateY(15px);
+    transition: opacity 0.5s ease, transform 0.5s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+}
+.invoice-statement-row.reveal-node-active { opacity: 1; transform: translateY(0); }
+.invoice-statement-row:hover { background-color: var(--surface-white); border-color: #D2E5E4; box-shadow: 0 4px 15px rgba(0,166,153,0.03); }
+
+.invoice-profile-meta { display: flex; align-items: center; gap: 14px; text-align: left; }
+.invoice-avatar-badge { width: 36px; height: 36px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.85rem; font-weight: 800; color: #FFFFFF; flex-shrink: 0; }
+.initials-pink { background-color: var(--primary-pink); }
+.initials-teal { background-color: var(--accent-teal); }
+
+.invoice-details-copy { display: flex; flex-direction: column; gap: 2px; }
+.invoice-details-copy strong { font-size: 0.98rem; font-weight: 800; color: var(--text-pure-black); }
+.invoice-details-copy span { font-size: 0.85rem; color: var(--text-muted); font-weight: 500; }
+.mono-code { font-family: monospace; background-color: #EEF4F4; padding: 2px 6px; border-radius: 4px; font-weight: 700; color: #3A4644; }
+
+.invoice-status-indicator { display: flex; align-items: center; gap: 14px; flex-shrink: 0; }
+.invoice-price-tag { font-size: 1.1rem; font-weight: 900; color: var(--text-pure-black); }
+.badge-status { font-size: 0.8rem; font-weight: 800; padding: 4px 12px; border-radius: 30px; display: inline-flex; align-items: center; gap: 6px; }
+.status-overdue { background-color: #FFF2F3; color: var(--primary-pink); }
+.status-overdue::before { content: ''; width: 5px; height: 5px; background-color: var(--primary-pink); border-radius: 50%; }
+.status-settled { background-color: #E8F5E9; color: #2E7D32; }
+.status-settled::before { content: ''; width: 5px; height: 5px; background-color: #4CAF50; border-radius: 50%; }
+
+.billing-action-btn { width: 32px; height: 32px; border-radius: 8px; background-color: var(--surface-white); border: 1px solid var(--border-color-dim); color: var(--text-charcoal); cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 0.85rem; font-weight: 800; transition: all 0.2s ease; }
+.billing-action-btn:hover { background-color: var(--accent-teal); color: #FFFFFF; border-color: var(--accent-teal); }
+
+/* --- RIGHT SIDE: HISTORY DATA TABLE --- */
+.billing-table-scroll-viewport { width: 100%; overflow-x: auto; border: 1px solid var(--border-color-dim); border-radius: 12px; background-color: #FAFAFA; }
+.billing-data-table { width: 100%; border-collapse: collapse; min-width: 400px; text-align: left; }
+.billing-data-table th { background-color: #EEF4F3; padding: 12px 14px; font-size: 0.8rem; font-weight: 800; color: #627A78; text-transform: uppercase; letter-spacing: 0.5px; border-bottom: 1px solid var(--border-color-dim); }
+.billing-table-row td { padding: 14px; border-bottom: 1px solid var(--border-color-dim); vertical-align: middle; }
+
+.table-desc-cell { display: flex; flex-direction: column; gap: 1px; }
+.table-desc-cell strong { font-size: 0.92rem; font-weight: 800; color: var(--text-pure-black); }
+.table-desc-cell span { font-size: 0.8rem; font-weight: 600; color: var(--text-muted); }
+.table-price { font-size: 0.95rem; color: var(--text-pure-black); }
+.font-bold { font-weight: 800; }
+
+/* ================= DYNAMIC HIGH-UTILITY MOBILE RESPONSIVE OVERLAYS ================= */
+@media (max-width: 1024px) {
+    .billing-summary-stats-grid { grid-template-columns: 1fr; gap: 12px; }
+    .billing-workspace-split-layout { grid-template-columns: 1fr; gap: 24px; }
+    .billing-invoices-pane, .billing-history-pane { padding: 20px 16px; }
+    .invoice-statement-row { flex-direction: column; align-items: stretch; gap: 14px; padding: 16px; }
+    .invoice-profile-meta { width: 100%; }
+    .invoice-status-indicator { justify-content: space-between; border-top: 1px dashed var(--border-color-dim); padding-top: 14px; width: 100%; }
+    .billing-action-btn { width: 100%; height: 42px; border-radius: 10px; gap: 8px; }
+    .billing-action-btn::before { content: 'Process Secure Payment '; font-size: 0.9rem; font-weight: 700; }
+}
+
+@media (max-width: 480px) {
+    .sub-pane-header h3 { font-size: 1.15rem; }
+    .invoice-details-copy strong { font-size: 0.92rem; }
+    .invoice-price-tag { font-size: 1rem; }
+}
+
+</style>
+
+<script>
+    /**
+ * Stackly Childcare Website - Financial Invoices Cascade Animation Sub-Engine
+ */
+document.addEventListener("DOMContentLoaded", () => {
+    initBillingInvoicesCascadeReveal();
+});
+
+/**
+ * Sequential Node Cascade Observer
+ * Slides invoice card elements up into viewports sequentially by 150ms intervals
+ */
+function initBillingInvoicesCascadeReveal() {
+    const invoicesContainer = document.getElementById("staggeredInvoicesContainer");
+    if (!invoicesContainer) return;
+
+    const intersectionObserver = new IntersectionObserver((entries, observer) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                const parent = entry.target;
+                const activeStatementNodes = parent.querySelectorAll(".billing-cascade-node");
+
+                activeStatementNodes.forEach((node, index) => {
+                    setTimeout(() => {
+                        node.classList.add("reveal-node-active");
+                    }, index * 150);
+                });
+
+                // Dismiss observer to lock layout states safely
+                observer.unobserve(parent);
+            }
+        });
+    }, { root: null, threshold: 0.1 });
+
+    intersectionObserver.observe(invoicesContainer);
+}
+
+</script>
+
+    <!-- ELABORATELY ENHANCED ATTENDANCE LOGS PORTAL -->
+<div class="dashboard-content-panel active-panel" id="attendance-panel">
+    
+    <!-- CONSOLE HEADER ROW -->
+    <div class="panel-section-title-wrapper-card">
+        <div class="header-text-group">
+            <h2>Attendance Logs & Gate Tracking</h2>
+            <p class="panel-subtitle-caption">Review secure digital gate check-in/out timestamp records, audit monthly presence calendar grids, and check guardian auth logs.</p>
+        </div>
+        <span class="panel-tag-badge">Attendance Desk</span>
+    </div>
+
+    <!-- 1. ATTENDANCE QUICK-STATS SUMMARY BLOCKS GRID -->
+    <div class="attendance-summary-stats-grid">
+        <!-- Stat Item 1: Days Present -->
+        <div class="attendance-macro-card border-left-green">
+            <div class="attendance-icon-badge green-tint">
+                <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11"/></svg>
+            </div>
+            <div class="attendance-meta">
+                <span class="attendance-value">19 Days</span>
+                <span class="attendance-label">Present This Month</span>
+            </div>
+        </div>
+        <!-- Stat Item 2: Late Arrivals -->
+        <div class="attendance-macro-card border-left-yellow">
+            <div class="attendance-icon-badge yellow-tint">
+                <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+            </div>
+            <div class="attendance-meta">
+                <span class="attendance-value">01 Day</span>
+                <span class="attendance-label">Late Arrival Log</span>
+            </div>
+        </div>
+        <!-- Stat Item 3: Total Active Tokens -->
+        <div class="attendance-macro-card border-left-teal">
+            <div class="attendance-icon-badge teal-tint">
+                <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+            </div>
+            <div class="attendance-meta">
+                <span class="attendance-value">STK-9821</span>
+                <span class="attendance-label">Active Gate Auth Token</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- 2. TWO-COLUMN SPLIT WORKSPACE INTERFACE -->
+    <div class="attendance-workspace-split-layout">
+        
+        <!-- LEFT SUB-PANE: TIME-SEGMENTED DIGITAL GATE TIMELINE -->
+        <div class="attendance-timeline-feed-pane">
+            <div class="sub-pane-header">
+                <h3>Recent Gate Swipe History</h3>
+                <p>Real-time check-in and check-out timestamp receipts logged at secure corridors.</p>
+            </div>
+            
+            <div class="attendance-timeline-stack" id="staggeredAttendanceTimeline">
+                
+                <!-- Log Entry 1 -->
+                <div class="attendance-feed-node attendance-cascade-item">
+                    <span class="attendance-time-marker">08:45 AM</span>
+                    <div class="attendance-node-details text-left">
+                        <strong>Secure Gate Check-In</strong>
+                        <p>Scanned successfully at Main Entrance Corridor. Student processed into Infant Pod Suite.</p>
+                        <span class="attendance-mini-pill badge-p-green">Verified Entry</span>
+                    </div>
+                </div>
+
+                <!-- Log Entry 2 -->
+                <div class="attendance-feed-node attendance-cascade-item">
+                    <span class="attendance-time-marker">04:30 PM</span>
+                    <div class="attendance-node-details text-left">
+                        <strong>Secure Gate Check-Out</strong>
+                        <p>Authorized pick-up scan completed. Verified by guardian security auth token key match codes.</p>
+                        <span class="attendance-mini-pill badge-p-teal">Verified Exit</span>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- RIGHT SUB-PANE: MONTHLY PRESENCE CALENDAR GRID -->
+        <div class="attendance-calendar-grid-pane">
+            <div class="sub-pane-header">
+                <h3>September 2026 Presence Matrix</h3>
+                <p>Visual map tracking calendar month presence metrics benchmarks.</p>
+            </div>
+
+            <!-- Modern 7-Day Matrix Array Wrapper -->
+            <div class="attendance-matrix-calendar-wrapper activity-cascade-item">
+                <div class="calendar-days-header-row">
+                    <span>M</span><span>T</span><span>W</span><span>T</span><span>F</span><span>S</span><span>S</span>
+                </div>
+                <div class="calendar-days-matrix-grid">
+                    <!-- Week 1 Spacer Blocks -->
+                    <span class="calendar-day-cell cell-empty"></span>
+                    <span class="calendar-day-cell cell-present">1</span>
+                    <span class="calendar-day-cell cell-present">2</span>
+                    <span class="calendar-day-cell cell-present">3</span>
+                    <span class="calendar-day-cell cell-present">4</span>
+                    <span class="calendar-day-cell cell-weekend">5</span>
+                    <span class="calendar-day-cell cell-weekend">6</span>
+                    
+                    <!-- Week 2: Dynamic Current Date Focus Highlight (Sept 7) -->
+                    <span class="calendar-day-cell cell-present live-current-date" title="Today: September 7, 2026">7</span>
+                    <span class="calendar-day-cell cell-empty">8</span>
+                    <span class="calendar-day-cell cell-empty">9</span>
+                    <span class="calendar-day-cell cell-empty">10</span>
+                    <span class="calendar-day-cell cell-empty">11</span>
+                    <span class="calendar-day-cell cell-weekend">12</span>
+                    <span class="calendar-day-cell cell-weekend">13</span>
+                    
+                    <!-- Remaining placeholders populate naturally -->
+                    <span class="calendar-day-cell cell-empty">14</span>
+                    <span class="calendar-day-cell cell-empty">15</span>
+                    <span class="calendar-day-cell cell-empty">16</span>
+                    <span class="calendar-day-cell cell-empty">17</span>
+                    <span class="calendar-day-cell cell-empty">18</span>
+                    <span class="calendar-day-cell cell-weekend">19</span>
+                    <span class="calendar-day-cell cell-weekend">20</span>
+                </div>
+            </div>
+            
+            <div class="calendar-legend-bar margin-top-20">
+                <span class="legend-item"><span class="legend-dot dot-present"></span>Present</span>
+                <span class="legend-item"><span class="legend-dot dot-late"></span>Late</span>
+                <span class="legend-item"><span class="legend-dot dot-weekend"></span>Weekend</span>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+<style>
+    /* --- ENHANCED DESIGN SYSTEM TOKENS --- */
+:root {
+    --text-pure-black: #000000;
+    --text-charcoal: #2B2B2B;
+    --text-muted-slate: #5A6D6A;
+    --primary-pink: #FF5A5F;
+    --accent-teal: #00A699;
+    --accent-yellow: #FFB400;
+    --accent-green: #7CB342;
+    --border-color-dim: #E2EBEA;
+    --surface-white: #FFFFFF;
+}
+
+.header-text-group { text-align: left; }
+.panel-subtitle-caption { font-size: 0.92rem; color: var(--text-muted-slate); margin-top: 4px; font-weight: 500; }
+
+/* ================= 1. ATTENDANCE QUICK-STATS SUMMARY BLOCKS GRID ================= */
+.attendance-summary-stats-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    width: 100%;
+    margin-bottom: 30px;
+    margin-top: 5px;
+}
+
+.attendance-macro-card {
+    background-color: var(--surface-white);
+    border: 1px solid var(--border-color-dim);
+    border-left: 4px solid transparent;
+    border-radius: 14px;
+    padding: 18px 20px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    text-align: left;
+}
+.border-left-green { border-left-color: var(--accent-green); }
+.border-left-yellow { border-left-color: var(--accent-yellow); }
+.border-left-teal { border-left-color: var(--accent-teal); }
+
+.attendance-icon-badge {
+    width: 42px; height: 42px; border-radius: 10px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+}
+.green-tint { background-color: #F1F8E9; color: var(--accent-green); }
+.yellow-tint { background-color: #FFF6E0; color: #E68A00; }
+.teal-tint { background-color: #E6F6F5; color: var(--accent-teal); }
+
+.attendance-meta { display: flex; flex-direction: column; gap: 2px; }
+.attendance-value { font-size: 1.25rem; font-weight: 900; color: var(--text-pure-black); letter-spacing: -0.5px; }
+.attendance-label { font-size: 0.82rem; font-weight: 700; color: var(--text-muted-slate); text-transform: uppercase; letter-spacing: 0.3px; }
+
+/* ================= 2. TWO-COLUMN SPLIT PANELS WORKSPACE ================= */
+.attendance-workspace-split-layout {
+    display: grid;
+    grid-template-columns: 1.05fr 0.95fr;
+    gap: 30px;
+    width: 100%;
+}
+
+.attendance-timeline-feed-pane, .attendance-calendar-grid-pane {
+    background-color: var(--surface-white);
+    border: 1px solid var(--border-color-dim);
+    border-radius: 20px;
+    padding: 26px 24px;
+    /* COMPLETELY BLOCKS CONTENT HIDING: Height expands naturally without hard clamping */
+    height: auto; 
+}
+
+.sub-pane-header { text-align: left; margin-bottom: 24px; border-bottom: 1px dashed var(--border-color-dim); padding-bottom: 14px; }
+.sub-pane-header h3 { font-size: 1.25rem; font-weight: 900; color: var(--text-pure-black); margin-bottom: 4px; }
+.sub-pane-header p { font-size: 0.88rem; font-weight: 500; color: var(--text-muted-slate); line-height: 1.4; }
+
+/* --- LEFT SIDE: CHRONICLE GATE TIMELINE FEED --- */
+.attendance-timeline-stack { display: flex; flex-direction: column; gap: 14px; width: 100%; }
+
+.attendance-feed-node {
+    width: 100%; padding: 16px 20px; border: 1px solid var(--border-color-dim); border-radius: 16px; background-color: #FAFAFA; display: flex; align-items: flex-start; gap: 20px; text-align: left; height: auto;
+    opacity: 0; transform: translateY(15px);
+    transition: opacity 0.5s ease, transform 0.5s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+}
+.attendance-feed-node.reveal-feed-active { opacity: 1; transform: translateY(0); }
+.attendance-feed-node:hover { background-color: var(--surface-white); border-color: #D2E5E4; box-shadow: 0 4px 15px rgba(0,166,153,0.02); }
+
+.attendance-time-marker { font-size: 0.88rem; font-weight: 800; color: var(--accent-teal); width: 80px; flex-shrink: 0; margin-top: 2px; }
+.attendance-node-details { flex-grow: 1; display: flex; flex-direction: column; align-items: flex-start; gap: 4px; }
+.attendance-node-details strong { font-size: 1.02rem; font-weight: 800; color: var(--text-pure-black); display: block; }
+.attendance-node-details p { font-size: 0.9rem; line-height: 1.45; color: #4A5553; font-weight: 500; margin-bottom: 6px; }
+
+.attendance-mini-pill { font-size: 0.72rem; font-weight: 800; text-transform: uppercase; padding: 2px 8px; border-radius: 4px; letter-spacing: 0.5px; color: #FFFFFF; }
+.badge-p-green { background-color: var(--accent-green); }
+.badge-p-teal { background-color: var(--accent-teal); }
+
+/* --- RIGHT SIDE: DIGITAL MATRIX CALENDAR WRAPPER --- */
+.attendance-matrix-calendar-wrapper {
+    width: 100%; display: flex; flex-direction: column; gap: 10px; background-color: #FAFAFA; padding: 20px; border-radius: 16px; border: 1px solid var(--border-color-dim);
+}
+
+.calendar-days-header-row { display: grid; grid-template-columns: repeat(7, 1fr); text-align: center; font-size: 0.82rem; font-weight: 800; color: var(--text-muted-slate); margin-bottom: 4px; }
+
+.calendar-days-matrix-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 8px; text-align: center; }
+
+.calendar-day-cell {
+    aspect-ratio: 1 / 1; border-radius: 8px; font-size: 0.92rem; font-weight: 700; display: flex; align-items: center; justify-content: center; color: var(--text-charcoal);
+}
+.cell-present { background-color: #E8F5E9; color: #2E7D32; border: 1px solid #C8E6C9; }
+.cell-weekend { background-color: #ECEFF1; color: #607D8B; }
+.cell-empty { background-color: var(--surface-white); border: 1px solid #EBF0F0; color: #90A4AE; }
+
+/* Real-Time Pulse Indicator Glow Ring for Current Log Date (September 7, 2026) */
+.calendar-day-cell.live-current-date {
+    background-color: var(--accent-teal); color: #FFFFFF; border-color: var(--accent-teal); box-shadow: 0 0 0 3px rgba(0, 166, 153, 0.2); position: relative;
+}
+
+/* Legend items */
+.calendar-legend-bar { display: flex; justify-content: flex-start; gap: 16px; flex-wrap: wrap; }
+.legend-item { font-size: 0.85rem; font-weight: 700; color: var(--text-muted-slate); display: flex; align-items: center; gap: 6px; }
+.legend-dot { width: 8px; height: 8px; border-radius: 50%; }
+.dot-present { background-color: #4CAF50; }
+.dot-late { background-color: var(--accent-yellow); }
+.dot-weekend { background-color: #90A4AE; }
+
+.margin-top-20 { margin-top: 20px; }
+
+/* ================= DYNAMIC HIGH-UTILITY MOBILE RESPONSIVE OVERLAYS ================= */
+@media (max-width: 1024px) {
+    .attendance-summary-stats-grid { grid-template-columns: 1fr; gap: 12px; }
+    .attendance-workspace-split-layout { grid-template-columns: 1fr; gap: 24px; }
+    .attendance-timeline-feed-pane, .attendance-calendar-grid-pane { padding: 20px 16px; }
+    .attendance-feed-node { flex-direction: column; align-items: flex-start; gap: 6px; padding: 16px; }
+    .attendance-time-marker { width: 100%; font-size: 0.8rem; border-bottom: 1px dashed var(--border-color-dim); padding-bottom: 4px; }
+}
+
+@media (max-width: 480px) {
+    .sub-pane-header h3 { font-size: 1.15rem; }
+    .calendar-days-matrix-grid { gap: 4px; }
+    .calendar-day-cell { font-size: 0.82rem; border-radius: 6px; }
+}
+
+</style>
+
+<script>
+    /**
+ * Stackly Childcare Website - Attendance Feed Cascade Animation Sub-Engine
+ */
+document.addEventListener("DOMContentLoaded", () => {
+    initAttendanceLogsCascadeReveal();
+});
+
+/**
+ * Sequential Node Cascade Observer
+ * Slides activity narrative lines up into viewports sequentially by 150ms intervals
+ */
+function initAttendanceLogsCascadeReveal() {
+    const splitLayoutStage = document.querySelector(".attendance-workspace-split-layout");
+    if (!splitLayoutStage) return;
+
+    const intersectionObserver = new IntersectionObserver((entries, observer) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                const parent = entry.target;
+                const activeCascadeNodes = parent.querySelectorAll(".attendance-cascade-item");
+
+                activeCascadeNodes.forEach((node, index) => {
+                    setTimeout(() => {
+                        node.classList.add("reveal-feed-active");
+                    }, index * 150);
+                });
+
+                observer.unobserve(parent);
+            }
+        });
+    }, { root: null, threshold: 0.1 });
+
+    intersectionObserver.observe(splitLayoutStage);
+}
+
+</script>
+
+       <!-- ELABORATELY ENHANCED HELPDESK & SUPPORT PORTAL -->
+<div class="dashboard-content-panel active-panel" id="helpdesk-panel">
+    
+    <!-- CONSOLE HEADER ROW -->
+    <div class="panel-section-title-wrapper-card">
+        <div class="header-text-group">
+            <h2>Help & Support Center</h2>
+            <p class="panel-subtitle-caption">Access our childcare knowledge base, submit direct assistance tickets, or review administrative staff contact directories.</p>
+        </div>
+        <span class="panel-tag-badge">Helpdesk Center</span>
+    </div>
+
+    <!-- 1. HELPDESK STATUS SUMMARY BLOCKS GRID -->
+    <div class="helpdesk-summary-stats-grid">
+        <!-- Stat Item 1: Support Desk Status -->
+        <div class="helpdesk-macro-card border-left-teal">
+            <div class="helpdesk-icon-badge teal-tint">
+                <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+            </div>
+            <div class="helpdesk-meta">
+                <span class="helpdesk-value">Live Now</span>
+                <span class="helpdesk-label">Admissions Chat Desk</span>
+            </div>
+        </div>
+        <!-- Stat Item 2: Knowledge Base Articles -->
+        <div class="helpdesk-macro-card border-left-green">
+            <div class="helpdesk-icon-badge green-tint">
+                <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+            </div>
+            <div class="helpdesk-meta">
+                <span class="helpdesk-value">24 Articles</span>
+                <span class="helpdesk-label">FAQ Knowledge Base</span>
+            </div>
+        </div>
+        <!-- Stat Item 3: Active Tickets -->
+        <div class="helpdesk-macro-card border-left-pink">
+            <div class="helpdesk-icon-badge pink-tint">
+                <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>
+            </div>
+            <div class="helpdesk-meta">
+                <span class="helpdesk-value">0 Tickets</span>
+                <span class="helpdesk-label">Active Support Request</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- 2. TWO-COLUMN SPLIT HELPDESK WORKSPACE OVERVIEW -->
+    <div class="helpdesk-workspace-split-layout">
+        
+        <!-- LEFT SUB-PANE: KNOWLEDGE BASE ACCORDION -->
+        <div class="helpdesk-faq-pane">
+            <div class="sub-pane-header">
+                <h3>Frequently Asked Questions</h3>
+                <p>Quick answers to common questions about tuition fees, activities trackers, and drop-off protocols.</p>
+            </div>
+            
+            <div class="faq-accordion-stack">
+                <!-- FAQ Item 1 -->
+                <div class="faq-accordion-node scroll-fade-item">
+                    <button class="faq-accordion-trigger" onclick="toggleFaqAccordionNode(this)">
+                        <span>How can I modify my child's allergy lock rules?</span>
+                        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+                    </button>
+                    <div class="faq-accordion-content-panel">
+                        <p>Navigate straight to the <strong>Catering Logs</strong> dashboard row menu or open a direct ticket request in this support channel to alert the senior kitchen supervisor instantly.</p>
+                    </div>
+                </div>
+
+                <!-- FAQ Item 2 -->
+                <div class="faq-accordion-node scroll-fade-item">
+                    <button class="faq-accordion-trigger" onclick="toggleFaqAccordionNode(this)">
+                        <span>Where can I find the printable tuition receipt files?</span>
+                        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+                    </button>
+                    <div class="faq-accordion-content-panel">
+                        <p>All historical ledger transaction parameters sheets are kept inside your <strong>Fees & Billing</strong> dashboard panel. Click the download icon button to export receipts instantly.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- RIGHT SUB-PANE: DIRECT SUPPORT TICKET ENTRY FORM -->
+        <div class="helpdesk-ticket-form-pane">
+            <div class="sub-pane-header">
+                <h3>Submit Assistance Ticket</h3>
+                <p>Can't find your answer? Transmit a message to our campus administrative office. Successful submissions route to 404.html page loops.</p>
+            </div>
+
+            <form class="helpdesk-interactive-ticket-form" onsubmit="validateAndSubmitTicket(event)">
+                <div class="ticket-input-box scroll-fade-item">
+                    <label for="ticketSubject">Inquiry Subject</label>
+                    <div class="ticket-field-shell">
+                        <input type="text" id="ticketSubject" placeholder="e.g., Update Pick-Up Guardian Token">
+                    </div>
+                </div>
+
+                <div class="ticket-input-box scroll-fade-item">
+                    <label for="ticketMessage">Detailed Explanation</label>
+                    <div class="ticket-field-shell">
+                        <textarea id="ticketMessage" rows="4" placeholder="Describe your helpdesk query, billing parameter variance, or campus support requirements..."></textarea>
+                    </div>
+                </div>
+
+                <div class="helpdesk-form-alert-toast" id="ticketValidationToast"></div>
+
+                <button type="submit" class="helpdesk-submit-btn scroll-fade-item">
+                    <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/></svg>
+                    Transmit Support Request
+                </button>
+            </form>
+        </div>
+
+    </div>
+
+</div>
+<style>
+    /* --- ENHANCED DESIGN SYSTEM TOKENS --- */
+:root {
+    --text-pure-black: #000000;
+    --text-charcoal: #2B2B2B;
+    --text-muted-slate: #5A6D6A;
+    --primary-pink: #FF5A5F;
+    --accent-teal: #00A699;
+    --border-color-dim: #E2EBEA;
+    --surface-white: #FFFFFF;
+}
+
+.header-text-group { text-align: left; }
+.panel-subtitle-caption { font-size: 0.92rem; color: var(--text-muted-slate); margin-top: 4px; font-weight: 500; }
+
+/* ================= 1. HELPDESK STATUS SUMMARY BLOCKS GRID ================= */
+.helpdesk-summary-stats-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    width: 100%;
+    margin-bottom: 30px;
+    margin-top: 5px;
+}
+
+.helpdesk-macro-card {
+    background-color: var(--surface-white);
+    border: 1px solid var(--border-color-dim);
+    border-left: 4px solid transparent;
+    border-radius: 14px;
+    padding: 18px 20px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    text-align: left;
+}
+.border-left-teal { border-left-color: var(--accent-teal); }
+.border-left-green { border-left-color: #7CB342; }
+.border-left-pink { border-left-color: var(--primary-pink); }
+
+.helpdesk-icon-badge {
+    width: 42px; height: 42px; border-radius: 10px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+}
+.teal-tint { background-color: #E6F6F5; color: var(--accent-teal); }
+.green-tint { background-color: #F1F8E9; color: #7CB342; }
+.pink-tint { background-color: #FFEBEB; color: var(--primary-pink); }
+
+.helpdesk-meta { display: flex; flex-direction: column; gap: 2px; }
+.helpdesk-value { font-size: 1.25rem; font-weight: 900; color: var(--text-pure-black); letter-spacing: -0.5px; }
+.helpdesk-label { font-size: 0.82rem; font-weight: 700; color: var(--text-muted-slate); text-transform: uppercase; letter-spacing: 0.3px; }
+
+/* ================= 2. TWO-COLUMN SPLIT WORKSPACE PANELS ================= */
+.helpdesk-workspace-split-layout {
+    display: grid;
+    grid-template-columns: 1.05fr 0.95fr;
+    gap: 30px;
+    width: 100%;
+}
+
+.helpdesk-faq-pane, .helpdesk-ticket-form-pane {
+    background-color: var(--surface-white);
+    border: 1px solid var(--border-color-dim);
+    border-radius: 20px;
+    padding: 26px 24px;
+    /* COMPLETELY BLOCKS CONTENT HIDING: Height sets fluidly as sub-accordions or labels open */
+    height: auto; 
+}
+
+.sub-pane-header { text-align: left; margin-bottom: 20px; border-bottom: 1px dashed var(--border-color-dim); padding-bottom: 14px; }
+.sub-pane-header h3 { font-size: 1.25rem; font-weight: 900; color: var(--text-pure-black); margin-bottom: 4px; }
+.sub-pane-header p { font-size: 0.88rem; font-weight: 500; color: var(--text-muted-slate); line-height: 1.4; }
+
+/* --- LEFT SIDE: FAQ ACCORDION STACK --- */
+.faq-accordion-stack { display: flex; flex-direction: column; gap: 12px; width: 100%; }
+
+.faq-accordion-node {
+    width: 100%; border: 1px solid var(--border-color-dim); border-radius: 14px; background-color: #FAFAFA; overflow: hidden;
+    opacity: 0; transform: translateY(15px);
+    transition: opacity 0.5s ease, transform 0.5s ease, border-color 0.2s;
+}
+.faq-accordion-node.reveal-node-active { opacity: 1; transform: translateY(0); }
+.faq-accordion-node:hover { border-color: var(--accent-teal); }
+
+.faq-accordion-trigger {
+    width: 100%; padding: 16px 20px; background: none; border: none; font-family: inherit; display: flex; justify-content: space-between; align-items: center; gap: 20px; cursor: pointer; text-align: left;
+}
+.faq-accordion-trigger span { font-size: 1rem; font-weight: 800; color: var(--text-pure-black); }
+.faq-accordion-trigger svg { color: #627A78; transition: transform 0.25s ease; flex-shrink: 0; }
+
+/* Expanded state indicators toggles tracking */
+.faq-accordion-node.node-expanded { background-color: var(--surface-white); border-color: var(--accent-teal); }
+.faq-accordion-node.node-expanded .faq-accordion-trigger svg { transform: rotate(180deg); color: var(--accent-teal); }
+
+.faq-accordion-content-panel {
+    max-height: 0; overflow: hidden; padding: 0 20px; transition: max-height 0.25s cubic-bezier(0.4, 0, 0.2, 1), padding 0.25s ease; text-align: left;
+}
+.faq-accordion-node.node-expanded .faq-accordion-content-panel { padding: 0 20px 20px 20px; max-height: 200px; }
+.faq-accordion-content-panel p { font-size: 0.92rem; line-height: 1.55; color: #4A5553; font-weight: 500; }
+
+/* --- RIGHT SIDE: TICKET INPUT FIELDS FORM --- */
+.helpdesk-interactive-ticket-form { display: flex; flex-direction: column; gap: 16px; width: 100%; }
+.ticket-input-box { display: flex; flex-direction: column; text-align: left; gap: 6px; width: 100%; }
+.ticket-input-box label { font-size: 0.82rem; font-weight: 800; color: var(--text-charcoal); text-transform: uppercase; letter-spacing: 0.5px; }
+
+.ticket-field-shell {
+    width: 100%; display: flex; align-items: center; background-color: #FAFAFA; border: 1px solid var(--border-color-dim); border-radius: 12px; transition: border-color 0.2s, box-shadow 0.2s;
+}
+.ticket-field-shell input, .ticket-field-shell textarea {
+    width: 100%; padding: 12px 16px; font-size: 0.95rem; background: none; border: none; font-family: inherit; color: var(--text-pure-black);
+}
+.ticket-field-shell textarea { resize: vertical; min-height: 90px; }
+.ticket-field-shell input:focus, .ticket-field-shell textarea:focus { outline: none; }
+.ticket-field-shell:focus-within { border-color: var(--accent-teal); background-color: #FFFFFF; box-shadow: 0 0 0 4px rgba(0, 166, 153, 0.06); }
+
+.helpdesk-form-alert-toast {
+    width: 100%; font-size: 0.88rem; font-weight: 700; color: var(--primary-pink); background-color: #FFF2F3; border: 1px dashed rgba(255, 90, 95, 0.3); border-radius: 12px; padding: 12px 16px; text-align: left; display: none;
+}
+
+.helpdesk-submit-btn {
+    background-color: var(--accent-teal); color: #FFFFFF; border: none; padding: 14px 28px; font-size: 0.95rem; font-weight: 800; border-radius: 12px; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 10px; width: max-content; box-shadow: 0 4px 12px rgba(0, 166, 153, 0.15); transition: background-color 0.2s, transform 0.2s;
+}
+.helpdesk-submit-btn:hover { background-color: #00877D; transform: translateY(-2px); }
+
+/* --- ANIMATION NODES DEFAULT DELAYS SETUP --- */
+.scroll-fade-item { opacity: 0; transform: translateY(15px); transition: opacity 0.5s ease, transform 0.5s ease, border-color 0.2s; }
+.scroll-fade-item.reveal-node-active { opacity: 1; transform: translateY(0); }
+
+/* ================= DYNAMIC HIGH-UTILITY MOBILE RESPONSIVE OVERLAYS ================= */
+@media (max-width: 1024px) {
+    .helpdesk-summary-stats-grid { grid-template-columns: 1fr; gap: 12px; }
+    .helpdesk-workspace-split-layout { grid-template-columns: 1fr; gap: 24px; }
+    .helpdesk-faq-pane, .helpdesk-ticket-form-pane { padding: 20px 16px; }
+    .helpdesk-submit-btn { width: 100%; text-align: center; }
+}
+
+@media (max-width: 480px) {
+    .sub-pane-header h3 { font-size: 1.15rem; }
+    .faq-accordion-trigger span { font-size: 0.92rem; }
+    .faq-accordion-content-panel p { font-size: 0.85rem; }
+}
+
+</style>
+
+<script>
+    /**
+ * Stackly Childcare Website - Help & Support Interaction Sub-Engine
+ */
+document.addEventListener("DOMContentLoaded", () => {
+    initHelpdeskItemsCascadeReveal();
+});
+
+/**
+ * 1. ACCORDION HEIGHT DISPATCHER
+ * Swaps collapsed / expanded height values natively on click selection ticks
+ */
+function toggleFaqAccordionNode(triggerButton) {
+    if (!triggerButton) return;
+    const parentNode = triggerButton.parentElement;
+    if (parentNode) {
+        parentNode.classList.toggle("node-expanded");
+    }
+}
+
+/**
+ * 2. SUPPORT FORM VALIDATION ROUTER
+ * Checks values before sending browser focus to the 404 page target
+ */
+function validateAndSubmitTicket(event) {
+    event.preventDefault();
+
+    const subjectInput = document.getElementById("ticketSubject");
+    const messageInput = document.getElementById("ticketMessage");
+    const alertToastBox = document.getElementById("ticketValidationToast");
+
+    if (!subjectInput || !messageInput || !alertToastBox) return;
+
+    const subjectText = subjectInput.value.trim();
+    const messageText = messageInput.value.trim();
+
+    if (subjectText === "" || messageText === "") {
+        alertToastBox.textContent = "Please fill in all ticket parameters fields before submitting.";
+        alertToastBox.style.display = "block";
+        subjectInput.parentElement.style.borderColor = "#FF5A5F";
+        return;
+    }
+
+    alertToastBox.style.display = "none";
+    window.location.href = "404.html";
+}
+
+/**
+ * 3. ITEM LOAD CASCADE OBSERVER
+ */
+function initHelpdeskItemsCascadeReveal() {
+    const mainWorkspace = document.querySelector(".helpdesk-workspace-split-layout");
+    if (!mainWorkspace) return;
+
+    const observer = new IntersectionObserver((entries, observer) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                const parent = entry.target;
+                const scrollNodes = parent.querySelectorAll(".scroll-fade-item");
+
+                scrollNodes.forEach((node, index) => {
+                    setTimeout(() => {
+                        node.classList.add("reveal-node-active");
+                    }, index * 140);
+                });
+                observer.unobserve(parent);
+            }
+        });
+    }, { root: null, threshold: 0.1 });
+
+    observer.observe(mainWorkspace);
+}
+
+</script>
+            </main>
+
+            <style>
+                :root {
+    --brand-green-base: #00A699;     /* Core Green Theme Color Profile */
+    --brand-green-hover: #00877D;
+    --text-pure-black: #000000;
+    --text-charcoal: #2B2B2B;
+    --text-muted-slate: #5A6D6A;
+    --surface-white: #FFFFFF;
+    --dashboard-sidebar-bg: #1A1C23;  /* High Contrast Slate Black Sidebar Filling Layer */
+    --workspace-canvas-bg: #F4F8F8;  /* Soft Warm Ice Tint Base Matte Backdrop Layer */
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    background-color: var(--workspace-canvas-bg);
+    color: var(--text-charcoal);
+    overflow: hidden;
+    width: 100vw; height: 100vh;
+}
+
+/* ================= THE MAIN MASTER WORKSPACE MACRO LAYOUT CONTAINER ================= */
+.dashboard-macro-layout {
+    width: 100%; height: 100vh;
+    display: flex; position: relative; overflow: hidden;
+}
+
+/* ================= HIGH CONTRAST SLATE BLACK SIDEBAR DESIGN ================= */
+.dashboard-sidebar {
+    width: 260px; height: 100%;
+    background-color: var(--dashboard-sidebar-bg);
+    padding: 30px 20px;
+    display: flex; flex-direction: column;
+    flex-shrink: 0; position: relative; z-index: 100;
+    box-shadow: 4px 0 25px rgba(0, 0, 0, 0.15);
+    transition: transform 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.mobile-sidebar-close-btn { display: none; } 
+
+.sidebar-menu-nav {
+    display: flex; flex-direction: column; gap: 8px; width: 100%; margin-top: 20px;
+}
+
+.menu-link-node {
+    width: 100%; padding: 12px 16px; font-size: 0.95rem; font-weight: 700;
+    color: #929EB0; background: none; border: none; border-radius: 12px;
+    display: flex; align-items: center; gap: 14px; cursor: pointer; text-align: left;
+    transition: background-color 0.2s, color 0.2s;
+}
+.menu-vector-icon { width: 18px; height: 18px; flex-shrink: 0; opacity: 0.85; }
+
+.menu-link-node:hover { background-color: rgba(255, 255, 255, 0.04); color: #FFFFFF; }
+.menu-link-node.active { background-color: var(--brand-green-base); color: #FFFFFF; box-shadow: 0 4px 12px rgba(0, 166, 153, 0.2); }
+
+.sidebar-logout-btn {
+    width: 100%; padding: 12px 16px; font-size: 0.95rem; font-weight: 700;
+    color: #FF5A5F; background: none; border: none; border-radius: 12px;
+    display: flex; align-items: center; gap: 14px; cursor: pointer; text-align: left;
+    margin-top: auto; transition: background-color 0.2s;
+}
+.sidebar-logout-btn:hover { background-color: rgba(255, 90, 95, 0.06); }
+
+/* ================= MAIN DISPLAY WORKSPACE CONSOLE ================= */
+.dashboard-workspace-block {
+    flex-grow: 1; height: 100%; display: flex; flex-direction: column; overflow: hidden;
+}
+
+/* --- THE TOP HEADER NOTIFICATION NAVIGATION PANEL --- */
+.workspace-top-header {
+    height: 70px; width: 100%; background-color: var(--surface-white);
+    border-bottom: 1px solid #E2EBEA; padding: 0 35px;
+    display: flex; justify-content: space-between; align-items: center; flex-shrink: 0; z-index: 50;
+}
+
+.header-left-cluster { display: flex; align-items: center; gap: 16px; }
+.mobile-hamburger-toggle-trigger { display: none; } 
+
+.dashboard-brand-refresh-logo { cursor: pointer; display: flex; align-items: center; }
+.brand-img-tag-logo { height: 32px; width: auto; object-fit: contain; display: block; }
+
+.header-right-cluster { display: flex; align-items: center; gap: 24px; }
+
+.header-notification-bell-pod {
+    position: relative; color: #4A5856; cursor: pointer; display: flex; align-items: center; justify-content: center; padding: 6px; transition: color 0.15s;
+}
+.header-notification-bell-pod:hover { color: var(--brand-green-base); }
+.notification-indicator-dot-badge {
+    position: absolute; top: 4px; right: 6px; width: 7px; height: 7px; background-color: #FF5A5F; border-radius: 50%; border: 1.5px solid #FFFFFF;
+}
+
+.header-profile-user-card { display: flex; align-items: center; gap: 10px; }
+.avatar-circle-frame {
+    width: 32px; height: 32px; border-radius: 50%; background-color: #EBF5F4; color: var(--brand-green-base); display: flex; align-items: center; justify-content: center;
+}
+.profile-display-name-node { font-size: 1rem; font-weight: 800; color: var(--text-pure-black); text-transform: capitalize; }
+
+/* --- ACTIVE PANE CANVASES --- */
+.workspace-content-pane {
+    flex-grow: 1; padding: 35px; overflow-y: auto; position: relative; width: 100%;
+}
+
+.dashboard-content-panel {
+    background-color: var(--surface-white); border: 1px solid #E2EBEA; border-radius: 20px; padding: 35px; width: 100%; box-shadow: 0 4px 15px rgba(0, 166, 153, 0.01); text-align: left;
+    display: none; opacity: 0; transform: translateY(12px);
+    transition: opacity 0.4s ease, transform 0.4s ease;
+}
+
+.dashboard-content-panel.active-panel { display: block; opacity: 1; transform: translateY(0); }
+
+.panel-section-title-wrapper-card {
+    display: flex; justify-content: space-between; align-items: center; width: 100%; margin-bottom: 20px; border-bottom: 1px dashed #E2EBEA; padding-bottom: 14px;
+}
+.panel-section-title-wrapper-card h2 { font-size: 1.55rem; font-weight: 900; color: var(--text-pure-black); letter-spacing: -0.5px; }
+
+.panel-tag-badge {
+    background-color: #E6F6F5; color: var(--brand-green-base); font-size: 0.8rem; font-weight: 800; padding: 5px 12px; border-radius: 6px; text-transform: uppercase; letter-spacing: 0.5px;
+}
+
+.panel-placeholder-info-text { font-size: 1.02rem; line-height: 1.6; color: var(--text-muted-slate); font-weight: 500; max-width: 780px; }
+
+/* ================= ADAPTIVE RESPONSIVE COMPACT MEDIA OVERLAYS ================= */
+@media (max-width: 992px) {
+    .workspace-top-header { padding: 0 20px; }
+    .workspace-content-pane { padding: 20px; }
+    .dashboard-content-panel { padding: 25px 20px; }
+    .panel-section-title-wrapper-card h2 { font-size: 1.35rem; }
+    .panel-placeholder-info-text { font-size: 0.95rem; }
+    
+    .dashboard-sidebar {
+        position: absolute; top: 0; left: 0; height: 100%; width: 260px; transform: translateX(-100%); z-index: 500;
+    }
+    .dashboard-sidebar.mobile-drawer-open { transform: translateX(0); }
+    
+    .mobile-sidebar-close-btn {
+        display: flex; align-items: center; justify-content: center; background: none; border: none; color: #929EB0; cursor: pointer; align-self: flex-end; margin-bottom: 15px; padding: 4px;
+    }
+    .mobile-sidebar-close-btn:hover { color: #FFFFFF; }
+    
+    .mobile-hamburger-toggle-trigger {
+        display: flex; align-items: center; justify-content: center; background: none; border: none; color: #4A5856; cursor: pointer; padding: 4px;
+    }
+    .mobile-hamburger-toggle-trigger:hover { color: var(--brand-green-base); }
+    
+    .mobile-sidebar-blanket {
+        position: absolute; top: 0; left: 0; width: 100vw; height: 100vh; background-color: rgba(26, 28, 35, 0.4); backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px); z-index: 400; display: none; opacity: 0; transition: opacity 0.3s ease;
+    }
+    .mobile-sidebar-blanket.blanket-active { display: block; opacity: 1; }
+}
+
+@media (max-width: 520px) {
+    .panel-section-title-wrapper-card { flex-direction: column; align-items: flex-start; gap: 10px; }
+    .header-profile-user-card .avatar-circle-frame { display: none; } 
+}
+            </style>
+
+<script>
+ 
+ 
+
+/* =========================================================
+   1. DASHBOARD INITIALIZATION
+========================================================= */
+
+document.addEventListener("DOMContentLoaded", function () {
+
+    /* Display logged-in email */
+    executeAuthenticationEmailDisplay();
+
+    /* Initialize mobile/sidebar interactions */
+    initializeClientDashboardInteractions();
+
+    /*
+     * Restore the dashboard panel that was active
+     * before the page was refreshed.
+     */
+    restoreDashboardPanelAfterRefresh();
+
+});
+
+
+/* =========================================================
+   2. DISPLAY LOGIN EMAIL IN CLIENT DASHBOARD HEADER
+========================================================= */
+
+function executeAuthenticationEmailDisplay() {
+
+    const greetingNode =
+        document.getElementById("headerProfileGreetingName");
+
+    if (!greetingNode) {
+        return;
+    }
+
+
+    /*
+     * Get the exact email entered on the login page
+     */
+
+    const authenticatedEmail =
+        localStorage.getItem("authenticatedUserEmail");
+
+
+    if (
+        authenticatedEmail &&
+        authenticatedEmail.trim() !== ""
+    ) {
+
+        /*
+         * Display exact email
+         *
+         * Example:
+         * test@gmail.com
+         */
+
+        greetingNode.textContent =
+            authenticatedEmail.trim();
+
+    } else {
+
+        /*
+         * Fallback if no login email exists
+         */
+
+        greetingNode.textContent = "Parent";
+    }
+
+}
+
+
+/* =========================================================
+   3. CLIENT DASHBOARD PANEL SWITCHER
+========================================================= */
+
+function switchDashboardSection(
+    targetPanelId,
+    selectedMenuButton
+) {
+
+    if (
+        !targetPanelId ||
+        !selectedMenuButton
+    ) {
+        return;
+    }
+
+
+    /*
+     * Remove active class from all dashboard panels
+     */
+
+    const allPanels =
+        document.querySelectorAll(
+            ".workspace-content-pane .dashboard-content-panel"
+        );
+
+
+    allPanels.forEach(function (panel) {
+
+        panel.classList.remove(
+            "active-panel"
+        );
+
+    });
+
+
+    /*
+     * Remove active class from all sidebar menu buttons
+     */
+
+    const allMenuButtons =
+        document.querySelectorAll(
+            ".sidebar-menu-nav .menu-link-node"
+        );
+
+
+    allMenuButtons.forEach(function (button) {
+
+        button.classList.remove("active");
+
+    });
+
+
+    /*
+     * Activate selected dashboard panel
+     */
+
+    const activeChosenPanel =
+        document.getElementById(targetPanelId);
+
+
+    if (activeChosenPanel) {
+
+        activeChosenPanel.classList.add(
+            "active-panel"
+        );
+
+    }
+
+
+    /*
+     * Activate selected sidebar menu
+     */
+
+    selectedMenuButton.classList.add(
+        "active"
+    );
+
+
+    /*
+     * Save the currently selected panel.
+     *
+     * This also means if the user refreshes the
+     * browser manually, the same panel can be restored.
+     */
+
+    sessionStorage.setItem(
+        "stackly_current_dashboard_panel",
+        targetPanelId
+    );
+
+
+    /*
+     * Automatically close mobile sidebar
+     */
+
+    const sidebarDrawer =
+        document.getElementById(
+            "dashboardSidebar"
+        );
+
+
+    if (
+        sidebarDrawer &&
+        sidebarDrawer.classList.contains(
+            "mobile-drawer-open"
+        )
+    ) {
+
+        toggleMobileSidebar();
+
+    }
+
+}
+
+
+/* =========================================================
+   4. DASHBOARD REFRESH CONTROLLER
+   Keeps the user on the current dashboard panel
+========================================================= */
+
+function refreshDashboardNatively() {
+
+    /*
+     * Find the currently active dashboard panel
+     */
+
+    const activePanel =
+        document.querySelector(
+            ".workspace-content-pane .dashboard-content-panel.active-panel"
+        );
+
+
+    /*
+     * If an active panel exists, save its ID.
+     */
+
+    if (
+        activePanel &&
+        activePanel.id
+    ) {
+
+        sessionStorage.setItem(
+            "stackly_return_panel",
+            activePanel.id
+        );
+
+        sessionStorage.setItem(
+            "stackly_current_dashboard_panel",
+            activePanel.id
+        );
+
+    }
+
+
+    /*
+     * Reload the current page.
+     *
+     * The page will reload, but the saved panel
+     * will be restored automatically.
+     */
+
+    window.location.reload();
+
+}
+
+
+/* =========================================================
+   5. RESTORE DASHBOARD PANEL AFTER REFRESH
+========================================================= */
+
+function restoreDashboardPanelAfterRefresh() {
+
+    /*
+     * First check the panel specifically saved
+     * by the logo refresh.
+     */
+
+    let savedPanelId =
+        sessionStorage.getItem(
+            "stackly_return_panel"
+        );
+
+
+    /*
+     * If there is no refresh-specific panel,
+     * check the currently selected panel.
+     */
+
+    if (
+        !savedPanelId
+    ) {
+
+        savedPanelId =
+            sessionStorage.getItem(
+                "stackly_current_dashboard_panel"
+            );
+
+    }
+
+
+    /*
+     * Nothing to restore.
+     */
+
+    if (
+        !savedPanelId
+    ) {
+
+        return;
+
+    }
+
+
+    /*
+     * Find the saved dashboard panel.
+     */
+
+    const savedPanel =
+        document.getElementById(
+            savedPanelId
+        );
+
+
+    /*
+     * If the panel does not exist,
+     * remove the invalid saved value.
+     */
+
+    if (!savedPanel) {
+
+        sessionStorage.removeItem(
+            "stackly_return_panel"
+        );
+
+        sessionStorage.removeItem(
+            "stackly_current_dashboard_panel"
+        );
+
+        return;
+
+    }
+
+
+    /* =====================================================
+       REMOVE ACTIVE STATE FROM ALL PANELS
+    ===================================================== */
+
+    const allPanels =
+        document.querySelectorAll(
+            ".workspace-content-pane .dashboard-content-panel"
+        );
+
+
+    allPanels.forEach(function (panel) {
+
+        panel.classList.remove(
+            "active-panel"
+        );
+
+    });
+
+
+    /* =====================================================
+       ACTIVATE PREVIOUS PANEL
+    ===================================================== */
+
+    savedPanel.classList.add(
+        "active-panel"
+    );
+
+
+    /* =====================================================
+       RESTORE SIDEBAR ACTIVE BUTTON
+    ===================================================== */
+
+    const allMenuButtons =
+        document.querySelectorAll(
+            ".sidebar-menu-nav .menu-link-node"
+        );
+
+
+    allMenuButtons.forEach(function (button) {
+
+        button.classList.remove(
+            "active"
+        );
+
+    });
+
+
+    /*
+     * Find the sidebar button connected
+     * to the saved panel.
+     *
+     * Example HTML:
+     *
+     * onclick="switchDashboardSection('profilePanel', this)"
+     */
+
+    allMenuButtons.forEach(function (button) {
+
+        const onclickValue =
+            button.getAttribute(
+                "onclick"
+            );
+
+
+        if (
+            onclickValue &&
+            onclickValue.includes(
+                "'" + savedPanelId + "'"
+            )
+        ) {
+
+            button.classList.add(
+                "active"
+            );
+
+        }
+
+    });
+
+
+    /*
+     * Also support double-quote syntax:
+     *
+     * onclick="switchDashboardSection("profilePanel", this)"
+     *
+     * in case your HTML uses it.
+     */
+
+    allMenuButtons.forEach(function (button) {
+
+        const onclickValue =
+            button.getAttribute(
+                "onclick"
+            );
+
+
+        if (
+            onclickValue &&
+            onclickValue.includes(
+                '"' + savedPanelId + '"'
+            )
+        ) {
+
+            button.classList.add(
+                "active"
+            );
+
+        }
+
+    });
+
+
+    /*
+     * Refresh-specific value is no longer needed
+     * after the panel has been restored.
+     */
+
+    sessionStorage.removeItem(
+        "stackly_return_panel"
+    );
+
+}
+
+
+/* =========================================================
+   6. MOBILE SIDEBAR TOGGLE
+========================================================= */
+
+function toggleMobileSidebar() {
+
+    const sidebarDrawer =
+        document.getElementById(
+            "dashboardSidebar"
+        );
+
+
+    const shadingBlanket =
+        document.getElementById(
+            "sidebarBlanket"
+        );
+
+
+    if (
+        !sidebarDrawer ||
+        !shadingBlanket
+    ) {
+
+        return;
+
+    }
+
+
+    /*
+     * Toggle sidebar
+     */
+
+    sidebarDrawer.classList.toggle(
+        "mobile-drawer-open"
+    );
+
+
+    /*
+     * Toggle overlay
+     */
+
+    shadingBlanket.classList.toggle(
+        "blanket-active"
+    );
+
+
+    /*
+     * Prevent background scrolling
+     * while mobile menu is open.
+     */
+
+    if (
+        sidebarDrawer.classList.contains(
+            "mobile-drawer-open"
+        )
+    ) {
+
+        document.body.style.overflow =
+            "hidden";
+
+    } else {
+
+        document.body.style.overflow =
+            "";
+
+    }
+
+}
+
+
+/* =========================================================
+   7. CLOSE MOBILE SIDEBAR WHEN CLICKING OUTSIDE
+========================================================= */
+
+function initializeClientDashboardInteractions() {
+
+    const shadingBlanket =
+        document.getElementById(
+            "sidebarBlanket"
+        );
+
+
+    if (!shadingBlanket) {
+
+        return;
+
+    }
+
+
+    shadingBlanket.addEventListener(
+        "click",
+        function () {
+
+            const sidebarDrawer =
+                document.getElementById(
+                    "dashboardSidebar"
+                );
+
+
+            if (
+                sidebarDrawer &&
+                sidebarDrawer.classList.contains(
+                    "mobile-drawer-open"
+                )
+            ) {
+
+                toggleMobileSidebar();
+
+            }
+
+        }
+    );
+
+}
+
+
+/* =========================================================
+   8. SECURE CLIENT LOGOUT
+========================================================= */
+
+function executeSecureDashboardLogout() {
+
+    /*
+     * Remove stored login information
+     */
+
+    localStorage.removeItem(
+        "authenticatedUserEmail"
+    );
+
+
+    localStorage.removeItem(
+        "authenticatedUserRole"
+    );
+
+
+    /*
+     * Remove saved dashboard panel.
+     *
+     * This is important because after logout,
+     * another user should NOT inherit the previous
+     * user's dashboard panel.
+     */
+
+    sessionStorage.removeItem(
+        "stackly_return_panel"
+    );
+
+
+    sessionStorage.removeItem(
+        "stackly_current_dashboard_panel"
+    );
+
+
+    /*
+     * Close mobile sidebar if open
+     */
+
+    const sidebarDrawer =
+        document.getElementById(
+            "dashboardSidebar"
+        );
+
+
+    const shadingBlanket =
+        document.getElementById(
+            "sidebarBlanket"
+        );
+
+
+    if (sidebarDrawer) {
+
+        sidebarDrawer.classList.remove(
+            "mobile-drawer-open"
+        );
+
+    }
+
+
+    if (shadingBlanket) {
+
+        shadingBlanket.classList.remove(
+            "blanket-active"
+        );
+
+    }
+
+
+    /*
+     * Restore page scrolling
+     */
+
+    document.body.style.overflow = "";
+
+
+    /*
+     * Return to login page
+     */
+
+    window.location.href =
+        "login.html";
+
+}
+
+
+/* =========================================================
+   9. CHECK LOGIN STATE
+   Prevent direct dashboard access without login
+========================================================= */
+
+function checkClientAuthenticationState() {
+
+    const authenticatedEmail =
+        localStorage.getItem(
+            "authenticatedUserEmail"
+        );
+
+
+    if (
+        !authenticatedEmail ||
+        authenticatedEmail.trim() === ""
+    ) {
+
+        /*
+         * Clear dashboard panel state
+         * when authentication is missing.
+         */
+
+        sessionStorage.removeItem(
+            "stackly_return_panel"
+        );
+
+
+        sessionStorage.removeItem(
+            "stackly_current_dashboard_panel"
+        );
+
+
+        /*
+         * Redirect to login
+         */
+
+        window.location.href =
+            "login.html";
+
+
+        return false;
+
+    }
+
+
+    return true;
+
+}
+
+
+/* =========================================================
+   10. RUN LOGIN STATE CHECK
+========================================================= */
+
+document.addEventListener(
+    "DOMContentLoaded",
+    function () {
+
+        checkClientAuthenticationState();
+
+    }
+);
+
+</script>

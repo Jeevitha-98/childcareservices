@@ -128,7 +128,7 @@ function initiatePreloader() {
         
         <!-- Brand Logo (Refreshes Page on Click) -->
         <div class="logo-wrapper" onclick="refreshPage()">
-            <img src="https://placehold.co" alt="Stackly Logo" class="brand-img">
+            <img src="./assests/childcare logo.webp" alt="Stackly Logo" class="brand-img">
         </div>
 
         <!-- Mobile Hamburger Menu Icon Toggle -->
@@ -149,7 +149,9 @@ function initiatePreloader() {
 
         <!-- Right-Aligned Authentication Action Element -->
         <div class="auth-actions">
-            <button class="auth-btn">Parent Portal</button>
+        <!-- UPDATED NAVIGATION ROUTER BUTTON -->
+<button class="auth-btn" onclick="window.location.href='login.html'">Parent Portal</button>
+
         </div>
         
     </div>
@@ -187,21 +189,26 @@ document.querySelectorAll('.nav-item').forEach(item => {
         
         <!-- Left Side: Core Brand Copy with Letter-by-Letter Framework -->
         <div class="hero-fresh-content">
-            <h1 class="hero-fresh-title" id="freshAnimatedTitle">
-                <span>B</span><span>u</span><span>i</span><span>l</span><span>d</span><span>i</span><span>n</span><span>g</span> 
-                <span>F</span><span>u</span><span>t</span><span>u</span><span>r</span><span>e</span><span>s</span> 
-                <span>B</span><span>l</span><span>o</span><span>c</span><span>k</span> 
-                <span>b</span><span>y</span> 
-                <span class="coral-highlight"><span>B</span><span>l</span><span>o</span><span>c</span><span>k</span></span>
-            </h1>
+<h1 class="hero-fresh-title" id="freshAnimatedTitle">
+    Building Futures Block by Block
+</h1>
             <p class="hero-fresh-subtitle">
                 Welcome to Stackly. Discover early childhood pathways where active, play-based frameworks meet modern safety standards to give your children the strongest foundation possible.
             </p>
             
             <!-- Dual Interactive Floating Action Triggers -->
             <div class="hero-fresh-actions">
-                <button class="hero-cta-btn primary-fresh float-node-1">Enroll Now ✨</button>
-                <button class="hero-cta-btn secondary-fresh float-node-2">Our Programs ➔</button>
+               <button
+    class="hero-cta-btn primary-fresh float-node-1"
+    onclick="window.location.href='404.html'">
+    Enroll Now ✨
+</button>
+
+<button
+    class="hero-cta-btn secondary-fresh float-node-2"
+    onclick="window.location.href='404.html'">
+    Our Programs ➔
+</button>
             </div>
         </div>
 
@@ -228,19 +235,18 @@ document.querySelectorAll('.nav-item').forEach(item => {
 }
 
 /* --- FULL WINDOW VIEWPORT FRAME --- */
-.hero-fresh-banner {
-    width: 100vw;
-    height: 100vh; /* Demands full height of the browser screen */
-    min-height: 650px;
-    background: linear-gradient(135deg, #FFFFFF 0%, #F5FAFA 100%);
-    padding: 0 0 0 0; /* Generous sideways padding for content safe-zones */
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    position: relative;
-    overflow: hidden;
+.hero-fresh-banner { 
+    width: 100vw; 
+    height: 100vh;
+    min-height: 650px; 
+    background: linear-gradient(135deg, #FFFFFF 0%, #F5FAFA 100%); 
+    padding: 0 0 10px 0; /* top right bottom left */
+    display: flex; 
+    align-items: center; 
+    justify-content: center; 
+    position: relative; 
+    overflow: hidden; 
 }
-
 .hero-fresh-container {
     width: 100%;
     max-width: 1300px;
@@ -436,14 +442,29 @@ function runFreshLetterReveal() {
         
         <!-- Interactive Floating Call-To-Action Trigger Button -->
         <div class="showcase-action-deck">
-            <button class="showcase-cta-btn floating-action-node">
-                <!-- Inline Custom Service Vector Icon Badge -->
-                <svg class="cta-vector-badge" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z"/>
-                    <path d="M12 6v6l4 2"/>
-                </svg>
-                Book a Service
-            </button>
+          <button
+    class="showcase-cta-btn floating-action-node"
+    onclick="window.location.href='404.html'">
+
+    <!-- Inline Custom Service Vector Icon Badge -->
+    <svg
+        class="cta-vector-badge"
+        viewBox="0 0 24 24"
+        width="18"
+        height="18"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2.5"
+        stroke-linecap="round"
+        stroke-linejoin="round">
+
+        <path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z"/>
+        <path d="M12 6v6l4 2"/>
+
+    </svg>
+
+    Book a Service
+</button>
         </div>
     </div>
 
@@ -1192,7 +1213,11 @@ function initLetterScrollReveal() {
                     <div class="card-body-content">
                         <h3>Full Day Daycare</h3>
                         <p>Comprehensive 8 AM - 6 PM care modules equipped with certified nursing staff, organic balanced meals, and safe sleep suites.</p>
-                        <button class="card-cta-trigger">Learn More ➔</button>
+                        <button
+    class="card-cta-trigger"
+    onclick="window.location.href='404.html'">
+    Learn More ➔
+</button>
                     </div>
                 </div>
 
@@ -1204,7 +1229,11 @@ function initLetterScrollReveal() {
                     <div class="card-body-content">
                         <h3>Preschool Academy</h3>
                         <p>Structured interactive spaces focusing on play-based sensory tools, language acquisition, and basic mathematical concepts.</p>
-                        <button class="card-cta-trigger">Learn More ➔</button>
+                      <button
+    class="card-cta-trigger"
+    onclick="window.location.href='404.html'">
+    Learn More ➔
+</button>
                     </div>
                 </div>
 
@@ -1216,7 +1245,11 @@ function initLetterScrollReveal() {
                     <div class="card-body-content">
                         <h3>After School Hub</h3>
                         <p>Engaging post-school sessions featuring homework guidance, speech enhancement clubs, and creative arts workshops.</p>
-                        <button class="card-cta-trigger">Learn More ➔</button>
+                     <button
+    class="card-cta-trigger"
+    onclick="window.location.href='404.html'">
+    Learn More ➔
+</button>
                     </div>
                 </div>
 
@@ -1235,7 +1268,11 @@ function initLetterScrollReveal() {
                     <div class="card-body-content">
                         <h3>Infant Care Pods</h3>
                         <p>Hyper-hygienic premium crib units built for infants from 6 months onwards with dedicated 1-on-1 caregiver tracking.</p>
-                        <button class="card-cta-trigger">Learn More ➔</button>
+                        <button
+    class="card-cta-trigger"
+    onclick="window.location.href='404.html'">
+    Learn More ➔
+</button>
                     </div>
                 </div>
 
@@ -1247,7 +1284,11 @@ function initLetterScrollReveal() {
                     <div class="card-body-content">
                         <h3>Weekend Bootcamps</h3>
                         <p>Playful Saturday creative workshops hosting children's yoga sessions, introductory coding blocks, and live storytelling theater.</p>
-                        <button class="card-cta-trigger">Learn More ➔</button>
+                        <button
+    class="card-cta-trigger"
+    onclick="window.location.href='404.html'">
+    Learn More ➔
+</button>
                     </div>
                 </div>
 
@@ -1259,7 +1300,11 @@ function initLetterScrollReveal() {
                     <div class="card-body-content">
                         <h3>Emergency Care</h3>
                         <p>Flexible, on-demand childcare slots for parents facing unexpected work adjustments or short-notice corporate meetings.</p>
-                        <button class="card-cta-trigger">Learn More ➔</button>
+                        <button
+    class="card-cta-trigger"
+    onclick="window.location.href='404.html'">
+    Learn More ➔
+</button>
                     </div>
                 </div>
 
@@ -1605,7 +1650,7 @@ function initServicesPageSwapper() {
 <section class="full-width-cta-banner">
     
     <!-- Core Background Layer Image Map driven via native <img> tag -->
-    <img src="https://unsplash.com" alt="Playful learning environment backdrop" class="banner-background-img">
+    <img src="./assests/care 3.webp" alt="Playful learning environment backdrop" class="banner-background-img">
     
     <!-- High-Trust Contrast Glassmorphism Sheet Overlay -->
     <div class="banner-color-overlay"></div>
@@ -1620,7 +1665,11 @@ function initServicesPageSwapper() {
 
         <!-- Right Side: Action Trigger CTA Hook -->
         <div class="banner-action-column">
-            <button class="banner-cta-trigger interactive-float-node">Schedule a Tour ✨</button>
+         <button
+    class="banner-cta-trigger interactive-float-node"
+    onclick="window.location.href='404.html'">
+    Schedule a Tour ✨
+</button>
         </div>
 
     </div>
@@ -1818,7 +1867,7 @@ function initBannerScrollRevealObserver() {
         <div class="profile-media-column">
             <div class="asymmetrical-profile-frame">
                 <!-- Main representation image mapping from reference image theme -->
-                <img src="https://unsplash.com" alt="Teacher instructing children in creative space" class="profile-display-img">
+                <img src="./assests/infant care.webp" alt="Teacher instructing children in creative space" class="profile-display-img">
             </div>
             
             <!-- Drifting Background Vector Cross Accent -->
@@ -1868,7 +1917,11 @@ function initBannerScrollRevealObserver() {
 
             <!-- Call Actions Footer Dock with Floating Buttons -->
             <div class="profile-action-footer">
-                <button class="profile-cta-btn primary-profile-cta float-cta-node">Know More ➔</button>
+               <button
+    class="profile-cta-btn primary-profile-cta float-cta-node"
+    onclick="window.location.href='404.html'">
+    Know More ➔
+</button>
                 
                 <div class="profile-phone-bridge">
                     <div class="profile-phone-badge">
@@ -2248,7 +2301,7 @@ function initSentenceScrollRevealObserver() {
             <div class="slate-text-casing">
                 <h3 class="scroll-fade-text">Nutritious Meals & Snacks Provided</h3>
                 <p class="scroll-fade-text">Balanced, kid-friendly meals prepared daily by nutrition experts to sustain vibrant mental milestones and high active playground hours.</p>
-                <a href="#meals" class="slate-action-link scroll-fade-text">Read More</a>
+                <a href="404.html" class="slate-action-link scroll-fade-text">Read More</a>
             </div>
         </div>
 
@@ -2275,11 +2328,22 @@ function initSentenceScrollRevealObserver() {
                     </div>
 
                     <!-- Custom 404 Play Button Trigger -->
-                    <button class="video-play-nav-node" onclick="routeTo404()" aria-label="Play Feature Overview Video">
-                        <svg viewBox="0 0 24 24" width="20" height="20" fill="#2B2B2B">
-                            <polygon points="8,5 19,12 8,19" />
-                        </svg>
-                    </button>
+                  <button
+    class="video-play-nav-node"
+    onclick="window.location.href='404.html'"
+    aria-label="Play Feature Overview Video">
+
+    <svg
+        viewBox="0 0 24 24"
+        width="20"
+        height="20"
+        fill="#2B2B2B">
+
+        <polygon points="8,5 19,12 8,19" />
+
+    </svg>
+
+</button>
                 </div>
             </div>
         </div>
@@ -3203,14 +3267,18 @@ function runIncrementalTicker(element) {
                 </div>
                 <h3>Complimentary trial day</h3>
                 <p>Visit Stackly and explore our safe, joyful environment.</p>
-                <button class="bento-cta-btn floating-cta">Make a Visit</button>
+               <button
+    class="bento-cta-btn floating-cta"
+    onclick="window.location.href='404.html'">
+    Make a Visit
+</button>
             </div>
         </div>
 
         <!-- CENTER COLUMN HERO: MAIN CHILD PORTRAIT (Enters from TOP on Scroll) -->
         <div class="bento-card center-hero-showcase entry-top">
             <!-- Central Frame Image with adaptive layout bounds -->
-            <img src="https://unsplash.com" alt="Smiling happy baby exploring" class="hero-child-img">
+            <img src="./assests/preschool.webp" alt="Smiling happy baby exploring" class="hero-child-img">
             
             <!-- Bottom Floating Overlay Badge Info Map -->
             <div class="hero-overlay-banner">
@@ -3234,13 +3302,13 @@ function runIncrementalTicker(element) {
                     <!-- Stacked Circle Images Matrix driven by raw <img> tags -->
                     <div class="circle-images-stack">
                         <div class="hover-circle-avatar">
-                            <img src="https://unsplash.com" alt="Active Instructor Profile" class="avatar-img">
+                            <img src="./assests/care 3.webp" alt="Active Instructor Profile" class="avatar-img">
                         </div>
                         <div class="hover-circle-avatar">
-                            <img src="https://unsplash.com" alt="Playground Activity Map" class="avatar-img">
+                            <img src="./assests/outdoor.webp" alt="Playground Activity Map" class="avatar-img">
                         </div>
                         <div class="hover-circle-avatar">
-                            <img src="https://unsplash.com" alt="Child Class Exploration" class="avatar-img">
+                            <img src="./assests/care center.webp" alt="Child Class Exploration" class="avatar-img">
                         </div>
                     </div>
                 </div>
@@ -3589,7 +3657,7 @@ function initBentoLetterRevealObserver() {
         <div class="faq-media-column">
             <div class="faq-image-wrapper">
                 <!-- Main representative image slot matching the reference image layout theme -->
-                <img src="https://unsplash.com" alt="Curious young girl holding educational books" class="faq-display-img">
+                <img src="./assests/outdoor.webp" alt="Curious young girl holding educational books" class="faq-display-img">
             </div>
             
             <!-- FLOATING BACKGROUND VECTOR CLOUD -->
@@ -4012,7 +4080,7 @@ function initFAQDrawerAccordionToggle() {
             <!-- Review Card 1 -->
             <div class="testimonial-bubble-card shape-blob-1">
                 <div class="parent-avatar-shell">
-                    <img src="https://unsplash.com" alt="Sarah M. Profile Avatar" class="avatar-img">
+                    <img src="./assests/devon mill.webp" alt="Sarah M. Profile Avatar" class="avatar-img">
                 </div>
                 <h4 class="parent-title">Parent of Nursery Student</h4>
                 <div class="star-rating-row">⭐⭐⭐⭐⭐</div>
@@ -4022,7 +4090,7 @@ function initFAQDrawerAccordionToggle() {
             <!-- Review Card 2 -->
             <div class="testimonial-bubble-card shape-blob-2">
                 <div class="parent-avatar-shell">
-                    <img src="https://unsplash.com" alt="David K. Profile Avatar" class="avatar-img">
+                    <img src="./assests/aris.webp" alt="David K. Profile Avatar" class="avatar-img">
                 </div>
                 <h4 class="parent-title">Parent of Toddler Student</h4>
                 <div class="star-rating-row">⭐⭐⭐⭐⭐</div>
@@ -4032,7 +4100,7 @@ function initFAQDrawerAccordionToggle() {
             <!-- Review Card 3 -->
             <div class="testimonial-bubble-card shape-blob-3">
                 <div class="parent-avatar-shell">
-                    <img src="https://unsplash.com" alt="Elena R. Profile Avatar" class="avatar-img">
+                    <img src="./assests/arjun.webp" alt="Elena R. Profile Avatar" class="avatar-img">
                 </div>
                 <h4 class="parent-title">Parent of Kindergarten Student</h4>
                 <div class="star-rating-row">⭐⭐⭐⭐⭐</div>
@@ -4042,7 +4110,7 @@ function initFAQDrawerAccordionToggle() {
             <!-- Review Card 4 -->
             <div class="testimonial-bubble-card shape-blob-1">
                 <div class="parent-avatar-shell">
-                    <img src="https://unsplash.com" alt="Marcus T. Profile Avatar" class="avatar-img">
+                    <img src="./assests/rose.webp" alt="Marcus T. Profile Avatar" class="avatar-img">
                 </div>
                 <h4 class="parent-title">Parent of Pre-K Student</h4>
                 <div class="star-rating-row">⭐⭐⭐⭐⭐</div>
@@ -4052,7 +4120,7 @@ function initFAQDrawerAccordionToggle() {
             <!-- Review Card 5 (Clone 1 for seamless infinite loop tracks) -->
             <div class="testimonial-bubble-card shape-blob-1">
                 <div class="parent-avatar-shell">
-                    <img src="https://unsplash.com" alt="Sarah M. Profile Avatar" class="avatar-img">
+                    <img src="./assests/arjun.webp" alt="Sarah M. Profile Avatar" class="avatar-img">
                 </div>
                 <h4 class="parent-title">Parent of Nursery Student</h4>
                 <div class="star-rating-row">⭐⭐⭐⭐⭐</div>
@@ -4062,7 +4130,7 @@ function initFAQDrawerAccordionToggle() {
             <!-- Review Card 6 (Clone 2 for seamless infinite loop tracks) -->
             <div class="testimonial-bubble-card shape-blob-2">
                 <div class="parent-avatar-shell">
-                    <img src="https://unsplash.com" alt="David K. Profile Avatar" class="avatar-img">
+                    <img src="./assests/aris.webp" alt="David K. Profile Avatar" class="avatar-img">
                 </div>
                 <h4 class="parent-title">Parent of Toddler Student</h4>
                 <div class="star-rating-row">⭐⭐⭐⭐⭐</div>
@@ -4345,7 +4413,7 @@ function playSoftBubblePopSound() {
 <section class="single-line-cta-banner">
     
     <!-- Background Layer Image driven via native <img> tag -->
-    <img src="https://unsplash.com" alt="Childcare playful setting backdrop" class="single-banner-bg-img">
+    <img src="./assests/care center.webp" alt="Childcare playful setting backdrop" class="single-banner-bg-img">
     
     <!-- Deep Contrast Color Overlay Sheet -->
     <div class="single-banner-overlay"></div>
@@ -4359,7 +4427,11 @@ function playSoftBubblePopSound() {
 
         <!-- Right Side: Action Trigger CTA Button -->
         <div class="single-banner-action-wrap">
-            <button class="single-banner-btn horizontal-float-node">Enroll Today ✨</button>
+          <button
+    class="single-banner-btn horizontal-float-node"
+    onclick="window.location.href='404.html'">
+    Enroll Today ✨
+</button>
         </div>
 
     </div>
@@ -4734,7 +4806,7 @@ function initSlowerElephant() {
             <div class="premium-brand-column">
                 <!-- Brand logo image triggers smooth scroll back to top -->
                 <div class="premium-logo-wrap" onclick="scrollToTop()" title="Back to Top">
-                    <img src="https://placehold.co" alt="Stackly Brand Logo" class="premium-logo-img">
+                    <img src="./assests/childcare footer.webp" alt="Stackly Brand Logo" class="premium-logo-img">
                 </div>
                 <p class="premium-brand-bio">
                     Nurturing early curiosity, building structural foundational strengths, and creating certified safe childcare environments designed for your little explorers.

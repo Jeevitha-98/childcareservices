@@ -1,0 +1,1675 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stackly - Creative Childcare Services</title>
+    <!-- Linking external CSS styles -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- PRELOADER SCREEN OVERLAY -->
+    <div id="preloader">
+        <!-- Interactive Entrance Button (Ensures sound is allowed by web browsers) -->
+        <div class="start-gate" id="startGate">
+            <button class="start-btn" onclick="initiatePreloader()">✨ Enter Stackly</button>
+        </div>
+
+        <!-- Main Loading Assets Container (Triggered on click) -->
+        <div class="loading-assets" id="loadingAssets">
+            <!-- Vector Graphic: Childcare Stacking Blocks Layer -->
+            <div class="vector-container">
+                <svg viewBox="0 0 100 100" width="100%" height="100%">
+                    <!-- Base Block -->
+                    <rect class="block block-bottom" x="15" y="70" width="70" height="20" rx="4" />
+                    <!-- Middle Block -->
+                    <rect class="block block-middle" x="27.5" y="45" width="45" height="20" rx="4" />
+                    <!-- Top Triangle Block -->
+                    <polygon class="block block-top" points="50,15 35,38 65,38" />
+                </svg>
+            </div>
+
+            <!-- Brand Logo Header Text -->
+            <h1 class="brand-name">Stackly<span>.</span></h1>
+
+            <!-- Loading Timing Bar Indicator -->
+            <div class="progress-track">
+                <div class="progress-bar" id="progressBar"></div>
+            </div>
+        </div>
+    </div>
+
+
+
+    <!-- Linking external Javascript behaviors -->
+    <script>
+
+        // --- NATIVE AUDIO SYNTHESIZER (Web Audio API) ---
+// Generates a bright, warm, browser-safe chime sequence dynamically without external dependencies.
+function playChimeSound() {
+    try {
+        const AudioContext = window.AudioContext || window.webkitAudioContext;
+        const ctx = new AudioContext();
+        
+        // Note One: Bright Introduction Core Base
+        let osc1 = ctx.createOscillator();
+        let gain1 = ctx.createGain();
+        osc1.type = 'triangle'; 
+        osc1.frequency.setValueAtTime(523.25, ctx.currentTime); // C5 Note
+        gain1.gain.setValueAtTime(0.15, ctx.currentTime);
+        gain1.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.6);
+        osc1.connect(gain1);
+        gain1.connect(ctx.destination);
+        osc1.start();
+        osc1.stop(ctx.currentTime + 0.6);
+
+        // Note Two: Upbeat Harmonizing Accent delayed by 150 milliseconds
+        setTimeout(() => {
+            let osc2 = ctx.createOscillator();
+            let gain2 = ctx.createGain();
+            osc2.type = 'sine';
+            osc2.frequency.setValueAtTime(659.25, ctx.currentTime); // E5 Note
+            gain2.gain.setValueAtTime(0.2, ctx.currentTime);
+            gain2.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.8);
+            osc2.connect(gain2);
+            gain2.connect(ctx.destination);
+            osc2.start();
+            osc2.stop(ctx.currentTime + 0.8);
+        }, 150);
+
+    } catch (error) {
+        console.warn("Audio presentation skipped due to client system security rules:", error);
+    }
+}
+
+// --- STATE COORDINATION RUNNER ---
+function initiatePreloader() {
+    // 1. Fire Audio Chime Module
+    playChimeSound();
+
+    // 2. Tear down the static start interaction gate
+    document.getElementById('startGate').style.display = 'none';
+    
+    // 3. Reveal Animated Loading elements 
+    const loadingAssets = document.getElementById('loadingAssets');
+    loadingAssets.style.display = 'flex';
+
+    // 4. Trigger 2-Second Linear Track filling
+    const bar = document.getElementById('progressBar');
+    setTimeout(() => {
+        bar.style.width = '100%';
+    }, 50);
+
+    // 5. Exit Preloader View and Introduce Main Landing Layout after exactly 2 seconds
+    setTimeout(() => {
+        const preloader = document.getElementById('preloader');
+        const mainContent = document.getElementById('main-content');
+        
+        // Smooth Outward Transitions
+        preloader.style.opacity = '0';
+        preloader.style.transform = 'scale(1.05)';
+        
+        setTimeout(() => {
+            preloader.style.display = 'none';
+            // Smoothly ease in your main app canvas elements
+            mainContent.classList.add('loaded');
+        }, 500); // 500ms aligns with CSS exit style limits
+
+    }, 2000); // Strict 2000ms duration requirement
+}
+
+    </script>
+
+    <!-- FLOATING STICKY HEADER Component -->
+<header class="floating-header">
+    <div class="header-container">
+        
+        <!-- Brand Logo (Refreshes Page on Click) -->
+        <div class="logo-wrapper" onclick="refreshPage()">
+            <img src="./assests/childcare logo.webp" alt="Stackly Logo" class="brand-img">
+        </div>
+
+        <!-- Mobile Hamburger Menu Icon Toggle -->
+        <div class="hamburger-menu" id="hamburgerToggle" onclick="toggleMobileMenu()">
+            <span class="bar"></span>
+            <span class="bar"></span>
+            <span class="bar"></span>
+        </div>
+
+        <!-- Centered Navigation Menu Layout -->
+        <nav class="nav-menu" id="navMenu">
+            <a href="index.html" class="nav-item ">Home</a>
+            <a href="programs.html" class="nav-item">Programs</a>
+            <a href="about.html" class="nav-item">About Us</a>
+            <a href="blogs.html" class="nav-item">Our Team</a>
+            <a href="contact.html" class="nav-item active">Contact</a>
+        </nav>
+
+        <!-- Right-Aligned Authentication Action Element -->
+        <div class="auth-actions">
+    <!-- UPDATED NAVIGATION ROUTER BUTTON -->
+<button class="auth-btn" onclick="window.location.href='login.html'">Parent Portal</button>
+
+        </div>
+        
+    </div>
+</header>
+
+<script>
+    // --- LOGO PAGE REFRESH FUNCTION ---
+function refreshPage() {
+    window.location.reload();
+}
+
+// --- HAMBURGER MENU DRAWER INTERACTION ---
+function toggleMobileMenu() {
+    const hamburger = document.getElementById('hamburgerToggle');
+    const navMenu = document.getElementById('navMenu');
+    
+    hamburger.classList.toggle('active');
+    navMenu.classList.toggle('active');
+}
+
+// Automatically close responsive drawer if any nav link is selected
+document.querySelectorAll('.nav-item').forEach(item => {
+    item.addEventListener('click', () => {
+        document.getElementById('hamburgerToggle').classList.remove('active');
+        document.getElementById('navMenu').classList.remove('active');
+    });
+});
+
+</script>
+
+<!-- FRESH CONTACT PAGE HERO SECTION -->
+<section class="contact-hero-section">
+    <div class="contact-hero-container">
+        
+        <!-- LEFT COLUMN: MESSAGING TEXT PANE (SCROLL DRIVEN) -->
+        <div class="contact-hero-content">
+            <!-- Sentence-by-Sentence Scroll Revealed Heading Matrix -->
+            <h1 class="contact-hero-title" id="contactHeroTitle">
+                <span class="contact-sentence">Get In Touch.</span>
+                <span class="contact-sentence">We Are Here To Help.</span>
+                <span class="contact-sentence highlight">Connect With Stackly.</span>
+            </h1>
+            
+            <p class="contact-hero-subtitle">
+                Have questions about our child care modules, age-group tracks, or enrollment procedures? Reach out to our admissions team today and secure your child's placement block.
+            </p>
+            
+            <!-- Dual Interactive Floating Action Buttons Grid -->
+            <div class="contact-hero-actions">
+                <button class="contact-hero-btn primary-contact-cta float-loop-node-1" onclick="document.getElementById('contact-form').scrollIntoView({behavior: 'smooth'})">Send Message ✨</button>
+                <a href="tel:+917010792745" class="contact-hero-btn secondary-contact-cta float-loop-node-2">Call Support ➔</a>
+            </div>
+        </div>
+
+        <!-- RIGHT COLUMN: CHUT THEMED IMAGE BACKPLATE CANVAS -->
+        <div class="contact-hero-media">
+            <!-- Non-square organic fluid layout curve masking box frame -->
+            <div class="contact-organic-mask-box">
+                <!-- Standard img tag for premium graphic image mapping -->
+                <img src="./assests/care 3.webp" alt="Caring instructor assisting child at desk" class="contact-hero-display-img">
+                
+                <!-- Floating Small Vector Envelope Accent Indicator -->
+                <div class="contact-vector-badge float-loop-node-2">
+                    <svg viewBox="0 0 24 24" width="36" height="36" fill="none" stroke="#FFB400" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+                        <polyline points="22,6 12,13 2,6"/>
+                    </svg>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</section>
+
+<style>
+    /* --- COMPONENT THEME DESIGN TOKENS --- */
+:root {
+    --primary-pink: #FF5A5F;     /* Bright Coral Pink */
+    --accent-teal: #00A699;      /* Fresh Childcare Green Theme Color */
+    --accent-yellow: #FFB400;    /* Warm Sunrise Yellow */
+    --text-pure-black: #000000;  /* Solid Black Contrast Typographies */
+    --surface-white: #FFFFFF;
+}
+
+/* --- OVERALL HERO WORKSPACE CONTAINER --- */
+.contact-hero-section {
+    width: 100%;
+    background: linear-gradient(180deg, #FFFFFF 0%, #F6FAFA 100%);
+    /* TARGET ASSIGNED SYSTEM PADDINGS: 50px Top, 30px Bottom */
+    padding: 130px 20px 30px 20px !important;
+    overflow: hidden;
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.contact-hero-container {
+    width: 100%;
+    max-width: 1240px;
+    margin: 0 auto;
+    display: grid;
+    /* MANDATED LAYOUT MATRIX: Left side text content, Right side graphic image */
+    grid-template-columns: 1.12fr 0.88fr;
+    gap: 55px;
+    align-items: center;
+}
+
+/* ================= LEFT COLUMN: COPY FIELDS & FLOATING ACTIONS ================= */
+.contact-hero-content {
+    text-align: left;
+}
+
+.contact-hero-title {
+    font-size: 3.4rem;
+    font-weight: 900;
+    line-height: 1.18;
+    color: var(--text-pure-black);
+    letter-spacing: -1.5px;
+    margin-bottom: 22px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+/* Sentence-by-sentence scroll triggers base styles */
+.contact-sentence {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.6s cubic-bezier(0.215, 0.610, 0.355, 1), 
+                transform 0.6s cubic-bezier(0.215, 0.610, 0.355, 1);
+}
+
+.contact-sentence.revealed-line {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.contact-hero-title .highlight {
+    color: var(--accent-teal); /* Accents title using child care service green values */
+}
+
+.contact-hero-subtitle {
+    font-size: 1.15rem;
+    line-height: 1.65;
+    color: #4A5452;
+    max-width: 550px;
+    margin-bottom: 35px;
+    font-weight: 500;
+}
+
+/* --- THE ACTION CTAS DECK --- */
+.contact-hero-actions {
+    display: flex;
+    gap: 16px;
+    align-items: center;
+}
+
+.contact-hero-btn {
+    padding: 16px 36px;
+    font-size: 1.05rem;
+    font-weight: 700;
+    border-radius: 16px;
+    border: none;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-block;
+    transition: background-color 0.3s, transform 0.2s, box-shadow 0.2s;
+}
+
+.primary-contact-cta {
+    background-color: var(--primary-pink);
+    color: #FFFFFF;
+    box-shadow: 0 5px 15px rgba(255, 90, 95, 0.25);
+}
+.primary-contact-cta:hover { background-color: #E04449; }
+
+.secondary-contact-cta {
+    background-color: var(--surface-white);
+    color: var(--text-pure-black);
+    border: 2px solid #E2E8F0;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.02);
+}
+.secondary-contact-cta:hover { background-color: #F8FAFB; }
+
+/* Continuous Infinite Floating Rhythm Physics Loops */
+.float-loop-node-1 { animation: contactFloatMotion 4.5s ease-in-out infinite alternate; }
+.float-loop-node-2 { animation: contactFloatMotion 4.5s ease-in-out infinite alternate-reverse; animation-delay: 0.6s; }
+
+@keyframes contactFloatMotion {
+    0% { transform: translateY(0); }
+    100% { transform: translateY(-7px); }
+}
+
+.contact-hero-btn:hover {
+    transform: translateY(-4px) scale(1.02);
+    box-shadow: 0 10px 22px rgba(43, 43, 43, 0.12);
+}
+
+/* ================= RIGHT COLUMN: INTERACTIVE PORTRAIT IMAGE ASSET ================= */
+.contact-hero-media {
+    display: flex;
+    justify-content: center;
+    position: relative;
+    width: 100%;
+}
+
+/* Custom organic fluid masking profile frame (strictly non-square parameters) */
+.contact-organic-mask-box {
+    position: relative;
+    width: 100%;
+    max-width: 440px;
+    aspect-ratio: 1.05 / 1;
+    overflow: visible; /* Permits vector badge items to float outside grid lines comfortably */
+    border-radius: 35% 65% 60% 40% / 50% 40% 60% 50%;
+    box-shadow: 0 20px 45px rgba(43, 43, 43, 0.06);
+    background-color: #EBF8F7;
+    z-index: 5;
+    transition: box-shadow 0.4s ease;
+}
+
+.contact-hero-display-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: inherit; /* Inherits the custom fluid envelope curvature natively */
+    transition: transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+/* Premium zoom hover transitions */
+.contact-organic-mask-box:hover .contact-hero-display-img {
+    transform: scale(1.04) rotate(-1deg);
+}
+.contact-organic-mask-box:hover {
+    box-shadow: 0 25px 55px rgba(0, 166, 153, 0.12); /* Casts a soft childcare theme green glow ambient layer */
+}
+
+/* Absolute coordinates vector link envelope badge item */
+.contact-vector-badge {
+    position: absolute;
+    top: -12px;
+    right: -10px;
+    z-index: 10;
+}
+
+/* ================= ADAPTIVE RESPONSIVE COMPACT MEDIA SCREEN BREAKPOINTS ================= */
+@media (max-width: 1024px) {
+    .stackly-premium-green-footer { padding: 40px 24px 30px 24px !important; }
+    .contact-hero-container { grid-template-columns: 1fr; gap: 50px; text-align: center; }
+    .contact-hero-content { display: flex; flex-direction: column; align-items: center; text-align: center; }
+    .contact-hero-title { font-size: 2.6rem; align-items: center; }
+    .contact-hero-subtitle { margin-left: auto; margin-right: auto; }
+    .contact-organic-mask-box { max-width: 360px; }
+    .contact-hero-actions { justify-content: center; }
+}
+
+@media (max-width: 580px) {
+    .contact-hero-title { font-size: 2.1rem; }
+    .contact-hero-actions { flex-direction: column; width: 100%; gap: 12px; }
+    .contact-hero-btn { width: 100%; text-align: center; }
+}
+
+</style>
+
+<script>
+    /**
+ * Stackly Childcare Website - Contact Hero Sequence Controller Engine
+ */
+document.addEventListener("DOMContentLoaded", () => {
+    initContactTitleRevealObserver();
+});
+
+/**
+ * Scroll Intersection Observer
+ * Unveils individual heading lines sequentially with a 240ms cascade delay
+ */
+function initContactTitleRevealObserver() {
+    const headingBlock = document.getElementById("contactHeroTitle");
+    if (!headingBlock) return;
+
+    const revealObserver = new IntersectionObserver((entries, observer) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                const parent = entry.target;
+                const sentenceLines = parent.querySelectorAll(".contact-sentence");
+
+                // Stagger individual lines sequence reveals cleanly by 240ms delay gaps
+                sentenceLines.forEach((line, index) => {
+                    setTimeout(() => {
+                        line.classList.add("revealed-line");
+                    }, index * 240);
+                });
+
+                // Clear observer to conserve background browser runtime threads footprints
+                observer.unobserve(parent);
+            }
+        });
+    }, { root: null, threshold: 0.2 });
+
+    revealObserver.observe(headingBlock);
+}
+
+</script>
+
+<!-- DYNAMIC CHILDCARE ADMISSIONS FORM & DIRECTORY SECTION -->
+<section class="admissions-contact-section" id="contact-form">
+    <div class="admissions-form-container">
+        
+        <!-- ================= LEFT COLUMN: SUBMISSION FORM NODE ================= -->
+        <div class="admissions-form-block">
+            <div class="admissions-form-header">
+                <span class="form-mini-badge tag-teal">Admissions Desk</span>
+                <h2>Configure Your Child's Placement Matrix</h2>
+                <p>Fill out your initial baseline requirements below. Our registrar team will dynamically compute a tailored enrollment proposal blueprint.</p>
+            </div>
+
+            <!-- Interactivity form wrapper -->
+            <form class="childcare-interactive-form" onsubmit="validateAndSubmitAdmissions(event)">
+                
+                <div class="form-input-row">
+                    <div class="input-field-box">
+                        <label for="parentName">Parent / Guardian Full Name</label>
+                        <div class="field-icon-shell">
+                            <!-- User Line Vector SVG -->
+                            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                            <input type="text" id="parentName" placeholder="e.g. Vikram R">
+                        </div>
+                    </div>
+                    
+                    <div class="input-field-box">
+                        <label for="contactMobile">Contact Mobile Handle</label>
+                        <div class="field-icon-shell">
+                            <!-- Phone Line Vector SVG -->
+                            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+                            <input type="tel" id="contactMobile" placeholder="e.g. +91 9876543210">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-input-row">
+                    <div class="input-field-box">
+                        <label for="parentEmail">Email Inbox Address</label>
+                        <div class="field-icon-shell">
+                            <!-- Mail Line Vector SVG -->
+                            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.09-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+                            <input type="email" id="parentEmail" placeholder="e.g. design@stacklystudio.com">
+                        </div>
+                    </div>
+                    
+                    <div class="input-field-box">
+                        <label for="childAge">Estimated Age of Child (Months)</label>
+                        <div class="field-icon-shell">
+                            <!-- Baby Silhouette Child Track SVG -->
+                            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="6" r="4"/><path d="M6 14c0-3.3 2.7-6 6-6s6 2.7 6 6v7H6v-7z"/></svg>
+                            <input type="number" id="childAge" placeholder="e.g. 18">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="input-field-box text-area-box">
+                    <label for="developmentNotes">Developmental Needs & Care Notes</label>
+                    <div class="field-icon-shell align-items-start">
+                        <textarea id="developmentNotes" rows="4" placeholder="Describe any tracking macro thresholds, allergy choices, developmental milestones, or specific curriculum package inclusions..."></textarea>
+                    </div>
+                </div>
+
+                <!-- Toast Warning Notification Field Container -->
+                <div class="admissions-form-alert" id="admissionsFormToast"></div>
+
+                <button type="submit" class="admissions-submit-btn">
+                    <!-- Send/Transmit Blueprint Vector Icon -->
+                    <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/></svg>
+                    Transmit Admissions Request
+                </button>
+            </form>
+        </div>
+
+        <!-- ================= RIGHT COLUMN: LIVE CONTACT DIRECTORY SHEETS ================= -->
+        <div class="admissions-directory-block">
+            <div class="admissions-form-header">
+                <span class="form-mini-badge tag-coral">Flagship Campus Hub</span>
+                <h2>Reach Our Care Architects</h2>
+                <p>Connect directly with our corporate pedagogical wellness staff to fast-track specialized child care bookings, nutritional packages, and event plans.</p>
+            </div>
+
+            <div class="directory-cards-stack">
+                
+                <!-- Box 1: Visit Our Studio -->
+                <div class="directory-info-card">
+                    <div class="card-icon-badge blue-tint">
+                        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                    </div>
+                    <div class="card-text-details">
+                        <span>Visit Our Studio</span>
+                        <p>MMR Complex, Periyakollappatty, Chinna Thirupathi, Salem, Tamil Nadu 636008</p>
+                    </div>
+                </div>
+
+                <!-- Box 2: Direct Hotlines -->
+                <div class="directory-info-card">
+                    <div class="card-icon-badge coral-tint">
+                        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+                    </div>
+                    <div class="card-text-details">
+                        <span>Direct Hotlines</span>
+                        <a href="tel:+917010792745" class="directory-anchor-link">+91 7010792745</a>
+                    </div>
+                </div>
+
+                <!-- Box 3: Electronic Mail (Outlook Auto-Launcher Native Redirect Module) -->
+                <div class="directory-info-card">
+                    <div class="card-icon-badge purple-tint">
+                        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.09-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+                    </div>
+                    <div class="card-text-details">
+                        <span>Electronic Mail</span>
+                        <!-- PRE-CONFIGURED MAILTO DIRECT: Injects to-column address instantly upon user selection -->
+                        <a href="mailto:design@://stacklystudio.com" class="directory-anchor-link underline-style" title="Launch Outlook Mail Connection Box">design@stacklystudio.com</a>
+                    </div>
+                </div>
+
+                <!-- Box 4: Atelier Availability -->
+                <div class="directory-info-card">
+                    <div class="card-icon-badge yellow-tint">
+                        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                    </div>
+                    <div class="card-text-details">
+                        <span>Atelier Availability</span>
+                        <p>Mon - Sun: 9:00 AM - 7:00 PM</p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+</section>
+
+<style>
+    /* --- SITE CONTEXT DESIGN THEME TOKENS --- */
+:root {
+    --text-pure-black: #000000;
+    --text-charcoal: #2B2B2B;
+    --text-muted: #536261;
+    --accent-teal-green: #00A699; /* Fresh Green Theme Color */
+    --primary-coral: #FF5A5F;
+    --accent-yellow: #FFB400;
+    --accent-purple: #8A7CF0;
+    --surface-white: #FFFFFF;
+}
+
+/* --- OVERALL WORKSPACE COVER PANELS --- */
+.admissions-contact-section {
+    width: 100%;
+    background-color: #FAFDFD;
+    /* DESIGN MANDATE TARGET PADDINGS: 50px Top, 30px Bottom */
+    padding: 50px 20px 30px 20px !important;
+    overflow: hidden;
+    position: relative;
+}
+
+.admissions-form-container {
+    width: 100%;
+    max-width: 1240px;
+    margin: 0 auto;
+    display: grid;
+    /* Balanced fluid asymmetric grid layout matrix */
+    grid-template-columns: 1.1fr 0.9fr;
+    gap: 40px;
+    align-items: start;
+}
+
+/* ================= LEFT SIDE: FORM BLOCK INTERIOR ================= */
+.admissions-form-block {
+    background-color: var(--surface-white);
+    border: 1px solid #EBF5F4;
+    border-radius: 28px;
+    padding: 40px;
+    box-shadow: 0 10px 30px rgba(0, 166, 153, 0.015);
+}
+
+.admissions-form-header {
+    text-align: left;
+    margin-bottom: 25px;
+    width: 100%;
+}
+
+.form-mini-badge {
+    font-size: 0.8rem; font-weight: 800; text-transform: uppercase; padding: 5px 12px; border-radius: 6px; letter-spacing: 1px; display: inline-block; margin-bottom: 12px; color: #FFFFFF;
+}
+.tag-teal { background-color: var(--accent-teal-green); }
+.tag-coral { background-color: var(--primary-coral); }
+
+.admissions-form-header h2 { font-size: 1.8rem; font-weight: 900; color: var(--text-pure-black); margin-bottom: 10px; letter-spacing: -0.5px; }
+.admissions-form-header p { font-size: 0.95rem; line-height: 1.5; color: var(--text-muted); }
+
+/* --- INTERACTIVE ELEMENT CELLS PACKING --- */
+.childcare-interactive-form { display: flex; flex-direction: column; gap: 20px; width: 100%; }
+.form-input-row { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; width: 100%; }
+
+.input-field-box { display: flex; flex-direction: column; text-align: left; gap: 8px; width: 100%; }
+.input-field-box label { font-size: 0.85rem; font-weight: 800; color: var(--text-charcoal); text-transform: uppercase; letter-spacing: 0.5px; }
+
+.field-icon-shell {
+    position: relative; width: 100%; display: flex; align-items: center;
+    background-color: #FAFAFA; border: 1px solid #DCEBEA; border-radius: 12px; color: #627A78; transition: border-color 0.25s, box-shadow 0.25s;
+}
+.field-icon-shell svg { position: absolute; left: 16px; pointer-events: none; flex-shrink: 0; }
+
+.field-icon-shell input, .field-icon-shell textarea {
+    width: 100%; padding: 14px 16px 14px 44px; font-size: 0.95rem; background: none; border: none; font-family: inherit; color: var(--text-pure-black);
+}
+.field-icon-shell textarea { padding: 14px 16px; resize: vertical; min-height: 100px; }
+.field-icon-shell input:focus, .field-icon-shell textarea:focus { outline: none; }
+
+/* Interactive Hover Active States Frame */
+.field-icon-shell:focus-within { border-color: var(--accent-teal-green); box-shadow: 0 0 0 4px rgba(0, 166, 153, 0.08); background-color: #FFFFFF; }
+
+/* Toast Validation Warning Container Box */
+.admissions-form-alert {
+    width: 100%; font-size: 0.9rem; font-weight: 700; color: var(--primary-coral); background-color: #FFF2F3; border: 1px dashed rgba(255, 90, 95, 0.3); border-radius: 12px; padding: 12px 16px; text-align: left; display: none; margin-bottom: -4px;
+}
+
+/* Transmit Button Module Specs */
+.admissions-submit-btn {
+    background-color: var(--accent-teal-green); color: #FFFFFF; border: none; padding: 16px 32px; font-size: 1rem; font-weight: 800; border-radius: 12px; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 10px; width: max-content; box-shadow: 0 5px 15px rgba(0, 166, 153, 0.2); transition: background-color 0.2s, transform 0.2s;
+}
+.admissions-submit-btn:hover { background-color: #00877D; transform: translateY(-2px); }
+
+/* ================= RIGHT SIDE: DIRECTORY CARDS LAYER ================= */
+.admissions-directory-block { display: flex; flex-direction: column; width: 100%; height: 100%; }
+
+.directory-cards-stack { display: flex; flex-direction: column; gap: 14px; width: 100%; margin-top: 5px; }
+
+.directory-info-card {
+    background-color: var(--surface-white); border: 1px solid #EBF5F4; border-radius: 16px; padding: 18px 20px; display: flex; align-items: center; gap: 16px; text-align: left; transition: transform 0.25s, box-shadow 0.25s;
+}
+.directory-info-card:hover { transform: translateX(4px); box-shadow: 0 6px 20px rgba(0, 166, 153, 0.03); }
+
+.card-icon-badge { width: 38px; height: 38px; border-radius: 10px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+.blue-tint { background-color: #E6F6F5; color: var(--accent-teal-green); }
+.coral-tint { background-color: #FFEBEB; color: var(--primary-coral); }
+.purple-tint { background-color: #F0EBF7; color: var(--accent-purple); }
+.yellow-tint { background-color: #FFF6E0; color: #E68A00; }
+
+.card-text-details { display: flex; flex-direction: column; gap: 4px; }
+.card-text-details span { font-size: 0.82rem; font-weight: 800; color: #627A78; text-transform: uppercase; letter-spacing: 0.5px; }
+.card-text-details p, .directory-anchor-link { font-size: 1rem; font-weight: 700; color: var(--text-pure-black); text-decoration: none; line-height: 1.4; }
+
+/* Legible active anchoring styles for links profiles */
+.directory-anchor-link { color: var(--text-pure-black); transition: color 0.15s; }
+.directory-anchor-link:hover { color: var(--accent-teal-green); }
+.underline-style { text-decoration: underline; text-underline-offset: 3px; }
+
+/* ================= ADAPTIVE RESPONSIVE COMPACT BREAKPOINTS ================= */
+@media (max-width: 1024px) {
+    .admissions-form-container { grid-template-columns: 1fr; gap: 40px; }
+    .admissions-form-block { padding: 30px 20px; }
+}
+
+@media (max-width: 600px) {
+    .form-input-row { grid-template-columns: 1fr; gap: 20px; }
+    .admissions-submit-btn { width: 100%; text-align: center; }
+    .directory-info-card { padding: 16px 14px; gap: 12px; }
+    .card-text-details p, .directory-anchor-link { font-size: 0.92rem; }
+}
+
+</style>
+
+<script>
+    /**
+ * Stackly Childcare Website - Admissions Form Validation & Redirect Engine
+ */
+
+/**
+ * COMPILER FORM BLOCK INTERCEPTOR
+ * Validates fields for blank entries before routing the browser focus to the 404 page target
+ */
+function validateAndSubmitAdmissions(event) {
+    // Block standard browser refresh operations natively
+    event.preventDefault();
+
+    const parentNameInput = document.getElementById("parentName");
+    const contactMobileInput = document.getElementById("contactMobile");
+    const parentEmailInput = document.getElementById("parentEmail");
+    const childAgeInput = document.getElementById("childAge");
+    const toastAlertBox = document.getElementById("admissionsFormToast");
+
+    if (!parentNameInput || !contactMobileInput || !parentEmailInput || !childAgeInput || !toastAlertBox) return;
+
+    // Sanitize string content using standard clean trim algorithms
+    const nameStr = parentNameInput.value.trim();
+    const phoneStr = contactMobileInput.value.trim();
+    const emailStr = parentEmailInput.value.trim();
+    const ageStr = childAgeInput.value.trim();
+
+    // 1. COMBINED BLANK STATE VALIDATION CHECK
+    if (nameStr === "" || phoneStr === "" || emailStr === "" || ageStr === "") {
+        toastAlertBox.textContent = "Please fill in all the required form fields before transmitting.";
+        toastAlertBox.style.display = "block";
+        
+        // Highlight boundary tracks using the pink warning token hook
+        highlightFormErrorBorders([parentNameInput, contactMobileInput, parentEmailInput, childAgeInput]);
+        return;
+    }
+
+    // 2. FORMAL REGEX PATTERN CHECKS: Verifies email matches standard formats
+    const standardEmailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!standardEmailRegex.test(emailStr)) {
+        toastAlertBox.textContent = "Please enter a valid electronic email format address.";
+        toastAlertBox.style.display = "block";
+        parentEmailInput.parentElement.style.borderColor = "#FF5A5F";
+        parentEmailInput.focus();
+        return;
+    }
+
+    // Clear alert triggers upon successful validation parameters compilation checks
+    toastAlertBox.style.display = "none";
+    clearFormErrorBorders([parentNameInput, contactMobileInput, parentEmailInput, childAgeInput]);
+
+    // 3. TARGET COMPONENT NAVIGATION DISPATCH: Diverts user straight to error target layout template page
+    window.location.href = "404.html";
+}
+
+/**
+ * Macro helper utilities for updating border color states inside layouts
+ */
+function highlightFormErrorBorders(elementsArray) {
+    elementsArray.forEach(input => {
+        if (input.value.trim() === "") {
+            input.parentElement.style.borderColor = "#FF5A5F";
+        } else {
+            input.parentElement.style.borderColor = "";
+        }
+    });
+}
+
+function clearFormErrorBorders(elementsArray) {
+    elementsArray.forEach(input => {
+        input.parentElement.style.borderColor = "";
+    });
+}
+
+</script>
+
+<!-- DYNAMIC SCROLL-REVEAL MAP SECTION -->
+<section class="contact-map-section" id="location-map">
+    <div class="map-main-container">
+        
+        <!-- THE HIGH-PERFORMANCE SLIDE-IN MAP CANVAS -->
+        <div class="map-reveal-frame slide-from-sideway" id="scrollMapFrame">
+            
+            <!-- Standard raw img tag for your map capture asset file mapping -->
+            <img src="./assests/map.webp" alt="Stackly Flagship Campus Location Map" class="map-raw-img">
+            
+            <!-- Contrast Backdrop Shade Mask -->
+            <div class="map-shade-overlay"></div>
+
+            <!-- OVERLAY ACTION BUTTON PANEL (Natively routes directly to live Google Maps view) -->
+            <div class="map-action-floating-deck">
+                <div class="map-tooltip-card">
+                    <span class="tooltip-badge">Flagship Hub</span>
+                    <h4>Stackly Salem Campus</h4>
+                    <p>MMR Complex, Periyakollappatty, Salem, TN</p>
+                </div>
+                
+                <!-- OPEN MAP TRIGGER: Launches external Google Maps search query thread natively on click -->
+                <a href="https://maps.app.goo.gl/1iUAJLxSuFhmkqeE8" target="_blank" rel="noopener" class="map-redirect-cta-btn infinite-float-node">
+                    <!-- Map Pin Vector SVG Icon -->
+                    <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
+                        <circle cx="12" cy="10" r="3"/>
+                    </svg>
+                    Open Map
+                </a>
+            </div>
+
+        </div>
+
+    </div>
+</section>
+
+<style>
+    /* --- SITE CONTEXT THEME TOKENS --- */
+:root {
+    --text-pure-black: #000000;
+    --accent-teal: #00A699;      /* Fresh Green Childcare Theme Color */
+    --primary-coral: #FF5A5F;    /* Playful Accent Pink */
+    --surface-white: #FFFFFF;
+}
+
+/* --- OVERALL SECTION FRAME CANVAS --- */
+.contact-map-section {
+    width: 100%;
+    background-color: #FAFDFD;
+    /* TARGET ASSIGNED DESIGN PADDINGS: 50px Top, 30px Bottom */
+    padding: 50px 20px 30px 20px !important;
+    overflow: hidden;
+    position: relative;
+}
+
+.map-main-container {
+    width: 100%;
+    max-width: 1240px;
+    margin: 0 auto;
+}
+
+/* ================= THE HIGH-PERFORMANCE SLIDE-IN MAP CANVAS ================= */
+.map-reveal-frame {
+    position: relative;
+    width: 100%;
+    height: 440px; /* Protected window box elevation height specs matching layout metrics */
+    background-color: #EBF5F4;
+    border-radius: 28px;
+    overflow: hidden;
+    border: 1px solid #DCEBEA;
+    box-shadow: 0 10px 30px rgba(0, 166, 153, 0.015);
+}
+
+.map-raw-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+/* Subtle graphic overlay layer mask to increase visual contrast thresholds */
+.map-shade-overlay {
+    position: absolute;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: linear-gradient(180deg, rgba(0, 0, 0, 0.02) 0%, rgba(29, 42, 41, 0.15) 100%);
+    z-index: 2;
+    pointer-events: none;
+}
+
+/* --- THE SIDEWAY SCROLL REVEAL STRUCTURE TRACKS --- */
+.slide-from-sideway {
+    opacity: 0;
+    /* SIDEWAY TRANSITION DIRECTION: Initially pushed outward horizontally to the right side */
+    transform: translateX(100px); 
+    transition: opacity 0.85s cubic-bezier(0.25, 1, 0.5, 1), 
+                transform 0.85s cubic-bezier(0.25, 1, 0.5, 1);
+    will-change: transform, opacity;
+}
+
+/* Activated class setting injected cleanly via JavaScript Intersection Stream triggers */
+.slide-from-sideway.activated-sideway-slide {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+/* ================= OVERLAY ACTION FLOATING DECK CORES ================= */
+.map-action-floating-deck {
+    position: absolute;
+    bottom: 30px;
+    left: 30px;
+    z-index: 10;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    align-items: flex-start;
+}
+
+/* Clean compact informational tooltip card text label panel */
+.map-tooltip-card {
+    background-color: var(--surface-white);
+    border-radius: 18px;
+    padding: 18px 22px;
+    box-shadow: 0 10px 35px rgba(29, 42, 41, 0.08);
+    border: 1px solid #EBF5F4;
+    text-align: left;
+}
+
+.tooltip-badge {
+    font-size: 0.75rem; font-weight: 800; color: var(--primary-coral); text-transform: uppercase; letter-spacing: 1px; display: inline-block; margin-bottom: 6px;
+}
+.map-tooltip-card h4 { font-size: 1.15rem; font-weight: 900; color: var(--text-pure-black); margin-bottom: 4px; }
+.map-tooltip-card p { font-size: 0.88rem; font-weight: 600; color: #5B6A68; line-height: 1.4; max-width: 240px; }
+
+/* THE FLOATING ACTION "OPEN MAP" TRIGGER TARGET BUTTON */
+.map-redirect-cta-btn {
+    background-color: var(--text-pure-black); /* High contrast premium solid black action wrapper */
+    color: #FFFFFF;
+    border: none;
+    padding: 14px 34px;
+    font-size: 0.95rem;
+    font-weight: 800;
+    border-radius: 50px;
+    cursor: pointer;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+    transition: background-color 0.25s, transform 0.25s, box-shadow 0.25s;
+}
+
+.map-redirect-cta-btn:hover {
+    background-color: var(--accent-teal); /* Shifting illumination track colors to brand green on hover focus loops */
+    box-shadow: 0 10px 24px rgba(0, 166, 153, 0.3);
+    transform: translateY(-4px) scale(1.02);
+}
+
+/* Continuous Infinite Card Floating Levitation Loops Physics */
+.infinite-float-node {
+    animation: mapButtonLevitate 4s ease-in-out infinite alternate;
+}
+@keyframes mapButtonLevitate { 0% { transform: translateY(0); } 100% { transform: translateY(-6px); } }
+
+/* ================= ADAPTIVE RESPONSIVE COMPACT MEDIA OVERLAYS ================= */
+@media (max-width: 992px) {
+    .map-reveal-frame { height: 380px; }
+    .map-action-floating-deck { bottom: 20px; left: 20px; }
+    .map-tooltip-card { padding: 14px 18px; }
+    .map-tooltip-card h4 { font-size: 1.05rem; }
+    .map-tooltip-card p { font-size: 0.82rem; max-width: 200px; }
+}
+
+@media (max-width: 650px) {
+    .contact-map-section { padding: 40px 16px 30px 16px !important; }
+    .map-reveal-frame { height: auto; display: flex; flex-direction: column; border-radius: 20px; }
+    .map-raw-img { height: 220px; width: 100%; }
+    
+    /* Repositions floating action panels flat beneath picture segments on narrow responsive phone screens naturally */
+    .map-action-floating-deck { position: static; width: 100%; padding: 20px 16px; gap: 14px; background-color: var(--surface-white); }
+    .map-tooltip-card { border: none; padding: 0; box-shadow: none; width: 100%; }
+    .map-tooltip-card p { max-width: 100%; }
+    .map-redirect-cta-btn { width: 100%; justify-content: center; }
+    
+    /* Optimize slide translation metrics on mobile grids to accelerate viewport loops rendering speed */
+    .slide-from-sideway { transform: translateX(30px); opacity: 0; }
+}
+
+</style>
+
+<script>
+    /**
+ * Stackly Childcare Website - Sideway Slide Map Section Scroll Reveal Engine
+ */
+document.addEventListener("DOMContentLoaded", () => {
+    initSidewayScrollMapObserver();
+});
+
+// SIDEWAY OBSERVER LAYER: Transitions the map box container tracking elements inwards smoothly from the right side
+function initSidewayScrollMapObserver() {
+    const mapFrame = document.getElementById("scrollMapFrame");
+    if (!mapFrame) return;
+
+    const scrollIntersectionObserver = new IntersectionObserver((entries, observer) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                // Appending active class strips translate parameters transforms, firing sideways tracking paths smoothly
+                entry.target.classList.add("activated-sideway-slide");
+                
+                // Clear active link trackers stream to conserve core performing cycles metrics footprints
+                observer.unobserve(entry.target);
+            }
+        });
+    }, { root: null, threshold: 0.15 }); // Fires promptly once 15% of map footprint enters viewport window tracking lines
+
+    scrollIntersectionObserver.observe(mapFrame);
+}
+
+</script>
+
+<!-- FULL WIDTH SINGLE-LINE CTA BANNER -->
+<section class="single-line-cta-banner">
+    
+    <!-- Background Layer Image driven via native <img> tag -->
+    <img src="./assests/outdoor.webp" alt="Childcare playful setting backdrop" class="single-banner-bg-img">
+    
+    <!-- Deep Contrast Color Overlay Sheet -->
+    <div class="single-banner-overlay"></div>
+
+    <div class="single-banner-content-container">
+        
+        <!-- Left Side: Single-Line Text Communication -->
+        <div class="single-banner-text-wrap scroll-fade-node" id="singleCtaText">
+            <h2 class="single-banner-title">Join the Stackly family today and give your child the brightest start!</h2>
+        </div>
+
+        <!-- Right Side: Action Trigger CTA Button -->
+        <div class="single-banner-action-wrap">
+            <button class="single-banner-btn horizontal-float-node">Enroll Today ✨</button>
+        </div>
+
+    </div>
+</section>
+
+<style>
+    /* --- SITE STYLE SYSTEM TOKENS --- */
+:root {
+    --primary-color: #FF5A5F;   /* Bright Coral */
+    --secondary-color: #FFB400; /* Warm Yellow */
+    --accent-color: #00A699;    /* Fresh Teal */
+    --text-light: #FFFFFF;
+}
+
+/* --- FULL WINDOW SECTION WRAPPER --- */
+.single-line-cta-banner {
+    position: relative;
+    width: 100vw;
+    /* Pulls edge alignment flush past standard container margins */
+    margin-left: calc(-50vw + 50%);
+    margin-right: calc(-50vw + 50%);
+    min-height: 160px; 
+    /* TARGET PARAMETER DESIGN PADDINGS: 50px Top, 30px Bottom */
+    padding: 50px 40px 30px 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+
+/* --- BACKGROUND IMAGE LAYERS --- */
+.single-banner-bg-img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: 1;
+    pointer-events: none;
+    transform: scale(1.02);
+    transition: transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+/* Zoom effect on banner hover */
+.single-line-cta-banner:hover .single-banner-bg-img {
+    transform: scale(1.05);
+}
+
+/* Deep gradient backdrop overlay over raw image to guarantee text contrast */
+.single-banner-overlay {
+    position: absolute;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: linear-gradient(135deg, rgba(0, 166, 153, 0.92) 0%, rgba(29, 42, 41, 0.85) 100%);
+    z-index: 2;
+    pointer-events: none;
+}
+
+/* --- INNER ALIGNMENT CONSTRAINTS --- */
+.single-banner-content-container {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    /* MANDATED LAYOUT: Single-line row structure, content left, action right */
+    justify-content: space-between;
+    align-items: center;
+    gap: 40px;
+    position: relative;
+    z-index: 5;
+}
+
+/* --- LEFT COLUMN: CONTENT WRAP --- */
+.single-banner-text-wrap {
+    text-align: left;
+    flex-grow: 1;
+}
+
+.single-banner-title {
+    font-size: 1.8rem;
+    font-weight: 800;
+    line-height: 1.3;
+    color: var(--text-light);
+    letter-spacing: -0.5px;
+}
+
+/* --- RIGHT COLUMN: CTA ACTION DECK --- */
+.single-banner-action-wrap {
+    display: flex;
+    justify-content: flex-end;
+    flex-shrink: 0;
+}
+
+.single-banner-btn {
+    background-color: var(--secondary-color); /* Bright optimistic brand yellow */
+    color: #1D2A29;
+    border: none;
+    padding: 16px 38px;
+    font-size: 1.05rem;
+    font-weight: 800;
+    border-radius: 50px;
+    cursor: pointer;
+    box-shadow: 0 6px 20px rgba(255, 180, 0, 0.3);
+    white-space: nowrap;
+    transition: background-color 0.25s, transform 0.25s, box-shadow 0.25s;
+}
+
+.single-banner-btn:hover {
+    background-color: #E29E00;
+    transform: translateY(-4px) scale(1.02);
+    box-shadow: 0 10px 25px rgba(255, 180, 0, 0.45);
+}
+
+/* Continuous Infinite Levitation Loop Physics */
+.horizontal-float-node {
+    animation: ctaSingleFloat 4s ease-in-out infinite alternate;
+}
+@keyframes ctaSingleFloat { 0% { transform: translateY(0); } 100% { transform: translateY(-6px); } }
+
+/* --- SCROLL REVEAL TIMING ANCHORS --- */
+.scroll-fade-node {
+    opacity: 0;
+    transform: translateY(15px);
+    transition: opacity 0.75s cubic-bezier(0.215, 0.610, 0.355, 1), 
+                transform 0.75s cubic-bezier(0.215, 0.610, 0.355, 1);
+}
+.scroll-fade-node.activated-fade-line {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* ================= ADAPTIVE RESPONSIVE GRID OVERLAY ================= */
+@media (max-width: 992px) {
+    .single-line-cta-banner { padding: 45px 24px 35px 24px; }
+    .single-banner-title { font-size: 1.5rem; text-align: center; }
+    
+    /* Collapses fluidly into centralized stacked rows layout on medium/small displays */
+    .single-banner-content-container {
+        flex-direction: column;
+        gap: 25px;
+        text-align: center;
+    }
+    .single-banner-text-wrap { display: flex; justify-content: center; }
+    .single-banner-action-wrap { justify-content: center; width: 100%; }
+}
+
+@media (max-width: 520px) {
+    .single-banner-title { font-size: 1.25rem; }
+    .single-banner-btn { width: 100%; text-align: center; padding: 14px 24px; }
+}
+
+</style>
+<script>
+    /**
+ * Stackly Childcare Website - Single Line CTA Scroll Reveal Engine
+ */
+document.addEventListener("DOMContentLoaded", () => {
+    initSingleBannerObserver();
+});
+
+// SCROLL OBSERVER: Fades text column smoothly into view upon viewport entry approach
+function initSingleBannerObserver() {
+    const textTarget = document.getElementById("singleCtaText");
+    if (!textTarget) return;
+
+    const scrollObserver = new IntersectionObserver((entries, observer) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add("activated-fade-line");
+                observer.unobserve(entry.target); // Unobserve to optimize page performance runtime metrics
+            }
+        });
+    }, { root: null, threshold: 0.15 });
+
+    scrollObserver.observe(textTarget);
+}
+
+</script>
+
+<!-- ELEPHANT ANIMATION STAGE SECTION -->
+<section class="elephant-stage">
+    
+    <!-- Seamless Background Landscape Hills -->
+    <div class="stage-backdrop">
+        <svg viewBox="0 0 1440 200" preserveAspectRatio="none" width="100%" height="100%">
+            <path d="M0,160 Q360,100 720,150 T1440,120 L1440,200 L0,200 Z" fill="#F4F9F9"/>
+            <path d="M0,180 Q400,140 800,170 T1440,150 L1440,200 L0,200 Z" fill="#EBF4F6"/>
+        </svg>
+    </div>
+
+    <!-- The Adaptive Moving Layout Container -->
+    <div class="elephant-container">
+        <div class="dancing-elephant">
+            <svg viewBox="0 0 120 90" width="100%" height="100%">
+                <!-- Main Body Outline Shadow -->
+                <ellipse cx="65" cy="50" rx="28" ry="22" fill="#A0B2C6" />
+                
+                <!-- Head & Snout -->
+                <circle cx="42" cy="42" r="16" fill="#B3C5D7" />
+                <ellipse cx="65" cy="48" rx="26" ry="20" fill="#B3C5D7" />
+                
+                <!-- Big Childish Ear -->
+                <ellipse cx="68" cy="42" rx="11" ry="14" fill="#C5D6E7" />
+                <ellipse cx="66" cy="42" rx="7" ry="10" fill="#FFB400" opacity="0.4" />
+                
+                <!-- Trunk / Snout (Happy Upward Curl) -->
+                <path d="M32,44 Q20,44 18,32 Q16,24 22,24 Q24,24 23,28 Q20,36 30,38 Z" fill="#B3C5D7" />
+                
+                <!-- Cute Happy Eye Details -->
+                <circle cx="36" cy="38" r="2.5" fill="#2B2B2B" />
+                <circle cx="37" cy="37" r="0.8" fill="#FFFFFF" />
+                
+                <!-- Calibrated Slow-Motion Legs -->
+                <rect class="leg leg-1" x="45" y="65" width="8" height="16" rx="3" fill="#A0B2C6" />
+                <rect class="leg leg-2" x="57" y="66" width="8" height="16" rx="3" fill="#B3C5D7" />
+                <rect class="leg leg-3" x="72" y="65" width="8" height="16" rx="3" fill="#A0B2C6" />
+                <rect class="leg leg-4" x="82" y="66" width="8" height="16" rx="3" fill="#B3C5D7" />
+            </svg>
+        </div>
+    </div>
+</section>
+
+<style>
+    /* --- CONFIGURATION REFERENCE TARGETS --- */
+:root {
+    --header-height: 80px; /* Synchronizes with the main header footprint */
+}
+
+/* --- ELEPHANT CANVAS AREA --- */
+.elephant-stage {
+    position: relative;
+    width: 100%;
+    height: 70px;
+    /* REDUCED SPACE AT TOP: Pulls it right beneath the floating header */
+    margin-top: calc(var(--header-height) + 5px); 
+    padding-top: 0 !important;
+    overflow: hidden;
+    background-color: transparent;
+}
+
+/* Vector Landscape Backdrop Layer */
+.stage-backdrop {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    pointer-events: none;
+}
+
+/* --- THE PACING STRUCTURAL RUNNER --- */
+.elephant-container {
+    position: absolute;
+    bottom: -5px;
+    left: -120px;
+    width: 110px;
+    height: 95px;
+    z-index: 2;
+    cursor: pointer;
+    /* Linear loop path across the canvas area */
+    animation: walkAcrossSlow 26s linear infinite;
+}
+
+/* --- THE GENTLE DANCING CORE ENGINE --- */
+.dancing-elephant {
+    width: 100%;
+    height: 100%;
+    transform-origin: bottom center;
+    /* Bouncing cycle set to a relaxed 1.2s execution rate */
+    animation: gentleDance 1.2s ease-in-out infinite alternate;
+}
+
+/* Micro Leg Transform States */
+.dancing-elephant .leg {
+    transform-origin: top center;
+}
+.dancing-elephant .leg-1, .dancing-elephant .leg-3 {
+    animation: legSwingSlow 0.6s ease-in-out infinite alternate;
+}
+.dancing-elephant .leg-2, .dancing-elephant .leg-4 {
+    animation: legSwingSlow 0.6s ease-in-out infinite alternate-reverse;
+}
+
+/* --- HARDWARE-ACCELERATED PHYSICS LAYOUT --- */
+
+/* Horizontal Run Pacing Paths with correct directional flipping */
+@keyframes walkAcrossSlow {
+    /* 1. Moving Left to Right (Flipped scaleX(-1) so it looks forward) */
+    0% { left: -120px; transform: scaleX(-1); }
+    45% { left: calc(100% + 20px); transform: scaleX(-1); }
+    
+    /* 2. Instant Pivot Turn at the right border edge */
+    46% { left: calc(100% + 20px); transform: scaleX(1); }
+    
+    /* 3. Moving Right to Left (Normal scaleX(1) facing forward left) */
+    95% { left: -120px; transform: scaleX(1); }
+    
+    /* 4. Instant Pivot Turn back to start configuration */
+    100% { left: -120px; transform: scaleX(-1); }
+}
+
+/* Slower Vertical Dance Bounce Physics */
+@keyframes gentleDance {
+    0% { transform: translateY(0) rotate(-2deg); }
+    100% { transform: translateY(-10px) rotate(3deg); }
+}
+
+/* Soft Leg Swing Bounds */
+@keyframes legSwingSlow {
+    0% { transform: rotate(-8deg); }
+    100% { transform: rotate(8deg); }
+}
+
+/* --- MOBILE RESPONSIVE ADAPTATION INTERFACE --- */
+@media (max-width: 992px) {
+    .elephant-stage {
+        margin-top: 75px; /* Extremely tight layout tuning for small devices */
+        height: 110px;
+    }
+    .elephant-container {
+        width: 85px;
+        height: 65px;
+    }
+}
+
+</style>
+
+<script>
+    /**
+ * Stackly Childcare Website - Slower Interactive Elephant Engine
+ */
+document.addEventListener("DOMContentLoaded", () => {
+    initSlowerElephant();
+});
+
+function initSlowerElephant() {
+    const container = document.querySelector(".elephant-container");
+    const elephant = document.querySelector(".dancing-elephant");
+
+    if (!container || !elephant) return;
+
+    // Creative Speed Modulator (Dances slightly faster when users hover over the runner)
+    container.addEventListener("mouseenter", () => {
+        // Increases vertical dance frequency bounce safely
+        elephant.style.animationDuration = "0.4s";
+        
+        // Speeds up matching limb movements smoothly
+        document.querySelectorAll(".dancing-elephant .leg").forEach(leg => {
+            leg.style.animationDuration = "0.2s";
+        });
+    });
+
+    // Restores default relaxed 1.2s dance tempo upon cursor exit
+    container.addEventListener("mouseleave", () => {
+        elephant.style.animationDuration = "1.2s";
+        document.querySelectorAll(".dancing-elephant .leg").forEach(leg => {
+            leg.style.animationDuration = "0.6s";
+        });
+    });
+}
+
+</script>
+<!-- FRESH PREMIUM FULL-WIDTH GREEN FOOTER -->
+<footer class="stackly-premium-green-footer">
+    <div class="footer-premium-wrapper">
+        
+        <!-- ================= ROW 1: PRIMARY FOUR-COLUMN MATRIX ================= -->
+        <div class="footer-premium-grid">
+            
+            <!-- COLUMN 1: BRAND LOGO AREA & BRIEF -->
+            <div class="premium-brand-column">
+                <!-- Brand logo image triggers smooth scroll back to top -->
+                <div class="premium-logo-wrap" onclick="scrollToTop()" title="Back to Top">
+                    <img src="./assests/childcare footer.webp" alt="Stackly Brand Logo" class="premium-logo-img">
+                </div>
+                <p class="premium-brand-bio">
+                    Nurturing early curiosity, building structural foundational strengths, and creating certified safe childcare environments designed for your little explorers.
+                </p>
+                <!-- Five solid circle dark contrast social links matching image layout footprints -->
+                <div class="premium-social-row">
+                    <a href="404.html" class="premium-social-badge" aria-label="Facebook">
+                        <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M22 12c0-5.52-4.48-10-10-10S2 6.48 2 12c0 4.84 3.44 8.87 8 9.8V15H8v-3h2V9.5C10 7.57 11.57 6 13.5 6H16v3h-2c-.55 0-1 .45-1 1v2h3v3h-3v6.95c4.56-.93 8-4.96 8-9.95z"/></svg>
+                    </a>
+                    <a href="404.html" class="premium-social-badge" aria-label="Instagram">
+                        <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771-4.919-4.919-1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.051.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 1 0 0 12.324 6.162 6.162 0 0 0 0-12.324zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.406-11.845a1.44 1.44 0 1 0 0 2.881 1.44 1.44 0 0 0 0-2.881z"/></svg>
+                    </a>
+                    <a href="404.html" class="premium-social-badge" aria-label="X / Twitter">
+                        <svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor"><path d="M18.244 2.25h3.308l-4.716 5.39 5.548 7.33H16.71l-4.343-5.678L6.27 14.99H2.96l5.004-5.717L2.5 2.25h6.916l3.829 5.064 4.999-5.064zm-1.161 10.763h1.833L7.084 4.126H5.117l11.966 8.887z"/></svg>
+                    </a>
+                    <a href="404.html" class="premium-social-badge" aria-label="LinkedIn">
+                        <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.779-1.75-1.75s.784-1.75 1.75-1.75 1.75.779 1.75 1.75-.784 1.75-1.75 1.75zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
+                    </a>
+                    <a href="404.html" class="premium-social-badge" aria-label="YouTube">
+                        <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M23.498 6.163a3.003 3.003 0 0 0-2.11-2.11C19.517 3.545 12 3.545 12 3.545s-7.517 0-9.388.508a3.003 3.003 0 0 0-2.11 2.11C0 8.033 0 12 0 12s0 3.967.502 5.837a3.003 3.003 0 0 0 2.11 2.11c1.871.508 9.388.508 9.388.508s7.517 0 9.388-.508a3.003 3.003 0 0 0 2.11-2.11C24 15.967 24 12 24 12s0-3.967-.502-5.837zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+                    </a>
+                </div>
+            </div>
+
+            <!-- COLUMN 2: EXPLOATORY PROGRAMS DIRECTORY -->
+            <div class="premium-links-column">
+                <h4>Explore Menus</h4>
+                <div class="links-anchor-stack">
+                    <a href="404.html">Infant Pod Suites</a>
+                    <a href="404.html">Nursery Milestones</a>
+                    <a href="404.html">Kinder Exploration</a>
+                    <a href="404.html">After School Hub</a>
+                </div>
+            </div>
+
+            <!-- COLUMN 3: PARENT SUPPORT DIRECTORY -->
+            <div class="premium-links-column">
+                <h4>Catering Support</h4>
+                <div class="links-anchor-stack">
+                    <a href="404.html">Safety Parameters</a>
+                    <a href="404.html">Parent Portal Track</a>
+                    <a href="404.html">Help & FAQ Center</a>
+                    <a href="404.html">Certified Teachers</a>
+                </div>
+            </div>
+
+            <!-- COLUMN 4: HEADQUARTERS ADDRESS BOUNDS -->
+            <div class="premium-links-column address-panel-column">
+                <h4>Headquarters Location</h4>
+                
+                <div class="address-vector-row">
+                    <svg class="addr-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                    <p>MMR Complex, Periyakollappatty, Chinna Thirupathi, Salem, Tamil Nadu 636008</p>
+                </div>
+                
+                <div class="address-vector-row phone-link-row">
+                    <svg class="addr-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+                    <a href="tel:+917010792745" class="tel-anchor">+91 7010792745</a>
+                </div>
+            </div>
+
+        </div>
+
+        <hr class="premium-horizontal-break">
+
+        <!-- ================= ROW 2: HORIZONTAL LEGAL DECK FOOTPRINT BANNER ================= -->
+        <div class="footer-premium-base-deck">
+            <p class="premium-copyright-text">© 2026 Stackly Industries. All learning rights reserved.</p>
+            <div class="premium-legal-anchors">
+                <a href="404.html">Privacy Policy</a>
+                <a href="404.html">Terms of Service</a>
+                <a href="404.html">Cookie Management</a>
+            </div>
+        </div>
+
+    </div>
+</footer>
+
+<style>
+    /* --- PREMIUM SYSTEM DESIGN TOKENS --- */
+:root {
+    --green-theme-bg: #00A699;     /* Bright Teal Green Theme Background */
+    --text-pure-black: #000000;    /* CRITICAL SOLID BLACK TYPOGRAPHY FILTER */
+    --border-color-dim: rgba(0, 0, 0, 0.15);
+}
+
+/* --- OVERALL COMPACT CASING WRAPPER --- */
+.premium-brand-column { display: flex; flex-direction: column; text-align: left; }
+.premium-logo-wrap { cursor: pointer; display: inline-block; margin-bottom: 18px; align-self: flex-start; }
+.premium-logo-img { height: 38px; width: auto; object-fit: contain; }
+
+.stackly-premium-green-footer {
+    position: relative;
+    width: 100vw;
+    /* Forces elements to bleed flush past standard page margin containers */
+    margin-left: calc(-50vw + 50%);
+    margin-right: calc(-50vw + 50%);
+    background-color: var(--green-theme-bg); 
+    color: var(--text-pure-black);
+    /* TARGET ASSIGNED SYSTEM PADDINGS: 50px Top, 30px Bottom */
+    padding: 50px 40px 30px 40px !important;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    overflow: hidden;
+}
+
+.footer-premium-wrapper {
+    width: 100%;
+    max-width: 1240px;
+    margin: 0 auto;
+}
+
+/* ================= COMPONENT LAYER 1: 4-COLUMN ENHANCED DIRECTORY ================= */
+.footer-premium-grid {
+    display: grid;
+    /* Clean 4-Column layout system tracking reference image scale perfectly */
+    grid-template-columns: 1.15fr 0.85fr 0.85fr 1.15fr;
+    gap: 40px;
+    align-items: start;
+    width: 100%;
+    margin-bottom: 35px;
+}
+
+/* SCALED UP DESCRIPTION TEXT IN SOLID BLACK */
+.premium-brand-bio { 
+    font-size: 0.98rem; /* SCALED UP FOR GREAT ACCESSIBILITY */
+    line-height: 1.6; 
+    color: var(--text-pure-black); 
+    margin-bottom: 22px; 
+    max-width: 300px; 
+    font-weight: 500;
+}
+
+/* Solid circular dark contrast badge stacks */
+.premium-social-row { display: flex; gap: 8px; }
+.premium-social-badge {
+    width: 34px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center;
+    background-color: rgba(0, 0, 0, 0.85); color: #FFFFFF; text-decoration: none;
+    transition: transform 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275), background-color 0.2s;
+}
+.premium-social-badge:hover { transform: translateY(-3px) scale(1.06); background-color: #000000; }
+
+/* Column 2 & 3 Link List Units */
+.premium-links-column { display: flex; flex-direction: column; text-align: left; }
+
+/* SCALED UP HEADING LABELS IN SOLID BLACK */
+.premium-links-column h4 {
+    font-size: 1.25rem; /* ENHANCED HIGHER FONT SIZE */
+    font-weight: 800; 
+    color: var(--text-pure-black); 
+    margin-bottom: 18px; 
+    position: relative; 
+    width: max-content;
+}
+/* Tiny underlying red line marker node mimicking reference screenshot image geometry exactly */
+.premium-links-column h4::after {
+    content: ''; position: absolute; bottom: -6px; left: 0; width: 28px; height: 2.5px; background-color: #FF5A5F;
+}
+
+.links-anchor-stack { display: flex; flex-direction: column; gap: 2px; }
+
+/* SCALED UP SITEMAP DIRECTORY LINKS IN SOLID BLACK */
+.premium-links-column a {
+    font-size: 1.02rem; /* SCALED UP FOR EASY NAVIGATION */
+    font-weight: 600; 
+    color: var(--text-pure-black); 
+    text-decoration: none;
+    padding: 6px 0; 
+    transition: transform 0.2s; 
+    display: inline-block; 
+    width: max-content;
+    opacity: 0.95;
+}
+.premium-links-column a:hover { opacity: 1; transform: translateX(4px); }
+
+/* Column 4 Specific Address Core Custom Panel Layouts */
+.address-panel-column { gap: 14px; }
+.address-panel-column h4 {
+    font-size: 1.25rem; font-weight: 800; color: var(--text-pure-black); margin-bottom: 18px; position: relative; width: max-content;
+}
+.address-panel-column h4::after {
+    content: ''; position: absolute; bottom: -6px; left: 0; width: 28px; height: 2.5px; background-color: #FF5A5F;
+}
+
+.address-vector-row { 
+    display: flex; 
+    align-items: start; 
+    gap: 12px; 
+    font-size: 0.98rem; /* SCALED UP FONT SIZE */
+    line-height: 1.5; 
+    color: var(--text-pure-black); 
+    text-align: left; 
+    font-weight: 600;
+}
+.addr-icon { width: 15px; height: 16px; color: var(--text-pure-black); flex-shrink: 0; margin-top: 2px; }
+.phone-link-row { align-items: center; margin-top: auto; }
+
+.tel-anchor { 
+    font-size: 1.18rem; /* SCALED UP COMPACT FOOTPRINT */
+    font-weight: 800; 
+    color: var(--text-pure-black); 
+    text-decoration: none; 
+    transition: opacity 0.2s; 
+}
+.tel-anchor:hover { opacity: 0.8; }
+
+/* Thin straight separator line */
+.premium-horizontal-break { border: none; border-top: 1px solid var(--border-color-dim); margin-bottom: 24px; }
+
+/* ================= COMPONENT LAYER 2: LEGAL COMPACT FOOTPRINT ENHANCED BASE DECK ================= */
+.footer-premium-base-deck {
+    display: flex; justify-content: space-between; align-items: center; width: 100%; 
+    font-size: 0.95rem; /* SCALED UP LEGAL BANNER */
+    color: var(--text-pure-black);
+}
+.premium-copyright-text { font-weight: 600; }
+.premium-legal-anchors { display: flex; gap: 24px; }
+.premium-legal-anchors a { color: var(--text-pure-black); text-decoration: none; transition: opacity 0.2s; font-weight: 600; }
+.premium-legal-anchors a:hover { opacity: 0.85; }
+
+/* ================= HIGH-UTILITY RESPONSIVE INTEGRATION LAYER ================= */
+@media (max-width: 1024px) {
+    .stackly-premium-green-footer { padding: 40px 24px 30px 24px !important; }
+    .footer-premium-grid { grid-template-columns: 1fr 1fr; gap: 35px 25px; }
+    .premium-brand-column { grid-column: span 2; display: flex; flex-direction: column; align-items: center; text-align: center; }
+    .premium-brand-bio { max-width: 500px; }
+    .premium-logo-wrap { align-self: center; }
+    .premium-links-column h4::after { left: 50%; transform: translateX(-50%); }
+    .premium-links-column { align-items: center; text-align: center; }
+    .address-panel-column { display: flex; flex-direction: column; align-items: center; }
+    .address-vector-row { justify-content: center; text-align: center; max-width: 320px; }
+    .phone-link-row { margin-top: 10px; }
+}
+
+@media (max-width: 600px) {
+    .footer-premium-grid { grid-template-columns: 1fr; gap: 30px; }
+    .premium-brand-column { grid-column: span 1; }
+    .footer-premium-base-deck { flex-direction: column; gap: 14px; text-align: center; }
+    .premium-legal-anchors { flex-direction: column; gap: 10px; }
+}
+
+</style>
+
+<script>
+    /**
+ * Stackly Childcare Website - Premium Footer Controller Engine
+ */
+
+/**
+ * BACK TO TOP NAV SCROLLER
+ * Smoothly scrolls the screen viewport canvas right back up to zero index bounds on selection
+ */
+function scrollToTop() {
+    window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+    });
+}
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,2536 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Educator Workspace - Stackly Partner</title>
+    <link rel="stylesheet" href="partner.css">
+</head>
+<body>
+
+    <!-- OVERALL DASHBOARD VIEWPORT CASING -->
+    <div class="dashboard-macro-layout">
+
+        <!-- ================= LAYER 1: VERTICAL NAVIGATION SIDEBAR ================= -->
+        <aside class="dashboard-sidebar" id="dashboardSidebar">
+            
+            <!-- Mobile Drawer Close Cross Button -->
+            <button class="mobile-sidebar-close-btn" onclick="toggleMobileSidebar()" aria-label="Close Sidebar">
+                <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+            </button>
+
+            <!-- Navigation Menu Directory Grid Links Links -->
+            <nav class="sidebar-menu-nav">
+                <!-- Menu Item 1: Student Roster Tracking Panel -->
+                <button class="menu-link-node active" onclick="switchDashboardSection('roster-panel', this)">
+                    <svg class="menu-vector-icon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+                    Student Roster
+                </button>
+
+                <!-- Menu Item 2: Milestone Trackers Planners -->
+                <button class="menu-link-node" onclick="switchDashboardSection('milestone-panel', this)">
+                    <svg class="menu-vector-icon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/><path d="M12 11l2 2 4-4"/></svg>
+                    Milestone Track
+                </button>
+
+                <!-- Menu Item 3: Nutrition Catering Activity Logs -->
+                <button class="menu-link-node" onclick="switchDashboardSection('nutrition-panel', this)">
+                    <svg class="menu-vector-icon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+                    Catering Logs
+                </button>
+
+                <!-- Menu Item 4: Class Schedules Calendars -->
+                <button class="menu-link-node" onclick="switchDashboardSection('schedule-panel', this)">
+                    <svg class="menu-vector-icon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+                    Class Schedules
+                </button>
+
+                <!-- Menu Item 5: Facility Security Framework Controls -->
+                <button class="menu-link-node" onclick="switchDashboardSection('security-panel', this)">
+                    <svg class="menu-vector-icon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+                    Security Settings
+                </button>
+            </nav>
+
+            <!-- TERMINAL DISPATCH EXIT MODULE: Logs session out securely back to login page -->
+            <button class="sidebar-logout-btn" onclick="executeSecureDashboardLogout()">
+                <svg class="menu-vector-icon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+                Log Out
+            </button>
+        </aside>
+
+        <!-- Dark backdrop shading blanket for mobile drawer overlays -->
+        <div class="mobile-sidebar-blanket" id="sidebarBlanket" onclick="toggleMobileSidebar()"></div>
+
+        <!-- ================= LAYER 2: WORKSPACE BLOCK CONTROL CONSOLE ================= -->
+        <div class="dashboard-workspace-block">
+            
+            <!-- TOP WORKSPACE NOTIFICATION HEADER BAR -->
+            <header class="workspace-top-header">
+                
+                <!-- Left End: Hamburger Menu Toggle & Refresh Brand Logo -->
+                <div class="header-left-cluster">
+                    <button class="mobile-hamburger-toggle-trigger" onclick="toggleMobileSidebar()" aria-label="Open Sidebar Menu Options">
+                        <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+                    </button>
+                    
+                    <!-- REFRESH FUNCTION LOGO: Brand image reloads current panel state upon selection click -->
+                    <div class="dashboard-brand-refresh-logo" onclick="refreshDashboardNatively()" title="Refresh Partner Workspace Grid Status">
+                        <img src="./assests/childcare logo.webp" alt="Stackly Partner Brand Logo" class="brand-img-tag-logo">
+                    </div>
+                </div>
+
+                <!-- Right End: Notification Indicator Bell & Prefix Profile Holder -->
+                <div class="header-right-cluster">
+                    <div class="header-notification-bell-pod" onclick="window.location.href='404.html'" title="View Alert Communications Logs">
+                        <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+                        <span class="notification-indicator-dot-badge"></span>
+                    </div>
+                    
+                    <!-- Dynamic User Account Display Card Panel -->
+                    <div class="header-profile-user-card">
+                        <div class="avatar-circle-frame">
+                            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                        </div>
+                        <!-- AUTOMATED PARSED PREFIX TARGET INJECTOR -->
+                        <span class="profile-display-name-node" id="headerProfileGreetingName">Educator</span>
+                    </div>
+                </div>
+            </header>
+
+            <!-- MAIN WORKSPACE PORTAL VIEW CANVASES PANELS -->
+            <main class="workspace-content-pane">
+                
+                <!-- MENU SHEET 1: STUDENT ROSTER (Default Display Active Pane) -->
+             <!-- ELABORATELY ENHANCED STUDENT ROSTER CONTROL CONSOLE -->
+<div class="dashboard-content-panel active-panel" id="roster-panel">
+    
+    <!-- CONSOLE HEADER ROW -->
+    <div class="panel-section-title-wrapper-card">
+        <div class="header-text-group">
+            <h2>Student Roster Management</h2>
+            <p class="panel-subtitle-caption">Track active room ratios, modify emergency contacts profiles, and manage live guardian check-in auth metrics logs.</p>
+        </div>
+        <span class="panel-tag-badge">Roster Controls</span>
+    </div>
+
+    <!-- 1. LIVE QUICK-STATS MATRICES SYSTEM -->
+    <div class="roster-stats-summary-grid">
+        <!-- Stat Item 1 -->
+        <div class="roster-mini-stat-card border-left-teal">
+            <div class="stat-icon-wrapper teal-tint">
+                <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+            </div>
+            <div class="stat-meta">
+                <span class="stat-value">42 / 45</span>
+                <span class="stat-label">Total Present Students</span>
+            </div>
+        </div>
+        <!-- Stat Item 2 -->
+        <div class="roster-mini-stat-card border-left-pink">
+            <div class="stat-icon-wrapper pink-tint">
+                <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11"/></svg>
+            </div>
+            <div class="stat-meta">
+                <span class="stat-value">93.3%</span>
+                <span class="stat-label">Room Ratio Capacity</span>
+            </div>
+        </div>
+        <!-- Stat Item 3 -->
+        <div class="roster-mini-stat-card border-left-yellow">
+            <div class="stat-icon-wrapper yellow-tint">
+                <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+            </div>
+            <div class="stat-meta">
+                <span class="stat-value">03</span>
+                <span class="stat-label">Pending Gate Check-Ins</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- 2. DYNAMIC SEARCH & FILTERING UTILITY TOOLBAR -->
+    <div class="roster-filter-toolbar-row">
+        <div class="roster-search-field-shell">
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+            <input type="text" id="rosterSearchInput" onkeyup="filterRosterTableData()" placeholder="Filter by student name, pod room, or guardian...">
+        </div>
+        <div class="roster-dropdown-select-group">
+            <select id="roomFilterSelect" onchange="filterRosterTableData()">
+                <option value="all">All Classrooms Pods</option>
+                <option value="infant">Infant Pod Suite</option>
+                <option value="nursery">Nursery Milestones</option>
+                <option value="kinder">Kinder Exploration</option>
+            </select>
+        </div>
+    </div>
+
+    <!-- 3. COMPREHENSIVE RESPONSIVE ROSTER ATTENDANCE TABLE DATA GRID -->
+    <div class="roster-table-scroll-viewport">
+        <table class="roster-data-table" id="studentRosterTable">
+            <thead>
+                <tr>
+                    <th>Student Name</th>
+                    <th>Classroom Pod Room</th>
+                    <th>Primary Guardian Info</th>
+                    <th>Gate Status Tracker</th>
+                    <th>Timestamp log</th>
+                    <th class="text-center-align">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                
+                <!-- Row Entry 1: Foreign Name Profile (Oliver) -->
+                <tr class="roster-row-entry" data-room-type="infant">
+                    <td>
+                        <div class="student-profile-cell-block">
+                            <div class="student-initials-badge pink-bg">OS</div>
+                            <div class="student-name-meta">
+                                <span class="student-fullname">Oliver Smith</span>
+                                <span class="student-age-sub">Age: 14 Months</span>
+                            </div>
+                        </div>
+                    </td>
+                    <td><span class="room-indicator-capsule color-p-pink">Infant Pod Suite</span></td>
+                    <td>
+                        <div class="guardian-meta-stack">
+                            <span class="guardian-name">Jonathan Smith</span>
+                            <span class="guardian-phone">+1 (555) 019-2834</span>
+                        </div>
+                    </td>
+                    <td><span class="status-indicator-tag status-checked-in">Checked In</span></td>
+                    <td><span class="log-time-stamp">08:45 AM</span></td>
+                    <td class="text-center-align">
+                        <button class="roster-action-icon-btn" onclick="window.location.href='404.html'" title="View profile data matrices">➔</button>
+                    </td>
+                </tr>
+
+                <!-- Row Entry 2: Foreign Name Profile (Emma) -->
+                <tr class="roster-row-entry" data-room-type="nursery">
+                    <td>
+                        <div class="student-profile-cell-block">
+                            <div class="student-initials-badge teal-bg">EM</div>
+                            <div class="student-name-meta">
+                                <span class="student-fullname">Emma Mueller</span>
+                                <span class="student-age-sub">Age: 28 Months</span>
+                            </div>
+                        </div>
+                    </td>
+                    <td><span class="room-indicator-capsule color-p-teal">Nursery Milestones</span></td>
+                    <td>
+                        <div class="guardian-meta-stack">
+                            <span class="guardian-name">Alexander Mueller</span>
+                            <span class="guardian-phone">+49 89 2019483</span>
+                        </div>
+                    </td>
+                    <td><span class="status-indicator-tag status-checked-in">Checked In</span></td>
+                    <td><span class="log-time-stamp">09:02 AM</span></td>
+                    <td class="text-center-align">
+                        <button class="roster-action-icon-btn" onclick="window.location.href='404.html'" title="View profile data matrices">➔</button>
+                    </td>
+                </tr>
+
+                <!-- Row Entry 3: Foreign Name Profile (Lucas) -->
+                <tr class="roster-row-entry" data-room-type="kinder">
+                    <td>
+                        <div class="student-profile-cell-block">
+                            <div class="student-initials-badge yellow-bg">LD</div>
+                            <div class="student-name-meta">
+                                <span class="student-fullname">Lucas Dubois</span>
+                                <span class="student-age-sub">Age: 4.5 Years</span>
+                            </div>
+                        </div>
+                    </td>
+                    <td><span class="room-indicator-capsule color-p-yellow">Kinder Exploration</span></td>
+                    <td>
+                        <div class="guardian-meta-stack">
+                            <span class="guardian-name">Charlotte Dubois</span>
+                            <span class="guardian-phone">+33 1 42 27 78</span>
+                        </div>
+                    </td>
+                    <td><span class="status-indicator-tag status-pending">Pending Entry</span></td>
+                    <td><span class="log-time-stamp">--:--</span></td>
+                    <td class="text-center-align">
+                        <button class="roster-action-icon-btn" onclick="window.location.href='404.html'" title="View profile data matrices">➔</button>
+                    </td>
+                </tr>
+
+            </tbody>
+        </table>
+    </div>
+
+</div>
+<style>
+    /* --- ENHANCED SYSTEM DESIGN TOKENS --- */
+:root {
+    --text-pure-black: #000000;
+    --text-charcoal: #2B2B2B;
+    --text-muted: #5A6D6A;
+    --primary-pink: #FF5A5F;
+    --accent-teal: #00A699;
+    --accent-yellow: #FFB400;
+    --border-color-dim: #E2EBEA;
+    --surface-card: #FFFFFF;
+}
+
+.header-text-group { text-align: left; }
+.panel-subtitle-caption { font-size: 0.92rem; color: var(--text-muted); margin-top: 4px; font-weight: 500; }
+
+/* ================= 1. LIVE QUICK-STATS SUMMARY BLOCKS GRID ================= */
+.roster-stats-summary-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    width: 100%;
+    margin-bottom: 30px;
+    margin-top: 5px;
+}
+
+.roster-mini-stat-card {
+    background-color: var(--surface-card);
+    border: 1px solid var(--border-color-dim);
+    border-left: 4px solid transparent;
+    border-radius: 14px;
+    padding: 18px 20px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    text-align: left;
+}
+.border-left-teal { border-left-color: var(--accent-teal); }
+.border-left-pink { border-left-color: var(--primary-pink); }
+.border-left-yellow { border-left-color: var(--accent-yellow); }
+
+.stat-icon-wrapper {
+    width: 42px; height: 42px; border-radius: 10px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+}
+.teal-tint { background-color: #E6F6F5; color: var(--accent-teal); }
+.pink-tint { background-color: #FFEBEB; color: var(--primary-pink); }
+.yellow-tint { background-color: #FFF6E0; color: #E68A00; }
+
+.stat-meta { display: flex; flex-direction: column; gap: 2px; }
+.stat-value { font-size: 1.35rem; font-weight: 900; color: var(--text-pure-black); letter-spacing: -0.5px; }
+.stat-label { font-size: 0.82rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.3px; }
+
+/* ================= 2. DYNAMIC TOOLBAR CONTROL FILTER ROW ================= */
+.roster-filter-toolbar-row {
+    display: flex; justify-content: space-between; align-items: center; gap: 20px; width: 100%; margin-bottom: 24px;
+}
+
+.roster-search-field-shell {
+    position: relative; width: 100%; max-width: 480px; display: flex; align-items: center;
+    background-color: #FAFAFA; border: 1px solid var(--border-color-dim); border-radius: 12px; color: #627A78;
+}
+.roster-search-field-shell svg { position: absolute; left: 16px; pointer-events: none; }
+.roster-search-field-shell input {
+    width: 100%; padding: 12px 16px 12px 44px; font-size: 0.95rem; background: none; border: none; font-family: inherit; color: var(--text-pure-black);
+}
+.roster-search-field-shell input:focus { outline: none; }
+.roster-search-field-shell:focus-within { border-color: var(--accent-teal); background-color: #FFFFFF; box-shadow: 0 0 0 4px rgba(0, 166, 153, 0.06); }
+
+.roster-dropdown-select-group select {
+    padding: 12px 40px 12px 16px; font-size: 0.95rem; font-weight: 700; background-color: #FAFAFA; border: 1px solid var(--border-color-dim); border-radius: 12px; cursor: pointer; color: var(--text-charcoal); font-family: inherit; -webkit-appearance: none; appearance: none;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://w3.org' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%23627A78' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'><polyline points='6 9 12 15 18 9'></polyline></svg>");
+    background-repeat: no-repeat; background-position: right 14px center; background-size: 14px;
+}
+.roster-dropdown-select-group select:focus { outline: none; border-color: var(--accent-teal); }
+
+/* ================= 3. COMPREHENSIVE ATTENDANCE DATA ROSTER TABLE ================= */
+.roster-table-scroll-viewport { width: 100%; overflow-x: auto; border: 1px solid var(--border-color-dim); border-radius: 16px; background-color: var(--surface-white); }
+
+.roster-data-table { width: 100%; border-collapse: collapse; min-width: 800px; text-align: left; }
+.roster-data-table th { background-color: #FAFAFA; padding: 16px 20px; font-size: 0.85rem; font-weight: 800; color: #627A78; text-transform: uppercase; letter-spacing: 0.5px; border-bottom: 1px solid var(--border-color-dim); }
+
+/* AUTO EXPANDING HEIGHT ENGINE: Completely blocks structural height-wise data hiding loops */
+.roster-data-table td { padding: 16px 20px; border-bottom: 1px solid var(--border-color-dim); vertical-align: middle; height: auto; }
+
+.student-profile-cell-block { display: flex; align-items: center; gap: 14px; }
+.student-initials-badge { width: 38px; height: 38px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 0.92rem; font-weight: 800; color: #FFFFFF; flex-shrink: 0; }
+.pink-bg { background-color: var(--primary-pink); }
+.teal-bg { background-color: var(--accent-teal); }
+.yellow-bg { background-color: var(--accent-yellow); }
+
+.student-name-meta { display: flex; flex-direction: column; gap: 2px; }
+.student-fullname { font-size: 1rem; font-weight: 800; color: var(--text-pure-black); }
+.student-age-sub { font-size: 0.82rem; font-weight: 600; color: var(--text-muted); }
+
+.room-indicator-capsule { font-size: 0.82rem; font-weight: 700; padding: 4px 12px; border-radius: 8px; display: inline-block; }
+.color-p-pink { background-color: #FFEBEB; color: var(--primary-pink); }
+.color-p-teal { background-color: #E6F6F5; color: var(--accent-teal); }
+.color-p-yellow { background-color: #FFF6E0; color: #E68A00; }
+
+.guardian-meta-stack { display: flex; flex-direction: column; gap: 2px; }
+.guardian-name { font-size: 0.95rem; font-weight: 700; color: var(--text-charcoal); }
+.guardian-phone { font-size: 0.85rem; font-weight: 600; color: var(--text-muted); }
+
+.status-indicator-tag { font-size: 0.82rem; font-weight: 800; padding: 4px 10px; border-radius: 30px; display: inline-flex; align-items: center; gap: 6px; }
+.status-checked-in { background-color: #E8F5E9; color: #2E7D32; }
+.status-checked-in::before { content: ''; width: 6px; height: 6px; background-color: #4CAF50; border-radius: 50%; }
+.status-pending { background-color: #FFF3E0; color: #E65100; }
+.status-pending::before { content: ''; width: 6px; height: 6px; background-color: #FF9800; border-radius: 50%; }
+
+.log-time-stamp { font-size: 0.9rem; font-weight: 700; color: var(--text-charcoal); }
+
+.roster-action-icon-btn { width: 32px; height: 32px; border-radius: 8px; background-color: #FAFAFA; border: 1px solid var(--border-color-dim); color: var(--text-charcoal); cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 0.85rem; font-weight: 800; transition: all 0.2s ease; }
+.roster-action-icon-btn:hover { background-color: var(--accent-teal); color: #FFFFFF; border-color: var(--accent-teal); }
+.text-center-align { text-align: center; justify-content: center; }
+
+/* ================= ADAPTIVE RESPONSIVE COMPACT MEDIA OVERLAYS ================= */
+@media (max-width: 1024px) {
+    .roster-stats-summary-grid { grid-template-columns: 1fr; gap: 14px; }
+    .roster-filter-toolbar-row { flex-direction: column; align-items: stretch; gap: 14px; }
+    .roster-search-field-shell { max-width: 100%; }
+    .roster-dropdown-select-group select { width: 100%; text-align: left; }
+}
+
+@media (max-width: 768px) {
+    .roster-table-scroll-viewport { border: none; background: none; }
+    .roster-data-table, .roster-data-table thead, .roster-data-table tbody, .roster-data-table th, .roster-data-table tr, .roster-data-table td { display: block; width: 100%; }
+    .roster-data-table thead { display: none; } 
+    
+    .roster-row-entry { background-color: var(--surface-card); border: 1px solid var(--border-color-dim); border-radius: 16px; padding: 16px; margin-bottom: 14px; display: flex; flex-direction: column; gap: 12px; height: auto; }
+    .roster-data-table td { padding: 0; border: none; }
+    
+    .roster-row-entry td:nth-of-type(2)::before { content: 'Room Slot: '; font-size: 0.8rem; font-weight: 800; color: var(--text-muted); text-transform: uppercase; }
+    .roster-row-entry td:nth-of-type(3)::before { content: 'Primary Guardian: '; font-size: 0.8rem; font-weight: 800; color: var(--text-muted); text-transform: uppercase; display: block; margin-bottom: 4px; }
+    .roster-row-entry td:nth-of-type(4)::before { content: 'Gate Track: '; font-size: 0.8rem; font-weight: 800; color: var(--text-muted); text-transform: uppercase; margin-right: 6px; }
+    .roster-row-entry td:nth-of-type(5)::before { content: 'Timestamp: '; font-size: 0.8rem; font-weight: 800; color: var(--text-muted); text-transform: uppercase; }
+    
+    .roster-row-entry td:nth-of-type(2), .roster-row-entry td:nth-of-type(4), .roster-row-entry td:nth-of-type(5) { display: flex; align-items: center; }
+    .roster-row-entry td:nth-of-type(6) { border-top: 1px dashed var(--border-color-dim); padding-top: 12px; display: flex; justify-content: flex-end; width: 100%; }
+    .roster-action-icon-btn { width: 100%; padding: 12px; height: auto; border-radius: 10px; justify-content: center; gap: 8px; }
+    .roster-action-icon-btn::before { content: 'Manage Student File '; font-size: 0.9rem; font-weight: 700; }
+}
+
+</style>
+
+<script>
+    /**
+ * Stackly Childcare Website - Live Student Roster Filtering System
+ */
+function filterRosterTableData() {
+    const searchStringQuery = document.getElementById("rosterSearchInput").value.toLowerCase();
+    const activeSelectedRoomClass = document.getElementById("roomFilterSelect").value;
+    const dataTableRows = document.querySelectorAll("#studentRosterTable .roster-row-entry");
+
+    dataTableRows.forEach(row => {
+        const studentFullName = row.querySelector(".student-fullname").textContent.toLowerCase();
+        const guardianName = row.querySelector(".guardian-name").textContent.toLowerCase();
+        const dataAttributeRoomToken = row.getAttribute("data-room-type");
+
+        const isSearchQueryMatched = studentFullName.includes(searchStringQuery) || guardianName.includes(searchStringQuery);
+        const isClassroomPodMatched = (activeSelectedRoomClass === "all") || (dataAttributeRoomToken === activeSelectedRoomClass);
+
+        if (isSearchQueryMatched && isClassroomPodMatched) {
+            row.style.display = ""; 
+        } else {
+            row.style.display = "none"; 
+        }
+    });
+}
+
+</script>
+
+                <!-- MENU SHEET 2: MILESTONE TRACK PLANNERS -->
+             <!-- ELABORATELY ENHANCED MILESTONE TRACK PLANNER CONSOLE -->
+<div class="dashboard-content-panel active-panel" id="milestone-panel">
+    
+    <!-- CONSOLE HEADER ROW -->
+    <div class="panel-section-title-wrapper-card">
+        <div class="header-text-group">
+            <h2>Milestone Track Planners</h2>
+            <p class="panel-subtitle-caption">Monitor cognitive milestone mapping layers, update sensory checklists, and log active child developmental observations.</p>
+        </div>
+        <span class="panel-tag-badge">Milestones</span>
+    </div>
+
+    <!-- 1. DEVELOPMENTAL CATEGORIES QUICK-STATS GRID -->
+    <div class="milestone-summary-matrix-grid">
+        <!-- Card 1: Cognitive Progress -->
+        <div class="milestone-macro-card border-p-pink">
+            <div class="milestone-badge-shell pink-tint">
+                <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z"/><path d="M12 6v6l4 2"/></svg>
+            </div>
+            <div class="milestone-meta-data text-left">
+                <h3>Cognitive Tracks</h3>
+                <span class="percentage-count">88% Achieved</span>
+                <div class="progress-bar-rail"><div class="progress-bar-fill pink-bg" style="width: 88%;"></div></div>
+            </div>
+        </div>
+
+        <!-- Card 2: Sensory Milestones -->
+        <div class="milestone-macro-card border-p-teal">
+            <div class="milestone-badge-shell teal-tint">
+                <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 21a9 9 0 1 0 0-18 9 9 0 0 0 0 18z"/><path d="M12 7v5l3 3"/></svg>
+            </div>
+            <div class="milestone-meta-data text-left">
+                <h3>Sensory Checklists</h3>
+                <span class="percentage-count">94% Tracked</span>
+                <div class="progress-bar-rail"><div class="progress-bar-fill teal-bg" style="width: 94%;"></div></div>
+            </div>
+        </div>
+
+        <!-- Card 3: Social Mechanics -->
+        <div class="milestone-macro-card border-p-yellow">
+            <div class="milestone-badge-shell yellow-tint">
+                <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>
+            </div>
+            <div class="milestone-meta-data text-left">
+                <h3>Social Interaction</h3>
+                <span class="percentage-count">76% Completed</span>
+                <div class="progress-bar-rail"><div class="progress-bar-fill yellow-bg" style="width: 76%;"></div></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 2. STAGGERED SCROLL-CASCADING MILESTONE ASSESSMENT SHEET -->
+    <div class="milestone-sheet-scroller-viewport">
+        <div class="milestone-assessment-header">
+            <h3>Active Observation Log Matrix</h3>
+            <p>Real-time early childhood metric indicators tracking international student profiles benchmarks.</p>
+        </div>
+
+        <div class="milestone-rows-stack" id="milestoneRowsContainer">
+            
+            <!-- Observation Entry Item 1 -->
+            <div class="milestone-tracking-row cascade-item-node" data-status="complete">
+                <div class="student-profile-mini">
+                    <div class="avatar-badge initials-pink">OS</div>
+                    <div class="student-brief">
+                        <span class="name">Oliver Smith</span>
+                        <span class="sub">Infant Pod Suite</span>
+                    </div>
+                </div>
+                <div class="milestone-criteria-desc text-left">
+                    <strong>Object Permanence Retention</strong>
+                    <p>Demonstrates complete sensory verification tracking with hidden toy blocks manipulation layers.</p>
+                </div>
+                <div class="milestone-status-indicator">
+                    <span class="badge-status status-verified">Verified</span>
+                    <button class="milestone-action-btn" onclick="window.location.href='404.html'">➔</button>
+                </div>
+            </div>
+
+            <!-- Observation Entry Item 2 -->
+            <div class="milestone-tracking-row cascade-item-node" data-status="complete">
+                <div class="student-profile-mini">
+                    <div class="avatar-badge initials-teal">EM</div>
+                    <div class="student-brief">
+                        <span class="name">Emma Mueller</span>
+                        <span class="sub">Nursery Milestones</span>
+                    </div>
+                </div>
+                <div class="milestone-criteria-desc text-left">
+                    <strong>Palette Selection & Color Logic</strong>
+                    <p>Successfully executes continuous color categorization tasks using fingerprint painting brush strokes tools.</p>
+                </div>
+                <div class="milestone-status-indicator">
+                    <span class="badge-status status-verified">Verified</span>
+                    <button class="milestone-action-btn" onclick="window.location.href='404.html'">➔</button>
+                </div>
+            </div>
+
+            <!-- Observation Entry Item 3 -->
+            <div class="milestone-tracking-row cascade-item-node" data-status="pending">
+                <div class="student-profile-mini">
+                    <div class="avatar-badge initials-yellow">LD</div>
+                    <div class="student-brief">
+                        <span class="name">Lucas Dubois</span>
+                        <span class="sub">Kinder Exploration</span>
+                    </div>
+                </div>
+                <div class="milestone-criteria-desc text-left">
+                    <strong>Complex Spatial Assembly Logic</strong>
+                    <p>Currently pacing mathematical geometry logic pathways via asymmetric brick blocks stacking parameters.</p>
+                </div>
+                <div class="milestone-status-indicator">
+                    <span class="badge-status status-observing">In Progress</span>
+                    <button class="milestone-action-btn" onclick="window.location.href='404.html'">➔</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+</div>
+<style>
+    /* --- COMPONENT TOKEN SYSTEMS --- */
+:root {
+    --text-pure-black: #000000;
+    --text-charcoal: #2B2B2B;
+    --text-muted-slate: #5A6D6A;
+    --primary-pink: #FF5A5F;
+    --accent-teal: #00A699;
+    --accent-yellow: #FFB400;
+    --border-color-dim: #E2EBEA;
+    --surface-white: #FFFFFF;
+}
+
+.header-text-group { text-align: left; }
+.panel-subtitle-caption { font-size: 0.92rem; color: var(--text-muted-slate); margin-top: 4px; font-weight: 500; }
+
+/* ================= 1. DEVELOPMENTAL CATEGORIES QUICK-STATS GRID ================= */
+.milestone-summary-matrix-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    width: 100%;
+    margin-bottom: 30px;
+    margin-top: 5px;
+}
+
+.milestone-macro-card {
+    background-color: var(--surface-white);
+    border: 1px solid var(--border-color-dim);
+    border-top: 4px solid transparent;
+    border-radius: 16px;
+    padding: 22px 20px;
+    display: flex;
+    align-items: center;
+    gap: 18px;
+}
+.border-p-pink { border-top-color: var(--primary-pink); }
+.border-p-teal { border-top-color: var(--accent-teal); }
+.border-p-yellow { border-top-color: var(--accent-yellow); }
+
+.milestone-badge-shell {
+    width: 44px; height: 44px; border-radius: 12px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+}
+.pink-tint { background-color: #FFEBEB; color: var(--primary-pink); }
+.teal-tint { background-color: #E6F6F5; color: var(--accent-teal); }
+.yellow-tint { background-color: #FFF6E0; color: #E68A00; }
+
+.milestone-meta-data { display: flex; flex-direction: column; gap: 4px; flex-grow: 1; }
+.milestone-meta-data h3 { font-size: 1.15rem; font-weight: 800; color: var(--text-pure-black); }
+.percentage-count { font-size: 0.88rem; font-weight: 700; color: var(--text-muted-slate); }
+
+/* Compact inline fluid progress bar mechanics */
+.progress-bar-rail { width: 100%; height: 6px; background-color: #FAFAFA; border-radius: 10px; margin-top: 4px; overflow: hidden; border: 1px solid #EEF4F4; }
+.progress-bar-fill { height: 100%; border-radius: 10px; }
+.pink-bg { background-color: var(--primary-pink); }
+.teal-bg { background-color: var(--accent-teal); }
+.yellow-bg { background-color: var(--accent-yellow); }
+
+/* ================= 2. CASCADING OBSERVED MILESTONE SHEETS STACK ================= */
+.milestone-sheet-scroller-viewport {
+    width: 100%; border: 1px solid var(--border-color-dim); border-radius: 20px; background-color: var(--surface-white); padding: 30px 24px;
+}
+.milestone-assessment-header { text-align: left; margin-bottom: 24px; border-bottom: 1px dashed var(--border-color-dim); padding-bottom: 16px; }
+.milestone-assessment-header h3 { font-size: 1.25rem; font-weight: 900; color: var(--text-pure-black); margin-bottom: 4px; }
+.milestone-assessment-header p { font-size: 0.9rem; font-weight: 500; color: var(--text-muted-slate); }
+
+.milestone-rows-stack { display: flex; flex-direction: column; gap: 14px; width: 100%; }
+
+/* --- FLEXIBLE RESPONSIVE ROWS CONFIGURATION: Blocks content hiding parameters --- */
+.milestone-tracking-row {
+    background-color: #FAFAFA;
+    border: 1px solid var(--border-color-dim);
+    border-radius: 16px;
+    padding: 16px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+    /* FLEXIBLE DESIGN TOKEN: Auto stretches box height naturally if descriptions text parameters expand */
+    height: auto; 
+    min-height: 80px;
+    opacity: 0; transform: translateY(15px);
+    transition: opacity 0.5s ease, transform 0.5s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+}
+.milestone-tracking-row.reveal-row-activated { opacity: 1; transform: translateY(0); }
+.milestone-tracking-row:hover { background-color: var(--surface-white); border-color: #D2E5E4; box-shadow: 0 4px 15px rgba(0,166,153,0.03); }
+
+/* Student Profile Badge components alignment */
+.student-profile-mini { display: flex; align-items: center; gap: 14px; width: 220px; flex-shrink: 0; text-align: left; }
+.avatar-badge { width: 38px; height: 38px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.88rem; font-weight: 800; color: #FFFFFF; flex-shrink: 0; }
+.initials-pink { background-color: var(--primary-pink); }
+.initials-teal { background-color: var(--accent-teal); }
+.initials-yellow { background-color: var(--accent-yellow); }
+
+.student-brief { display: flex; flex-direction: column; gap: 2px; }
+.student-brief .name { font-size: 0.98rem; font-weight: 800; color: var(--text-pure-black); }
+.student-brief .sub { font-size: 0.82rem; font-weight: 600; color: var(--text-muted-slate); }
+
+.milestone-criteria-desc { flex-grow: 1; text-align: left; }
+.milestone-criteria-desc strong { font-size: 1.05rem; font-weight: 800; color: var(--text-pure-black); display: block; margin-bottom: 4px; }
+.milestone-criteria-desc p { font-size: 0.9rem; line-height: 1.45; color: #4A5553; font-weight: 500; }
+
+.milestone-status-indicator { display: flex; align-items: center; gap: 16px; flex-shrink: 0; }
+.badge-status { font-size: 0.8rem; font-weight: 800; padding: 4px 12px; border-radius: 30px; display: inline-flex; align-items: center; gap: 6px; }
+.status-verified { background-color: #E8F5E9; color: #2E7D32; }
+.status-verified::before { content: ''; width: 5px; height: 5px; background-color: #4CAF50; border-radius: 50%; }
+.status-observing { background-color: #FFF3E0; color: #E65100; }
+.status-observing::before { content: ''; width: 5px; height: 5px; background-color: #FF9800; border-radius: 50%; }
+
+.milestone-action-btn { width: 32px; height: 32px; border-radius: 8px; background-color: var(--surface-white); border: 1px solid var(--border-color-dim); color: var(--text-charcoal); cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 0.85rem; font-weight: 800; transition: all 0.2s ease; }
+.milestone-action-btn:hover { background-color: var(--accent-teal); color: #FFFFFF; border-color: var(--accent-teal); }
+
+/* ================= DYNAMIC ADAPTIVE RESPONSIVE COMPACT MEDIA OVERLAYS ================= */
+@media (max-width: 1024px) {
+    .milestone-summary-matrix-grid { grid-template-columns: 1fr; gap: 14px; }
+    .milestone-sheet-scroller-viewport { padding: 20px 16px; }
+    .milestone-tracking-row { flex-direction: column; align-items: stretch; gap: 16px; padding: 20px 16px; }
+    .student-profile-mini { width: 100%; }
+    .milestone-status-indicator { justify-content: space-between; border-top: 1px dashed var(--border-color-dim); padding-top: 14px; width: 100%; }
+    .milestone-action-btn { width: 100%; height: 42px; border-radius: 10px; gap: 8px; }
+    .milestone-action-btn::before { content: 'Open Evaluation Sheet '; font-size: 0.9rem; font-weight: 700; }
+}
+
+@media (max-width: 480px) {
+    .milestone-assessment-header h3 { font-size: 1.15rem; }
+    .milestone-criteria-desc strong { font-size: 0.95rem; }
+    .milestone-criteria-desc p { font-size: 0.85rem; }
+}
+
+</style>
+
+<script>
+    /**
+ * Stackly Childcare Website - Milestone Planner Cascade Animation Sub-Engine
+ */
+document.addEventListener("DOMContentLoaded", () => {
+    initMilestoneRowsCascadeReveal();
+});
+
+/**
+ * One-by-One Staggered Reveal Trigger
+ * Cascades milestone logs entry elements onto the active viewport smoothly with a 150ms delay stagger loop
+ */
+function initMilestoneRowsCascadeReveal() {
+    const rowsContainer = document.getElementById("milestoneRowsContainer");
+    if (!rowsContainer) return;
+
+    const intersectionObserver = new IntersectionObserver((entries, observer) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                const parent = entry.target;
+                const singleRows = parent.querySelectorAll(".cascade-item-node");
+
+                singleRows.forEach((row, index) => {
+                    setTimeout(() => {
+                        row.classList.add("reveal-row-activated");
+                    }, index * 150); // Staggers row line arrivals sequentially by 150ms
+                });
+
+                // Detach operational runtime listeners loop hooks to lock active cell profiles safely
+                observer.unobserve(parent);
+            }
+        });
+    }, { root: null, threshold: 0.1 });
+
+    intersectionObserver.observe(rowsContainer);
+}
+
+</script>
+
+
+                <!-- MENU SHEET 3: CATERING LOGS NUTRITIONS -->
+            <!-- ELABORATELY ENHANCED CATERING LOGS & NUTRITION CONSOLE -->
+<div class="dashboard-content-panel active-panel" id="nutrition-panel">
+    
+    <!-- CONSOLE HEADER ROW -->
+    <div class="panel-section-title-wrapper-card">
+        <div class="header-text-group">
+            <h2>Catering Logs & Nutrition</h2>
+            <p class="panel-subtitle-caption">Manage organic daily menu schedules, track dietary allergy logs, and monitor kitchen portion controls.</p>
+        </div>
+        <span class="panel-tag-badge">Nutrition Logs</span>
+    </div>
+
+    <!-- 1. DAILY DIET MACRO QUICK-STATS MATRIX -->
+    <div class="nutrition-summary-stats-grid">
+        <!-- Stat Item 1 -->
+        <div class="nutrition-macro-card border-left-green">
+            <div class="nutrition-icon-badge green-tint">
+                <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z"/><path d="M12 6v6l4 2"/></svg>
+            </div>
+            <div class="nutrition-meta">
+                <span class="nutrition-value">Organic Base</span>
+                <span class="nutrition-label">100% Certified Sourced</span>
+            </div>
+        </div>
+        <!-- Stat Item 2 -->
+        <div class="nutrition-macro-card border-left-pink">
+            <div class="nutrition-icon-badge pink-tint">
+                <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+            </div>
+            <div class="nutrition-meta">
+                <span class="nutrition-value">04 Active Alerts</span>
+                <span class="nutrition-label">Critical Allergy Locks</span>
+            </div>
+        </div>
+        <!-- Stat Item 3 -->
+        <div class="nutrition-macro-card border-left-yellow">
+            <div class="nutrition-icon-badge yellow-tint">
+                <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><line x1="9" y1="3" x2="9" y2="21"/><line x1="15" y1="3" x2="15" y2="21"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="3" y1="15" x2="21" y2="15"/></svg>
+            </div>
+            <div class="nutrition-meta">
+                <span class="nutrition-value">3 Meal Tracks</span>
+                <span class="nutrition-label">Portion Verified Daily</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- 2. INTERACTIVE WEEKLY ORGANIC MENU SCHEDULER DECK -->
+    <div class="nutrition-workspace-split-layout">
+        
+        <!-- LEFT SUB-PANE: WEEKLY TIMETABLE TRACK -->
+        <div class="nutrition-menu-scheduler-pane">
+            <div class="sub-pane-header">
+                <h3>Weekly Menu Schedule</h3>
+                <p>Select a calendar day to modify menu profiles or review nutritional values.</p>
+            </div>
+            
+            <div class="weekly-days-grid-list">
+                <button class="day-strip-btn active-day" onclick="switchNutritionDay('monday', this)">
+                    <span class="day-name">Mon</span><span class="menu-summary-label">Pureed Apple & Oats</span>
+                </button>
+                <button class="day-strip-btn" onclick="switchNutritionDay('tuesday', this)">
+                    <span class="day-name">Tue</span><span class="menu-summary-label">Mashed Sweet Potato</span>
+                </button>
+                <button class="day-strip-btn" onclick="switchNutritionDay('wednesday', this)">
+                    <span class="day-name">Wed</span><span class="menu-summary-label">Organic Vegetable Broth</span>
+                </button>
+                <button class="day-strip-btn" onclick="switchNutritionDay('thursday', this)">
+                    <span class="day-name">Thu</span><span class="menu-summary-label">Brown Rice Khichdi</span>
+                </button>
+                <button class="day-strip-btn" onclick="switchNutritionDay('friday', this)">
+                    <span class="day-name">Fri</span><span class="menu-summary-label">Steamed Pear Purée</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- RIGHT SUB-PANE: DIETARY ALLERGY ALERTS LOG SHEET -->
+        <div class="nutrition-allergy-alert-pane">
+            <div class="sub-pane-header">
+                <h3>Dietary Allergy Alert Sheet</h3>
+                <p>Active medical locks mapped to international student profiles benchmarks.</p>
+            </div>
+
+            <div class="allergy-rows-stack">
+                <!-- Entry 1 -->
+                <div class="allergy-alert-row-node alert-high">
+                    <div class="allergy-student-profile">
+                        <div class="student-mini-avatar pink-bg">OS</div>
+                        <div class="student-meta-stack">
+                            <strong>Oliver Smith</strong>
+                            <span>Infant Pod Suite</span>
+                        </div>
+                    </div>
+                    <div class="allergy-lock-desc">
+                        <span class="allergy-trigger-badge">Dairy Lock</span>
+                        <p>Strict lactose-free substitutes mapping mandatory for all meals.</p>
+                    </div>
+                </div>
+
+                <!-- Entry 2 -->
+                <div class="allergy-alert-row-node alert-medium">
+                    <div class="allergy-student-profile">
+                        <div class="student-mini-avatar yellow-bg">LD</div>
+                        <div class="student-meta-stack">
+                            <strong>Lucas Dubois</strong>
+                            <span>Kinder Exploration</span>
+                        </div>
+                    </div>
+                    <div class="allergy-lock-desc">
+                        <span class="allergy-trigger-badge">Nut Lock</span>
+                        <p>Severe peanut tree trace restriction locks active in prep zone.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+<style>
+    /* --- ENHANCED SYSTEM DESIGN TOKENS --- */
+:root {
+    --text-pure-black: #000000;
+    --text-charcoal: #2B2B2B;
+    --text-muted: #5A6D6A;
+    --primary-pink: #FF5A5F;
+    --accent-teal: #00A699;
+    --accent-yellow: #FFB400;
+    --border-color-dim: #E2EBEA;
+    --surface-white: #FFFFFF;
+}
+
+.header-text-group { text-align: left; }
+.panel-subtitle-caption { font-size: 0.92rem; color: var(--text-muted); margin-top: 4px; font-weight: 500; }
+
+/* ================= 1. DAILY DIET MACRO QUICK-STATS MATRIX ================= */
+.nutrition-summary-stats-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    width: 100%;
+    margin-bottom: 30px;
+    margin-top: 5px;
+}
+
+.nutrition-macro-card {
+    background-color: var(--surface-white);
+    border: 1px solid var(--border-color-dim);
+    border-left: 4px solid transparent;
+    border-radius: 14px;
+    padding: 18px 20px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    text-align: left;
+}
+.border-left-green { border-left-color: #7CB342; }
+.border-left-pink { border-left-color: var(--primary-pink); }
+.border-left-yellow { border-left-color: var(--accent-yellow); }
+
+.nutrition-icon-badge {
+    width: 42px; height: 42px; border-radius: 10px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+}
+.green-tint { background-color: #F1F8E9; color: #7CB342; }
+.pink-tint { background-color: #FFEBEB; color: var(--primary-pink); }
+.yellow-tint { background-color: #FFF6E0; color: #E68A00; }
+
+.nutrition-meta { display: flex; flex-direction: column; gap: 2px; }
+.nutrition-value { font-size: 1.25rem; font-weight: 900; color: var(--text-pure-black); letter-spacing: -0.5px; }
+.nutrition-label { font-size: 0.82rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.3px; }
+
+/* ================= 2. INTERACTIVE WEEKLY ORGANIC MENU SCHEDULER DECK ================= */
+.nutrition-workspace-split-layout {
+    display: grid;
+    grid-template-columns: 1.05fr 0.95fr;
+    gap: 30px;
+    width: 100%;
+}
+
+.nutrition-menu-scheduler-pane, .nutrition-allergy-alert-pane {
+    background-color: var(--surface-white);
+    border: 1px solid var(--border-color-dim);
+    border-radius: 20px;
+    padding: 26px 24px;
+    height: auto; /* Precludes fixed viewport clamping loops */
+}
+
+.sub-pane-header { text-align: left; margin-bottom: 20px; border-bottom: 1px dashed var(--border-color-dim); padding-bottom: 14px; }
+.sub-pane-header h3 { font-size: 1.25rem; font-weight: 900; color: var(--text-pure-black); margin-bottom: 4px; }
+.sub-pane-header p { font-size: 0.88rem; font-weight: 500; color: var(--text-muted); line-height: 1.4; }
+
+.weekly-days-grid-list { display: flex; flex-direction: column; gap: 10px; width: 100%; }
+
+/* Menu selection strip row anchors */
+.day-strip-btn {
+    width: 100%; padding: 14px 18px; border: 1px solid var(--border-color-dim); border-radius: 12px; background-color: #FAFAFA; display: flex; align-items: center; justify-content: space-between; gap: 20px; cursor: pointer; font-family: inherit; transition: all 0.2s ease;
+}
+.day-strip-btn:hover { background-color: var(--surface-white); border-color: var(--accent-teal); transform: translateX(3px); }
+.day-strip-btn.active-day { background-color: #E6F6F5; border-color: var(--accent-teal); }
+
+.day-name { font-size: 0.95rem; font-weight: 800; color: var(--text-pure-black); width: 45px; text-align: left; }
+.menu-summary-label { font-size: 0.92rem; font-weight: 600; color: #4A5452; text-align: right; flex-grow: 1; }
+.day-strip-btn.active-day .menu-summary-label { color: var(--brand-green-hover); font-weight: 700; }
+
+/* --- RIGHT PANEL ALLERGY FIELDS: Spans text cleanly without hiding rules --- */
+.allergy-rows-stack { display: flex; flex-direction: column; gap: 12px; width: 100%; }
+
+.allergy-alert-row-node {
+    border-radius: 16px; padding: 16px; border: 1px solid transparent; display: flex; flex-direction: column; gap: 12px; text-align: left; height: auto;
+}
+.alert-high { background-color: #FFF2F3; border-color: #F8D7DA; }
+.alert-medium { background-color: #FFF9E6; border-color: #FFE3C2; }
+
+.allergy-student-profile { display: flex; align-items: center; gap: 12px; }
+.student-mini-avatar { width: 34px; height: 34px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.8rem; font-weight: 800; color: #FFFFFF; }
+.pink-bg { background-color: var(--primary-pink); }
+.yellow-bg { background-color: var(--accent-yellow); }
+
+.student-meta-stack { display: flex; flex-direction: column; gap: 1px; }
+.student-meta-stack strong { font-size: 0.95rem; font-weight: 800; color: var(--text-pure-black); }
+.student-meta-stack span { font-size: 0.8rem; font-weight: 600; color: var(--text-muted); }
+
+.allergy-lock-desc { text-align: left; display: flex; flex-direction: column; gap: 4px; }
+.allergy-trigger-badge { font-size: 0.75rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.5px; width: max-content; padding: 2px 8px; border-radius: 4px; color: #FFFFFF; }
+.alert-high .allergy-trigger-badge { background-color: var(--primary-pink); }
+.alert-medium .allergy-trigger-badge { background-color: #E68A00; }
+.allergy-lock-desc p { font-size: 0.88rem; line-height: 1.4; color: #2B2B2B; font-weight: 600; }
+
+/* ================= DYNAMIC HIGH-UTILITY MOBILE RESPONSIVE OVERLAYS ================= */
+@media (max-width: 1024px) {
+    .nutrition-summary-stats-grid { grid-template-columns: 1fr; gap: 12px; }
+    .nutrition-workspace-split-layout { grid-template-columns: 1fr; gap: 24px; }
+    .nutrition-menu-scheduler-pane, .nutrition-allergy-alert-pane { padding: 20px 16px; }
+}
+
+@media (max-width: 480px) {
+    .day-strip-btn { padding: 12px 14px; gap: 10px; }
+    .day-name { font-size: 0.88rem; width: 35px; }
+    .menu-summary-label { font-size: 0.82rem; }
+}
+
+</style>
+
+<script>
+    /**
+ * Stackly Childcare Website - Interactive Nutritional Menu Week Toggler
+ */
+function switchNutritionDay(dayTokenId, selectedButton) {
+    if (!dayTokenId || !selectedButton) return;
+
+    // Pull out selection states from neighboring day nodes lists
+    const dayButtons = document.querySelectorAll(".weekly-days-grid-list .day-strip-btn");
+    dayButtons.forEach(btn => {
+        btn.classList.remove("active-day");
+    });
+
+    // Append display markers to highlight current parent day focus loop state natively
+    selectedButton.classList.add("active-day");
+
+    // Workspace extension hooks: Optional feature to load corresponding recipe sheets can follow cleanly here
+    console.log(`Catering matrix track active date index adjusted to: ${dayTokenId}`);
+}
+
+</script>
+
+                <!-- MENU SHEET 4: CLASS SCHEDULE TIMES SCHEDULERS -->
+              <!-- ELABORATELY ENHANCED CLASS SCHEDULES & CALENDARS CONSOLE -->
+<div class="dashboard-content-panel active-panel" id="schedule-panel">
+    
+    <!-- CONSOLE HEADER ROW -->
+    <div class="panel-section-title-wrapper-card">
+        <div class="header-text-group">
+            <h2>Class Schedules & Calendars</h2>
+            <p class="panel-subtitle-caption">Manage time-segmented lesson plan timetables, view active playground rotations, and track upcoming daycare event calendars.</p>
+        </div>
+        <span class="panel-tag-badge">Schedules Grid</span>
+    </div>
+
+    <!-- 1. OPERATIONAL QUICK-STATS MATRICES -->
+    <div class="schedule-summary-stats-grid">
+        <!-- Stat Item 1 -->
+        <div class="schedule-macro-card border-left-teal">
+            <div class="schedule-icon-badge teal-tint">
+                <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+            </div>
+            <div class="schedule-meta">
+                <span class="schedule-value">Active Now</span>
+                <span class="schedule-label">Storytelling Hour</span>
+            </div>
+        </div>
+        <!-- Stat Item 2 -->
+        <div class="schedule-macro-card border-left-yellow">
+            <div class="schedule-icon-badge yellow-tint">
+                <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/></svg>
+            </div>
+            <div class="schedule-meta">
+                <span class="schedule-value">Next Rotation</span>
+                <span class="schedule-label">Playground Slot (3:00 PM)</span>
+            </div>
+        </div>
+        <!-- Stat Item 3 -->
+        <div class="schedule-macro-card border-left-pink">
+            <div class="schedule-icon-badge pink-tint">
+                <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+            </div>
+            <div class="schedule-meta">
+                <span class="schedule-value">02 Events</span>
+                <span class="schedule-label">Marked for This Month</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- 2. TWO-COLUMN INTERACTIVE TIMETABLE & EVENTS SCRIPTS -->
+    <div class="schedule-workspace-split-layout">
+        
+        <!-- LEFT SUB-PANE: CURRENT DAY TIME-SLOT TIMETABLE -->
+        <div class="schedule-timetable-pane">
+            <div class="sub-pane-header">
+                <h3>Today's Routine Matrix</h3>
+                <p>Real-time early childhood timetable block tracking your class milestones logs.</p>
+            </div>
+            
+            <div class="timetable-slots-stack">
+                <!-- Slot 1 -->
+                <div class="timetable-slot-row active-now-slot">
+                    <span class="slot-time-bracket">09:00 - 10:30 AM</span>
+                    <div class="slot-details-copy text-left">
+                        <strong>Sensory Discovery Play</strong>
+                        <p>Infant Pod Suite • Oliver Smith, Emma Mueller</p>
+                    </div>
+                </div>
+
+                <!-- Slot 2 -->
+                <div class="timetable-slot-row active-now-slot">
+                    <span class="slot-time-bracket">10:30 - 12:00 PM</span>
+                    <div class="slot-details-copy text-left">
+                        <strong>Palette Expression & Art Logic</strong>
+                        <p>Nursery Milestones • Guided Stroke Methods</p>
+                    </div>
+                </div>
+
+                <!-- Slot 3 (Highlighted Current Active Tracking Slot) -->
+                <div class="timetable-slot-row current-live-highlight">
+                    <span class="slot-time-bracket">01:30 - 02:45 PM</span>
+                    <div class="slot-details-copy text-left">
+                        <strong>Storytelling & Language Hour</strong>
+                        <p>Kinder Exploration • Vocabulary Building</p>
+                    </div>
+                    <span class="live-pulse-badge">LIVE</span>
+                </div>
+
+                <!-- Slot 4 -->
+                <div class="timetable-slot-row">
+                    <span class="slot-time-bracket">03:00 - 04:30 PM</span>
+                    <div class="slot-details-copy text-left">
+                        <strong>Outdoor Playground Rotation</strong>
+                        <p>All Pods Classroom Blocks • Physical Milestones</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- RIGHT SUB-PANE: UPCOMING DAYCARE HOLIDAYS & EVENTS TIMELINE -->
+        <div class="schedule-events-timeline-pane">
+            <div class="sub-pane-header">
+                <h3>Events & Holiday Calendars</h3>
+                <p>Key academic calendar locks mapped to international student profiles benchmarks.</p>
+            </div>
+
+            <div class="timeline-items-stack" id="staggeredTimelineContainer">
+                <!-- Timeline Event 1 -->
+                <div class="timeline-event-card border-pink timeline-cascade-node">
+                    <div class="event-date-badge pink-bg">
+                        <span class="date-num">24</span><span class="date-month">Sept</span>
+                    </div>
+                    <div class="event-text-meta text-left">
+                        <h4>Annual Preschool Sports Day</h4>
+                        <p>Track lists registration fields matrices remain active online.</p>
+                        <a href="404.html" class="event-action-link">View Event Blueprint ➔</a>
+                    </div>
+                </div>
+
+                <!-- Timeline Event 2 -->
+                <div class="timeline-event-card border-yellow timeline-cascade-node">
+                    <div class="event-date-badge yellow-bg">
+                        <span class="date-num">02</span><span class="date-month">Oct</span>
+                    </div>
+                    <div class="event-text-meta text-left">
+                        <h4>National Day Holiday</h4>
+                        <p>Flagship campus facility gates locked. No student drop-off sessions log.</p>
+                        <a href="404.html" class="event-action-link">View Calendar ➔</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+<style>
+    /* --- ENHANCED DESIGN SYSTEM TOKENS --- */
+:root {
+    --text-pure-black: #000000;
+    --text-charcoal: #2B2B2B;
+    --text-muted: #5A6D6A;
+    --primary-pink: #FF5A5F;
+    --accent-teal: #00A699;
+    --accent-yellow: #FFB400;
+    --border-color-dim: #E2EBEA;
+    --surface-white: #FFFFFF;
+}
+
+.header-text-group { text-align: left; }
+.panel-subtitle-caption { font-size: 0.92rem; color: var(--text-muted); margin-top: 4px; font-weight: 500; }
+
+/* ================= 1. OPERATIONAL QUICK-STATS MATRICES ================= */
+.schedule-summary-stats-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    width: 100%;
+    margin-bottom: 30px;
+    margin-top: 5px;
+}
+
+.schedule-macro-card {
+    background-color: var(--surface-white);
+    border: 1px solid var(--border-color-dim);
+    border-left: 4px solid transparent;
+    border-radius: 14px;
+    padding: 18px 20px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    text-align: left;
+}
+.border-left-teal { border-left-color: var(--accent-teal); }
+.border-left-yellow { border-left-color: var(--accent-yellow); }
+.border-left-pink { border-left-color: var(--primary-pink); }
+
+.schedule-icon-badge {
+    width: 42px; height: 42px; border-radius: 10px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+}
+.teal-tint { background-color: #E6F6F5; color: var(--accent-teal); }
+.yellow-tint { background-color: #FFF6E0; color: #E68A00; }
+.pink-tint { background-color: #FFEBEB; color: var(--primary-pink); }
+
+.schedule-meta { display: flex; flex-direction: column; gap: 2px; }
+.schedule-value { font-size: 1.25rem; font-weight: 900; color: var(--text-pure-black); letter-spacing: -0.5px; }
+.schedule-label { font-size: 0.82rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.3px; }
+
+/* ================= 2. TWO-COLUMN SPLIT PANEL WORKSPACE ================= */
+.schedule-workspace-split-layout {
+    display: grid;
+    grid-template-columns: 1.05fr 0.95fr;
+    gap: 30px;
+    width: 100%;
+}
+
+.schedule-timetable-pane, .schedule-events-timeline-pane {
+    background-color: var(--surface-white);
+    border: 1px solid var(--border-color-dim);
+    border-radius: 20px;
+    padding: 26px 24px;
+    height: auto; /* Completely blocks vertical height-wise content clamping hidden loops */
+}
+
+.sub-pane-header { text-align: left; margin-bottom: 20px; border-bottom: 1px dashed var(--border-color-dim); padding-bottom: 14px; }
+.sub-pane-header h3 { font-size: 1.25rem; font-weight: 900; color: var(--text-pure-black); margin-bottom: 4px; }
+.sub-pane-header p { font-size: 0.88rem; font-weight: 500; color: var(--text-muted); line-height: 1.4; }
+
+/* --- LEFT SIDE: TIMETABLE BLOCKS LAYER --- */
+.timetable-slots-stack { display: flex; flex-direction: column; gap: 12px; width: 100%; }
+
+.timetable-slot-row {
+    width: 100%; padding: 14px 18px; border: 1px solid var(--border-color-dim); border-radius: 14px; background-color: #FAFAFA; display: flex; align-items: center; gap: 20px; text-align: left; height: auto;
+}
+.slot-time-bracket { font-size: 0.88rem; font-weight: 800; color: var(--text-muted); width: 110px; flex-shrink: 0; }
+.slot-details-copy { flex-grow: 1; }
+.slot-details-copy strong { font-size: 1rem; font-weight: 800; color: var(--text-pure-black); display: block; margin-bottom: 2px; }
+.slot-details-copy p { font-size: 0.85rem; color: var(--text-muted); font-weight: 500; }
+
+/* Highlight Live Active Class Row Blocks Metrics */
+.timetable-slot-row.current-live-highlight {
+    background-color: #E6F6F5; border-color: var(--accent-teal); position: relative; box-shadow: 0 4px 12px rgba(0,166,153,0.04);
+}
+.timetable-slot-row.current-live-highlight .slot-time-bracket { color: var(--brand-green-hover); }
+.timetable-slot-row.current-live-highlight strong { color: var(--brand-green-hover); }
+
+.live-pulse-badge {
+    background-color: var(--accent-teal); color: #FFFFFF; font-size: 0.72rem; font-weight: 900; padding: 3px 8px; border-radius: 6px; letter-spacing: 0.5px; display: inline-flex; align-items: center; gap: 4px;
+}
+.live-pulse-badge::before { content: ''; width: 5px; height: 5px; background-color: #FFFFFF; border-radius: 50%; display: inline-block; animation: beaconBlink 1s infinite alternate; }
+@keyframes beaconBlink { 0% { opacity: 0.3; } 100% { opacity: 1; } }
+
+/* --- RIGHT SIDE: CALENDAR EVENTS STACK ROWS --- */
+.timeline-items-stack { display: flex; flex-direction: column; gap: 14px; width: 100%; }
+
+.timeline-event-card {
+    background-color: #FAFAFA; border: 1px solid var(--border-color-dim); border-left: 4px solid transparent; border-radius: 16px; padding: 16px 20px; display: flex; align-items: center; gap: 20px; height: auto;
+    opacity: 0; transform: translateY(15px);
+    transition: opacity 0.5s ease, transform 0.5s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+}
+.border-pink { border-left-color: var(--primary-pink); }
+.border-yellow { border-left-color: var(--accent-yellow); }
+
+.timeline-event-card.reveal-node-active { opacity: 1; transform: translateY(0); }
+.timeline-event-card:hover { background-color: var(--surface-white); box-shadow: 0 4px 15px rgba(0,0,0,0.02); }
+
+.event-date-badge {
+    width: 52px; height: 52px; border-radius: 12px; display: flex; flex-direction: column; align-items: center; justify-content: center; flex-shrink: 0; color: #FFFFFF; line-height: 1.1;
+}
+.pink-bg { background-color: var(--primary-pink); }
+.yellow-bg { background-color: #E68A00; }
+
+.date-num { font-size: 1.25rem; font-weight: 900; }
+.date-month { font-size: 0.7rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.5px; }
+
+.event-text-meta { flex-grow: 1; }
+.event-text-meta h4 { font-size: 1.1rem; font-weight: 800; color: var(--text-pure-black); margin-bottom: 4px; }
+.event-text-meta p { font-size: 0.88rem; line-height: 1.4; color: var(--text-muted); font-weight: 500; margin-bottom: 8px; }
+.event-action-link { font-size: 0.85rem; font-weight: 800; color: var(--text-pure-black); text-decoration: none; display: inline-block; transition: color 0.15s; }
+.event-action-link:hover { color: var(--primary-pink); }
+
+/* ================= DYNAMIC HIGH-UTILITY MOBILE RESPONSIVE OVERLAYS ================= */
+@media (max-width: 1024px) {
+    .schedule-summary-stats-grid { grid-template-columns: 1fr; gap: 12px; }
+    .schedule-workspace-split-layout { grid-template-columns: 1fr; gap: 24px; }
+    .schedule-timetable-pane, .schedule-events-timeline-pane { padding: 20px 16px; }
+    .timetable-slot-row { flex-direction: column; align-items: flex-start; gap: 8px; padding: 16px; }
+    .slot-time-bracket { width: 100%; font-size: 0.82rem; border-bottom: 1px dashed var(--border-color-dim); padding-bottom: 4px; }
+    .live-pulse-badge { position: absolute; top: 16px; right: 16px; }
+}
+
+@media (max-width: 480px) {
+    .sub-pane-header h3 { font-size: 1.15rem; }
+    .event-text-meta h4 { font-size: 1rem; }
+    .event-text-meta p { font-size: 0.82rem; }
+    .timeline-event-card { gap: 14px; padding: 14px; }
+    .event-date-badge { width: 46px; height: 42px; border-radius: 8px; }
+    .date-num { font-size: 1.05rem; }
+    .date-month { font-size: 0.65rem; }
+}
+
+</style>
+<script>
+    /**
+ * Stackly Childcare Website - Timelines Cascade Animation Sub-Engine
+ */
+document.addEventListener("DOMContentLoaded", () => {
+    initScheduleTimelineCascadeReveal();
+});
+
+/**
+ * Sequential Node Cascade Trigger
+ * Slides calendar timeline item blocks up into viewports sequentially by 150ms intervals
+ */
+function initScheduleTimelineCascadeReveal() {
+    const timelineContainer = document.getElementById("staggeredTimelineContainer");
+    if (!timelineContainer) return;
+
+    const intersectionObserver = new IntersectionObserver((entries, observer) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                const parent = entry.target;
+                const eventNodes = parent.querySelectorAll(".timeline-cascade-node");
+
+                eventNodes.forEach((node, index) => {
+                    setTimeout(() => {
+                        node.classList.add("reveal-node-active");
+                    }, index * 150);
+                });
+
+                // Dismiss active runtime connection listeners loop hooks to locks panel active values state safely
+                observer.unobserve(parent);
+            }
+        });
+    }, { root: null, threshold: 0.1 });
+
+    intersectionObserver.observe(timelineContainer);
+}
+
+</script>
+          <!-- ELABORATELY ENHANCED SECURITY CONTROL CONSOLE -->
+<div class="dashboard-content-panel active-panel" id="security-panel">
+    
+    <!-- CONSOLE HEADER ROW -->
+    <div class="panel-section-title-wrapper-card">
+        <div class="header-text-group">
+            <h2>Security Settings & Parameters</h2>
+            <p class="panel-subtitle-caption">Manage authorized guardian check-out credentials gates, audit compliance validation parameters, and configure child data encryption tools.</p>
+        </div>
+        <span class="panel-tag-badge">Security Control</span>
+    </div>
+
+    <!-- 1. ACTIVE COMPLIANCE QUICK-STATS MATRIX -->
+    <div class="security-summary-stats-grid">
+        <!-- Stat Item 1 -->
+        <div class="security-macro-card border-left-teal">
+            <div class="security-icon-badge teal-tint">
+                <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+            </div>
+            <div class="security-meta">
+                <span class="security-value">AES-256</span>
+                <span class="security-label">Data Encryption Lock</span>
+            </div>
+        </div>
+        <!-- Stat Item 2 -->
+        <div class="security-macro-card border-left-green">
+            <div class="security-icon-badge green-tint">
+                <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11"/></svg>
+            </div>
+            <div class="security-meta">
+                <span class="security-value">100% Passed</span>
+                <span class="security-label">Staff Compliance Audit</span>
+            </div>
+        </div>
+        <!-- Stat Item 3 -->
+        <div class="security-macro-card border-left-yellow">
+            <div class="security-icon-badge yellow-tint">
+                <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+            </div>
+            <div class="security-meta">
+                <span class="security-value">Zero Alerts</span>
+                <span class="security-label">Unauthorized Incidents</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- 2. TWO-COLUMN SPLIT AUTHENTICATION & LOCK CONSOLE -->
+    <div class="security-workspace-split-layout">
+        
+        <!-- LEFT SUB-PANE: GUARDIAN CHECK-OUT AUTH TOKENS -->
+        <div class="security-auth-tokens-pane">
+            <div class="sub-pane-header">
+                <h3>Guardian Auth Token Verification</h3>
+                <p>Verify active digital checkout tokens assigned to family pick-up profiles.</p>
+            </div>
+            
+            <div class="auth-tokens-stack" id="staggeredTokensContainer">
+                <!-- Token 1 -->
+                <div class="token-verification-row token-cascade-node">
+                    <div class="token-profile-meta">
+                        <div class="token-avatar-badge initials-pink">OS</div>
+                        <div class="token-details-copy text-left">
+                            <strong>Oliver Smith</strong>
+                            <span>Token Key: <code class="mono-code">STK-9821-X</code></span>
+                        </div>
+                    </div>
+                    <div class="token-status-indicator">
+                        <span class="badge-status status-secure">Active Secure</span>
+                        <button class="security-action-btn" onclick="window.location.href='404.html'">➔</button>
+                    </div>
+                </div>
+
+                <!-- Token 2 -->
+                <div class="token-verification-row token-cascade-node">
+                    <div class="token-profile-meta">
+                        <div class="token-avatar-badge initials-teal">EM</div>
+                        <div class="token-details-copy text-left">
+                            <strong>Emma Mueller</strong>
+                            <span>Token Key: <code class="mono-code">STK-4402-Y</code></span>
+                        </div>
+                    </div>
+                    <div class="token-status-indicator">
+                        <span class="badge-status status-secure">Active Secure</span>
+                        <button class="security-action-btn" onclick="window.location.href='404.html'">➔</button>
+                    </div>
+                </div>
+
+                <!-- Token 3 -->
+                <div class="token-verification-row token-cascade-node">
+                    <div class="token-profile-meta">
+                        <div class="token-avatar-badge initials-yellow">LD</div>
+                        <div class="token-details-copy text-left">
+                            <strong>Lucas Dubois</strong>
+                            <span>Token Key: <code class="mono-code">STK-1193-Z</code></span>
+                        </div>
+                    </div>
+                    <div class="token-status-indicator">
+                        <span class="badge-status status-pending">Regenerating</span>
+                        <button class="security-action-btn" onclick="window.location.href='404.html'">➔</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- RIGHT SUB-PANE: CLASSROOM BIOMETRIC LOGS CONTROL PANEL -->
+        <div class="security-biometric-control-pane">
+            <div class="sub-pane-header">
+                <h3>Classroom Access Controls</h3>
+                <p>Configure biometric campus facility locks parameters and audit check-in gates.</p>
+            </div>
+
+            <form class="security-toggle-settings-form" onsubmit="event.preventDefault();">
+                <!-- Toggle Item 1 -->
+                <div class="security-toggle-row-card">
+                    <div class="toggle-text-meta text-left">
+                        <h4>Biometric Gate Access Lock</h4>
+                        <p>Require authorized educator fingerprint verification for all classroom entrance doors layers.</p>
+                    </div>
+                    <label class="switch-toggle-shell">
+                        <input type="checkbox" checked>
+                        <span class="switch-toggle-slider"></span>
+                    </label>
+                </div>
+
+                <!-- Toggle Item 2 -->
+                <div class="security-toggle-row-card">
+                    <div class="toggle-text-meta text-left">
+                        <h4>Real-Time Parent Portal Feeds</h4>
+                        <p>Encrypt and stream live activity log progress parameters straight to guardian mobile frameworks channels.</p>
+                    </div>
+                    <label class="switch-toggle-shell">
+                        <input type="checkbox" checked>
+                        <span class="switch-toggle-slider"></span>
+                    </label>
+                </div>
+
+                <!-- Toggle Item 3 -->
+                <div class="security-toggle-row-card">
+                    <div class="toggle-text-meta text-left">
+                        <h4>Automated Checkout Alerts</h4>
+                        <p>Transmit an immediate electronic email alert notification whenever a child token code is scanned at checkout corridors.</p>
+                    </div>
+                    <label class="switch-toggle-shell">
+                        <input type="checkbox">
+                        <span class="switch-toggle-slider"></span>
+                    </label>
+                </div>
+            </form>
+        </div>
+
+    </div>
+
+</div>
+<style>
+    /* --- ENHANCED DESIGN SYSTEM TOKENS --- */
+:root {
+    --text-pure-black: #000000;
+    --text-charcoal: #2B2B2B;
+    --text-muted: #5A6D6A;
+    --primary-pink: #FF5A5F;
+    --accent-teal: #00A699;
+    --accent-yellow: #FFB400;
+    --border-color-dim: #E2EBEA;
+    --surface-white: #FFFFFF;
+}
+
+.header-text-group { text-align: left; }
+.panel-subtitle-caption { font-size: 0.92rem; color: var(--text-muted); margin-top: 4px; font-weight: 500; }
+
+/* ================= 1. ACTIVE COMPLIANCE QUICK-STATS MATRIX ================= */
+.security-summary-stats-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    width: 100%;
+    margin-bottom: 30px;
+    margin-top: 5px;
+}
+
+.security-macro-card {
+    background-color: var(--surface-white);
+    border: 1px solid var(--border-color-dim);
+    border-left: 4px solid transparent;
+    border-radius: 14px;
+    padding: 18px 20px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    text-align: left;
+}
+.border-left-teal { border-left-color: var(--accent-teal); }
+.border-left-green { border-left-color: #7CB342; }
+.border-left-yellow { border-left-color: var(--accent-yellow); }
+
+.security-icon-badge {
+    width: 42px; height: 42px; border-radius: 10px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+}
+.teal-tint { background-color: #E6F6F5; color: var(--accent-teal); }
+.green-tint { background-color: #F1F8E9; color: #7CB342; }
+.yellow-tint { background-color: #FFF6E0; color: #E68A00; }
+
+.security-meta { display: flex; flex-direction: column; gap: 2px; }
+.security-value { font-size: 1.25rem; font-weight: 900; color: var(--text-pure-black); letter-spacing: -0.5px; }
+.security-label { font-size: 0.82rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.3px; }
+
+/* ================= 2. TWO-COLUMN SPLIT WORKSPACE PANELS ================= */
+.security-workspace-split-layout {
+    display: grid;
+    grid-template-columns: 1.05fr 0.95fr;
+    gap: 30px;
+    width: 100%;
+}
+
+.security-auth-tokens-pane, .security-biometric-control-pane {
+    background-color: var(--surface-white);
+    border: 1px solid var(--border-color-dim);
+    border-radius: 20px;
+    padding: 26px 24px;
+    height: auto; /* Precludes fixed spatial clamping loops: text expands dynamically */
+}
+
+.sub-pane-header { text-align: left; margin-bottom: 20px; border-bottom: 1px dashed var(--border-color-dim); padding-bottom: 14px; }
+.sub-pane-header h3 { font-size: 1.25rem; font-weight: 900; color: var(--text-pure-black); margin-bottom: 4px; }
+.sub-pane-header p { font-size: 0.88rem; font-weight: 500; color: var(--text-muted); line-height: 1.4; }
+
+/* --- LEFT SIDE: GUARDIAN AUTH TOKENS DECK --- */
+.auth-tokens-stack { display: flex; flex-direction: column; gap: 12px; width: 100%; }
+
+.token-verification-row {
+    width: 100%; padding: 14px 18px; border: 1px solid var(--border-color-dim); border-radius: 14px; background-color: #FAFAFA; display: flex; align-items: center; justify-content: space-between; gap: 20px; height: auto;
+    opacity: 0; transform: translateY(15px);
+    transition: opacity 0.5s ease, transform 0.5s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+}
+.token-verification-row.reveal-token-active { opacity: 1; transform: translateY(0); }
+.token-verification-row:hover { background-color: var(--surface-white); border-color: #D2E5E4; box-shadow: 0 4px 15px rgba(0,166,153,0.03); }
+
+.token-profile-meta { display: flex; align-items: center; gap: 14px; text-align: left; }
+.token-avatar-badge { width: 36px; height: 36px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.85rem; font-weight: 800; color: #FFFFFF; flex-shrink: 0; }
+.initials-pink { background-color: var(--primary-pink); }
+.initials-teal { background-color: var(--accent-teal); }
+.initials-yellow { background-color: var(--accent-yellow); }
+
+.token-details-copy { display: flex; flex-direction: column; gap: 2px; }
+.token-details-copy strong { font-size: 0.98rem; font-weight: 800; color: var(--text-pure-black); }
+.token-details-copy span { font-size: 0.85rem; color: var(--text-muted); font-weight: 500; }
+.mono-code { font-family: monospace; background-color: #EEF4F4; padding: 2px 6px; border-radius: 4px; font-weight: 700; color: #3A4644; }
+
+.token-status-indicator { display: flex; align-items: center; gap: 14px; flex-shrink: 0; }
+.badge-status { font-size: 0.8rem; font-weight: 800; padding: 4px 12px; border-radius: 30px; display: inline-flex; align-items: center; gap: 6px; }
+.status-secure { background-color: #E8F5E9; color: #2E7D32; }
+.status-secure::before { content: ''; width: 5px; height: 5px; background-color: #4CAF50; border-radius: 50%; }
+.status-pending { background-color: #FFF3E0; color: #E65100; }
+.status-pending::before { content: ''; width: 5px; height: 5px; background-color: #FF9800; border-radius: 50%; }
+
+.security-action-btn { width: 32px; height: 32px; border-radius: 8px; background-color: var(--surface-white); border: 1px solid var(--border-color-dim); color: var(--text-charcoal); cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 0.85rem; font-weight: 800; transition: all 0.2s ease; }
+.security-action-btn:hover { background-color: var(--accent-teal); color: #FFFFFF; border-color: var(--accent-teal); }
+
+/* --- RIGHT SIDE: TOGGLE SWITCH SETTINGS COMPONENT --- */
+.security-toggle-settings-form { display: flex; flex-direction: column; gap: 14px; width: 100%; }
+
+.security-toggle-row-card {
+    background-color: #FAFAFA; border: 1px solid var(--border-color-dim); border-radius: 16px; padding: 16px 20px; display: flex; align-items: center; justify-content: space-between; gap: 24px; height: auto; transition: background-color 0.25s, border-color 0.25s;
+}
+.security-toggle-row-card:hover { background-color: var(--surface-white); border-color: #D2E5E4; }
+
+.toggle-text-meta { flex-grow: 1; text-align: left; }
+.toggle-text-meta h4 { font-size: 1.05rem; font-weight: 800; color: var(--text-pure-black); margin-bottom: 4px; }
+.toggle-text-meta p { font-size: 0.88rem; line-height: 1.45; color: var(--text-muted); font-weight: 500; }
+
+/* Pure CSS iOS-Style Toggle Switch Mechanics */
+.switch-toggle-shell { position: relative; display: inline-block; width: 44px; height: 24px; flex-shrink: 0; cursor: pointer; }
+.switch-toggle-shell input { opacity: 0; width: 0; height: 0; }
+.switch-toggle-slider { position: absolute; top: 0; left: 0; right: 0; bottom: 0; background-color: #CCD7D6; border-radius: 34px; transition: background-color 0.3s; }
+.switch-toggle-slider::before { position: absolute; content: ""; height: 18px; width: 18px; left: 3px; bottom: 3px; background-color: white; border-radius: 50%; transition: transform 0.3s; }
+
+.switch-toggle-shell input:checked + .switch-toggle-slider { background-color: var(--accent-teal); }
+.switch-toggle-shell input:checked + .switch-toggle-slider::before { transform: translateX(20px); }
+
+/* ================= DYNAMIC HIGH-UTILITY MOBILE RESPONSIVE OVERLAYS ================= */
+@media (max-width: 1024px) {
+    .security-summary-stats-grid { grid-template-columns: 1fr; gap: 12px; }
+    .security-workspace-split-layout { grid-template-columns: 1fr; gap: 24px; }
+    .security-auth-tokens-pane, .security-biometric-control-pane { padding: 20px 16px; }
+    .token-verification-row { flex-direction: column; align-items: stretch; gap: 14px; padding: 16px; }
+    .token-profile-meta { width: 100%; }
+    .token-status-indicator { justify-content: space-between; border-top: 1px dashed var(--border-color-dim); padding-top: 14px; width: 100%; }
+    .security-action-btn { width: 100%; height: 42px; border-radius: 10px; gap: 8px; }
+    .security-action-btn::before { content: 'Audit Token Log '; font-size: 0.9rem; font-weight: 700; }
+    .security-toggle-row-card { gap: 16px; padding: 16px; }
+}
+
+@media (max-width: 480px) {
+    .sub-pane-header h3 { font-size: 1.15rem; }
+    .toggle-text-meta h4 { font-size: 0.98rem; }
+    .toggle-text-meta p { font-size: 0.82rem; }
+}
+
+</style>
+
+<script>
+    /**
+ * Stackly Childcare Website - Security Tokens Cascade Animation Sub-Engine
+ */
+document.addEventListener("DOMContentLoaded", () => {
+    initSecurityTokensCascadeReveal();
+});
+
+/**
+ * Sequential Node Cascade Trigger
+ * Slides auth token row elements up into viewports sequentially by 150ms intervals
+ */
+function initSecurityTokensCascadeReveal() {
+    const tokensContainer = document.getElementById("staggeredTokensContainer");
+    if (!tokensContainer) return;
+
+    const intersectionObserver = new IntersectionObserver((entries, observer) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                const parent = entry.target;
+                const tokenNodes = parent.querySelectorAll(".token-cascade-node");
+
+                tokenNodes.forEach((node, index) => {
+                    setTimeout(() => {
+                        node.classList.add("reveal-token-active");
+                    }, index * 150);
+                });
+
+                // Dismiss active runtime connection listeners loop hooks to locks panel active values state safely
+                observer.unobserve(parent);
+            }
+        });
+    }, { root: null, threshold: 0.1 });
+
+    intersectionObserver.observe(tokensContainer);
+}
+
+</script>
+
+                    <style>
+                        :root {
+    --brand-green-base: #00A699;     /* Core Green Theme Color Profile */
+    --brand-green-hover: #00877D;
+    --text-pure-black: #000000;
+    --text-charcoal: #2B2B2B;
+    --text-muted-slate: #5A6D6A;
+    --surface-white: #FFFFFF;
+    --dashboard-sidebar-bg: #1A1C23;  /* High Contrast Slate Black Sidebar Filling Layer */
+    --workspace-canvas-bg: #F4F8F8;  /* Soft Warm Ice Tint Base Matte Backdrop Layer */
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    background-color: var(--workspace-canvas-bg);
+    color: var(--text-charcoal);
+    overflow: hidden;
+    width: 100vw; height: 100vh;
+}
+
+/* ================= THE MAIN MASTER WORKSPACE MACRO LAYOUT CONTAINER ================= */
+.dashboard-macro-layout {
+    width: 100%; height: 100vh;
+    display: flex; position: relative; overflow: hidden;
+}
+
+/* ================= SIDEBAR MODULE DESIGN ================= */
+.dashboard-sidebar {
+    width: 260px; height: 100%;
+    background-color: var(--dashboard-sidebar-bg);
+    padding: 30px 20px;
+    display: flex; flex-direction: column;
+    flex-shrink: 0; position: relative; z-index: 100;
+    box-shadow: 4px 0 25px rgba(0, 0, 0, 0.15);
+    transition: transform 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.mobile-sidebar-close-btn { display: none; } 
+
+.sidebar-menu-nav {
+    display: flex; flex-direction: column; gap: 8px; width: 100%; margin-top: 20px;
+}
+
+/* Sidebar Menu Navigation Nodes link buttons */
+.menu-link-node {
+    width: 100%; padding: 12px 16px; font-size: 0.95rem; font-weight: 700;
+    color: #929EB0; background: none; border: none; border-radius: 12px;
+    display: flex; align-items: center; gap: 14px; cursor: pointer; text-align: left;
+    transition: background-color 0.2s, color 0.2s;
+}
+.menu-vector-icon { width: 18px; height: 18px; flex-shrink: 0; opacity: 0.85; }
+
+.menu-link-node:hover { background-color: rgba(255, 255, 255, 0.04); color: #FFFFFF; }
+.menu-link-node.active { background-color: var(--brand-green-base); color: #FFFFFF; box-shadow: 0 4px 12px rgba(0, 166, 153, 0.2); }
+
+.sidebar-logout-btn {
+    width: 100%; padding: 12px 16px; font-size: 0.95rem; font-weight: 700;
+    color: #FF5A5F; background: none; border: none; border-radius: 12px;
+    display: flex; align-items: center; gap: 14px; cursor: pointer; text-align: left;
+    margin-top: auto; transition: background-color 0.2s;
+}
+.sidebar-logout-btn:hover { background-color: rgba(255, 90, 95, 0.06); }
+
+/* ================= MAIN DISPLAY WORKSPACE CONSOLE ================= */
+.dashboard-workspace-block {
+    flex-grow: 1; height: 100%; display: flex; flex-direction: column; overflow: hidden;
+}
+
+/* --- THE TOP HEADER NOTIFICATION NAVIGATION PANEL --- */
+.workspace-top-header {
+    height: 70px; width: 100%; background-color: var(--surface-white);
+    border-bottom: 1px solid #E2EBEA; padding: 0 35px;
+    display: flex; justify-content: space-between; align-items: center; flex-shrink: 0; z-index: 50;
+}
+
+.header-left-cluster { display: flex; align-items: center; gap: 16px; }
+.mobile-hamburger-toggle-trigger { display: none; } 
+
+.dashboard-brand-refresh-logo { cursor: pointer; display: flex; align-items: center; }
+.brand-img-tag-logo { height: 32px; width: auto; object-fit: contain; display: block; }
+
+.header-right-cluster { display: flex; align-items: center; gap: 24px; }
+
+/* Notification Bell Module Casing */
+.header-notification-bell-pod {
+    position: relative; color: #4A5856; cursor: pointer; display: flex; align-items: center; justify-content: center; padding: 6px; transition: color 0.15s;
+}
+.header-notification-bell-pod:hover { color: var(--brand-green-base); }
+.notification-indicator-dot-badge {
+    position: absolute; top: 4px; right: 6px; width: 7px; height: 7px; background-color: #FF5A5F; border-radius: 50%; border: 1.5px solid #FFFFFF;
+}
+
+/* Profile Name Greeting Badge info */
+.header-profile-user-card { display: flex; align-items: center; gap: 10px; }
+.avatar-circle-frame {
+    width: 32px; height: 32px; border-radius: 50%; background-color: #EBF5F4; color: var(--brand-green-base); display: flex; align-items: center; justify-content: center;
+}
+.profile-display-name-node { font-size: 1rem; font-weight: 800; color: var(--text-pure-black); text-transform: capitalize; }
+
+/* --- ACTIVE PANE CANVASES --- */
+.workspace-content-pane {
+    flex-grow: 1; padding: 35px; overflow-y: auto; position: relative; width: 100%;
+}
+
+.dashboard-content-panel {
+    background-color: var(--surface-white); border: 1px solid #E2EBEA; border-radius: 20px; padding: 35px; width: 100%; box-shadow: 0 4px 15px rgba(0, 166, 153, 0.01); text-align: left;
+    display: none; opacity: 0; transform: translateY(12px);
+    transition: opacity 0.4s ease, transform 0.4s ease;
+}
+
+.dashboard-content-panel.active-panel { display: block; opacity: 1; transform: translateY(0); }
+
+.panel-section-title-wrapper-card {
+    display: flex; justify-content: space-between; align-items: center; width: 100%; margin-bottom: 20px; border-bottom: 1px dashed #E2EBEA; padding-bottom: 14px;
+}
+.panel-section-title-wrapper-card h2 { font-size: 1.55rem; font-weight: 900; color: var(--text-pure-black); letter-spacing: -0.5px; }
+
+.panel-tag-badge {
+    background-color: #E6F6F5; color: var(--brand-green-base); font-size: 0.8rem; font-weight: 800; padding: 5px 12px; border-radius: 6px; text-transform: uppercase; letter-spacing: 0.5px;
+}
+
+.panel-placeholder-info-text { font-size: 1.02rem; line-height: 1.6; color: var(--text-muted-slate); font-weight: 500; max-width: 780px; }
+
+/* ================= HIGH-PERFORMANCE RESPONSIVE MOBILE HANDLES OVERLAYS ================= */
+@media (max-width: 992px) {
+    .workspace-top-header { padding: 0 20px; }
+    .workspace-content-pane { padding: 20px; }
+    .dashboard-content-panel { padding: 25px 20px; }
+    .panel-section-title-wrapper-card h2 { font-size: 1.35rem; }
+    .panel-placeholder-info-text { font-size: 0.95rem; }
+    
+    .dashboard-sidebar {
+        position: absolute; top: 0; left: 0; height: 100%; width: 260px; transform: translateX(-100%); z-index: 500;
+    }
+    .dashboard-sidebar.mobile-drawer-open { transform: translateX(0); }
+    
+    .mobile-sidebar-close-btn {
+        display: flex; align-items: center; justify-content: center; background: none; border: none; color: #929EB0; cursor: pointer; align-self: flex-end; margin-bottom: 15px; padding: 4px;
+    }
+    .mobile-sidebar-close-btn:hover { color: #FFFFFF; }
+    
+    .mobile-hamburger-toggle-trigger {
+        display: flex; align-items: center; justify-content: center; background: none; border: none; color: #4A5856; cursor: pointer; padding: 4px;
+    }
+    .mobile-hamburger-toggle-trigger:hover { color: var(--brand-green-base); }
+    
+    .mobile-sidebar-blanket {
+        position: absolute; top: 0; left: 0; width: 100vw; height: 100vh; background-color: rgba(26, 28, 35, 0.4); backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px); z-index: 400; display: none; opacity: 0; transition: opacity 0.3s ease;
+    }
+    .mobile-sidebar-blanket.blanket-active { display: block; opacity: 1; }
+}
+
+@media (max-width: 520px) {
+    .panel-section-title-wrapper-card { flex-direction: column; align-items: flex-start; gap: 10px; }
+    .header-profile-user-card .avatar-circle-frame { display: none; } 
+}
+                    </style>
+
+
+<script>
+
+
+document.addEventListener(
+    "DOMContentLoaded",
+    function () {
+
+        /*
+         * Display logged-in email
+         */
+        executeAuthenticationEmailDisplay();
+
+        /*
+         * Initialize mobile sidebar
+         */
+        initializePartnerDashboardInteractions();
+
+        /*
+         * Restore the panel that was active
+         * before the page was refreshed.
+         */
+        restorePartnerDashboardPanel();
+
+    }
+);
+
+
+/* =========================================================
+   2. DISPLAY LOGIN EMAIL IN DASHBOARD HEADER
+========================================================= */
+
+function executeAuthenticationEmailDisplay() {
+
+    const greetingNode =
+        document.getElementById(
+            "headerProfileGreetingName"
+        );
+
+    if (!greetingNode) {
+        return;
+    }
+
+
+    /*
+     * Read email saved by login page
+     */
+
+    const authenticatedEmail =
+        localStorage.getItem(
+            "authenticatedUserEmail"
+        );
+
+
+    /*
+     * Display actual login email
+     */
+
+    if (
+        authenticatedEmail &&
+        authenticatedEmail.trim() !== ""
+    ) {
+
+        greetingNode.textContent =
+            authenticatedEmail.trim();
+
+    } else {
+
+        /*
+         * Fallback
+         */
+
+        greetingNode.textContent =
+            "Educator";
+    }
+
+}
+
+
+/* =========================================================
+   3. PARTNER DASHBOARD PANEL SWITCHER
+========================================================= */
+
+function switchDashboardSection(
+    targetPanelId,
+    selectedMenuButton
+) {
+
+    if (
+        !targetPanelId ||
+        !selectedMenuButton
+    ) {
+        return;
+    }
+
+
+    /* =====================================================
+       HIDE ALL DASHBOARD PANELS
+    ===================================================== */
+
+    const allPanels =
+        document.querySelectorAll(
+            ".workspace-content-pane .dashboard-content-panel"
+        );
+
+
+    allPanels.forEach(
+        function (panel) {
+
+            panel.classList.remove(
+                "active-panel"
+            );
+
+        }
+    );
+
+
+    /* =====================================================
+       REMOVE ACTIVE SIDEBAR BUTTON
+    ===================================================== */
+
+    const allMenuButtons =
+        document.querySelectorAll(
+            ".sidebar-menu-nav .menu-link-node"
+        );
+
+
+    allMenuButtons.forEach(
+        function (button) {
+
+            button.classList.remove(
+                "active"
+            );
+
+        }
+    );
+
+
+    /* =====================================================
+       SHOW SELECTED PANEL
+    ===================================================== */
+
+    const activeChosenPanel =
+        document.getElementById(
+            targetPanelId
+        );
+
+
+    if (activeChosenPanel) {
+
+        activeChosenPanel.classList.add(
+            "active-panel"
+        );
+
+    }
+
+
+    /* =====================================================
+       HIGHLIGHT SELECTED MENU
+    ===================================================== */
+
+    selectedMenuButton.classList.add(
+        "active"
+    );
+
+
+    /* =====================================================
+       SAVE CURRENT PANEL
+       
+       This is the important part.
+       
+       Example:
+       partnerHomePanel
+       ordersPanel
+       profilePanel
+       settingsPanel
+    ===================================================== */
+
+    sessionStorage.setItem(
+        "partner_current_dashboard_panel",
+        targetPanelId
+    );
+
+
+    /* =====================================================
+       CLOSE MOBILE SIDEBAR
+    ===================================================== */
+
+    const sidebarDrawer =
+        document.getElementById(
+            "dashboardSidebar"
+        );
+
+
+    if (
+        sidebarDrawer &&
+        sidebarDrawer.classList.contains(
+            "mobile-drawer-open"
+        )
+    ) {
+
+        toggleMobileSidebar();
+
+    }
+
+}
+
+
+/* =========================================================
+   4. REFRESH DASHBOARD
+   Keeps CURRENT PANEL after logo click
+========================================================= */
+
+function refreshDashboardNatively() {
+
+    /*
+     * Find whichever dashboard panel is currently active.
+     */
+
+    const activePanel =
+        document.querySelector(
+            ".workspace-content-pane .dashboard-content-panel.active-panel"
+        );
+
+
+    /*
+     * Save active panel before refreshing.
+     */
+
+    if (
+        activePanel &&
+        activePanel.id
+    ) {
+
+        sessionStorage.setItem(
+            "partner_return_panel",
+            activePanel.id
+        );
+
+
+        /*
+         * Also update the permanent session
+         * panel state.
+         */
+
+        sessionStorage.setItem(
+            "partner_current_dashboard_panel",
+            activePanel.id
+        );
+
+    }
+
+
+    /*
+     * Refresh current page.
+     */
+
+    window.location.reload();
+
+}
+
+
+/* =========================================================
+   5. RESTORE PANEL AFTER PAGE REFRESH
+========================================================= */
+
+function restorePartnerDashboardPanel() {
+
+    /*
+     * First use the panel saved specifically
+     * for the logo refresh.
+     */
+
+    let savedPanelId =
+        sessionStorage.getItem(
+            "partner_return_panel"
+        );
+
+
+    /*
+     * If no refresh panel exists,
+     * use the last selected dashboard panel.
+     */
+
+    if (!savedPanelId) {
+
+        savedPanelId =
+            sessionStorage.getItem(
+                "partner_current_dashboard_panel"
+            );
+
+    }
+
+
+    /*
+     * Nothing to restore.
+     */
+
+    if (!savedPanelId) {
+        return;
+    }
+
+
+    /*
+     * Find the saved panel.
+     */
+
+    const savedPanel =
+        document.getElementById(
+            savedPanelId
+        );
+
+
+    /*
+     * If panel doesn't exist,
+     * remove invalid state.
+     */
+
+    if (!savedPanel) {
+
+        sessionStorage.removeItem(
+            "partner_return_panel"
+        );
+
+        sessionStorage.removeItem(
+            "partner_current_dashboard_panel"
+        );
+
+        return;
+    }
+
+
+    /* =====================================================
+       REMOVE ACTIVE CLASS FROM ALL PANELS
+    ===================================================== */
+
+    const allPanels =
+        document.querySelectorAll(
+            ".workspace-content-pane .dashboard-content-panel"
+        );
+
+
+    allPanels.forEach(
+        function (panel) {
+
+            panel.classList.remove(
+                "active-panel"
+            );
+
+        }
+    );
+
+
+    /* =====================================================
+       ACTIVATE SAVED PANEL
+    ===================================================== */
+
+    savedPanel.classList.add(
+        "active-panel"
+    );
+
+
+    /* =====================================================
+       RESTORE ACTIVE SIDEBAR MENU
+    ===================================================== */
+
+    const allMenuButtons =
+        document.querySelectorAll(
+            ".sidebar-menu-nav .menu-link-node"
+        );
+
+
+    allMenuButtons.forEach(
+        function (button) {
+
+            button.classList.remove(
+                "active"
+            );
+
+        }
+    );
+
+
+    /*
+     * Find the menu button that points
+     * to the saved panel.
+     *
+     * Supports:
+     *
+     * onclick="switchDashboardSection('panelId', this)"
+     *
+     * and
+     *
+     * onclick="switchDashboardSection("panelId", this)"
+     */
+
+    allMenuButtons.forEach(
+        function (button) {
+
+            const onclickValue =
+                button.getAttribute(
+                    "onclick"
+                );
+
+
+            if (!onclickValue) {
+                return;
+            }
+
+
+            /*
+             * Single quote format
+             */
+
+            if (
+                onclickValue.includes(
+                    "'" + savedPanelId + "'"
+                )
+            ) {
+
+                button.classList.add(
+                    "active"
+                );
+
+            }
+
+
+            /*
+             * Double quote format
+             */
+
+            if (
+                onclickValue.includes(
+                    '"' + savedPanelId + '"'
+                )
+            ) {
+
+                button.classList.add(
+                    "active"
+                );
+
+            }
+
+        }
+    );
+
+
+    /*
+     * Refresh-specific state has now been used.
+     */
+
+    sessionStorage.removeItem(
+        "partner_return_panel"
+    );
+
+}
+
+
+/* =========================================================
+   6. MOBILE SIDEBAR TOGGLE
+========================================================= */
+
+function toggleMobileSidebar() {
+
+    const sidebarDrawer =
+        document.getElementById(
+            "dashboardSidebar"
+        );
+
+
+    const shadingBlanket =
+        document.getElementById(
+            "sidebarBlanket"
+        );
+
+
+    if (
+        !sidebarDrawer ||
+        !shadingBlanket
+    ) {
+
+        return;
+
+    }
+
+
+    /* =====================================================
+       TOGGLE SIDEBAR
+    ===================================================== */
+
+    sidebarDrawer.classList.toggle(
+        "mobile-drawer-open"
+    );
+
+
+    /* =====================================================
+       TOGGLE OVERLAY
+    ===================================================== */
+
+    shadingBlanket.classList.toggle(
+        "blanket-active"
+    );
+
+
+    /* =====================================================
+       PREVENT BACKGROUND SCROLL
+    ===================================================== */
+
+    if (
+        sidebarDrawer.classList.contains(
+            "mobile-drawer-open"
+        )
+    ) {
+
+        document.body.style.overflow =
+            "hidden";
+
+    } else {
+
+        document.body.style.overflow =
+            "";
+
+    }
+
+}
+
+
+/* =========================================================
+   7. MOBILE SIDEBAR / OUTSIDE CLICK
+========================================================= */
+
+function initializePartnerDashboardInteractions() {
+
+    const shadingBlanket =
+        document.getElementById(
+            "sidebarBlanket"
+        );
+
+
+    if (!shadingBlanket) {
+        return;
+    }
+
+
+    shadingBlanket.addEventListener(
+        "click",
+        function () {
+
+            const sidebarDrawer =
+                document.getElementById(
+                    "dashboardSidebar"
+                );
+
+
+            if (
+                sidebarDrawer &&
+                sidebarDrawer.classList.contains(
+                    "mobile-drawer-open"
+                )
+            ) {
+
+                toggleMobileSidebar();
+
+            }
+
+        }
+    );
+
+}
+
+
+/* =========================================================
+   8. SECURE LOGOUT
+========================================================= */
+
+function executeSecureDashboardLogout() {
+
+    /*
+     * Remove login email
+     */
+
+    localStorage.removeItem(
+        "authenticatedUserEmail"
+    );
+
+
+    /*
+     * Remove login role
+     */
+
+    localStorage.removeItem(
+        "authenticatedUserRole"
+    );
+
+
+    /*
+     * IMPORTANT:
+     * Clear partner dashboard panel state.
+     *
+     * This prevents the next login session
+     * from opening the previous user's panel.
+     */
+
+    sessionStorage.removeItem(
+        "partner_return_panel"
+    );
+
+
+    sessionStorage.removeItem(
+        "partner_current_dashboard_panel"
+    );
+
+
+    /*
+     * Close mobile sidebar
+     */
+
+    const sidebarDrawer =
+        document.getElementById(
+            "dashboardSidebar"
+        );
+
+
+    const shadingBlanket =
+        document.getElementById(
+            "sidebarBlanket"
+        );
+
+
+    if (sidebarDrawer) {
+
+        sidebarDrawer.classList.remove(
+            "mobile-drawer-open"
+        );
+
+    }
+
+
+    if (shadingBlanket) {
+
+        shadingBlanket.classList.remove(
+            "blanket-active"
+        );
+
+    }
+
+
+    /*
+     * Restore page scrolling
+     */
+
+    document.body.style.overflow =
+        "";
+
+
+    /*
+     * Return to login page
+     */
+
+    window.location.href =
+        "login.html";
+
+}
+
+
+/* =========================================================
+   9. OPTIONAL LOGIN STATE CHECK
+========================================================= */
+
+function checkPartnerAuthenticationState() {
+
+    const authenticatedEmail =
+        localStorage.getItem(
+            "authenticatedUserEmail"
+        );
+
+
+    if (
+        !authenticatedEmail ||
+        authenticatedEmail.trim() === ""
+    ) {
+
+        /*
+         * Clear saved panel state
+         */
+
+        sessionStorage.removeItem(
+            "partner_return_panel"
+        );
+
+
+        sessionStorage.removeItem(
+            "partner_current_dashboard_panel"
+        );
+
+
+        /*
+         * Redirect to login
+         */
+
+        window.location.href =
+            "login.html";
+
+
+        return false;
+    }
+
+
+    return true;
+
+}
+
+
+/* =========================================================
+   10. RUN AUTHENTICATION CHECK
+========================================================= */
+
+document.addEventListener(
+    "DOMContentLoaded",
+    function () {
+
+        checkPartnerAuthenticationState();
+
+    }
+);
+
+</script>
+
+
+</script>

@@ -1,0 +1,656 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome Back - Stackly</title>
+    <link rel="stylesheet" href="login.css">
+</head>
+<body>
+
+    <div class="login-split-viewport-wrapper">
+        
+        <!-- ================= LEFT HAND SIDE: DOMAIN PROMO CARD PANEL ================= -->
+        <div class="login-promo-left-pane">
+            <div class="promo-inner-content">
+                
+                <span class="promo-mini-badge">
+                    <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11"/></svg>
+                    Certified Childcare
+                </span>
+                
+                <h1 class="promo-main-headline">
+                    Learn Well.<br><span class="highlight-green">Grow Better.</span>
+                </h1>
+                
+                <p class="promo-subtext-para">
+                    Purposefully structured classrooms, play-based milestone foundations, and expert caring environments crafted for early development and unforgettable childhood breakthroughs.
+                </p>
+
+                <div class="promo-team-image-frame">
+                    <img src="./assests/care 3.webp" alt="Stackly Certified Caregivers Team Group" class="promo-team-img">
+                </div>
+            </div>
+        </div>
+
+        <!-- ================= RIGHT HAND SIDE: INTERACTIVE AUTH ENGINE LOGIN PANEL ================= -->
+        <div class="login-engine-right-pane">
+            <div class="engine-inner-content">
+                
+                <!-- Back Link navigation framework mapping back flush to index.html -->
+                <a href="index.html" class="back-home-anchor-link">
+                    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="12" x2="6" y2="12"/><polyline points="12 5 5 12 12 19"/></svg>
+                    Back to Home
+                </a>
+
+                <div class="auth-text-header">
+                    <h2>Welcome Back</h2>
+                    <p>Sign in to manage your child's tracking track, view activities sheets, and account data layers.</p>
+                </div>
+
+                <!-- Core Form Module Engine -->
+                <form class="auth-interactive-form" onsubmit="handleSecureLoginEngine(event)">
+                    
+                    <!-- Role Dropdown Row Selection -->
+                    <div class="auth-input-box">
+                        <label for="loginRole">Login As</label>
+                        <div class="auth-field-icon-shell">
+                            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                            <select id="loginRole">
+                                <option value="" disabled selected>Select account type</option>
+                                <option value="client">Parent / Guardian (Client Dashboard)</option>
+                                <option value="partner">Educator / Caregiver (Partner Dashboard)</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Email Address Field -->
+                    <div class="auth-input-box">
+                        <label for="loginEmail">Email Address</label>
+                        <div class="auth-field-icon-shell">
+                            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.09-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+                            <input type="email" id="loginEmail" placeholder="Enter your email">
+                        </div>
+                    </div>
+
+                    <!-- Password Field With Integrated Interactive Eye Toggle Wrapper -->
+                    <div class="auth-input-box">
+                        <label for="loginPassword">Password</label>
+                        <div class="auth-field-icon-shell">
+                            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" class="input-leading-icon"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+                            
+                            <input type="password" id="loginPassword" placeholder="Enter your password">
+                            
+                            <!-- FIXED EYE TOGGLE ACTION BUTTON MODULE -->
+                            <button type="button" class="eye-visibility-toggle-btn" id="passwordVisibilityTrigger" onclick="togglePasswordMaskVisibility()" aria-label="Toggle password visibility">
+                                <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
+                                    <circle cx="12" cy="12" r="3"/>
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Forgot Password Link Anchor points straight to 404.html -->
+                    <div class="forgot-password-row-wrap">
+                        <a href="404.html" class="forgot-pass-anchor">Forgot Password?</a>
+                    </div>
+
+                    <!-- Dynamic Verification Warning Alert Toast Field -->
+                    <div class="auth-validation-toast-alert" id="authValidationAlert"></div>
+
+                    <!-- Action Submission Trigger Button -->
+                    <button type="submit" class="auth-primary-submit-btn">Sign In</button>
+
+                </form>
+
+                <div class="auth-separator-break-row">
+                    <span>OR CONTINUE WITH</span>
+                </div>
+
+                <!-- Third Party Social Authentication Row Buttons Network Deck -->
+                <div class="social-federated-auth-grid">
+                    <a href="404.html" class="social-fed-btn">
+                        <svg viewBox="0 0 24 24" width="16" height="16" fill="#EA4335"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-3.3 3.28-8.16 3.28-13.09z" fill="#4285F4"/><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z" fill="#FBBC05"/><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/></svg>
+                        Google
+                    </a>
+                    <a href="404.html" class="social-fed-btn">
+                        <svg viewBox="0 0 24 24" width="16" height="16" fill="#1877F2"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+                        Facebook
+                    </a>
+                </div>
+
+                <p class="auth-foot-redirect-prompt">
+                    Don't have an account? <a href="signup.html" class="signup-redirect-anchor">Create Account</a>
+                </p>
+
+            </div>
+        </div>
+
+    </div>
+
+<style>
+    /* --- SITE CONTEXT DESIGN THEME TOKENS --- */
+:root {
+    --brand-green-base: #00A699;  /* Core green background domain color */
+    --brand-green-hover: #00877D;
+    --text-pure-black: #000000;
+    --text-charcoal: #2B2B2B;
+    --text-muted-gray: #657775;
+    --surface-white: #FFFFFF;
+    --input-field-bg: #FAFAFA;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    background-color: #FFFFFF;
+    color: var(--text-charcoal);
+    overflow-x: hidden;
+    width: 100vw; height: 100vh;
+}
+
+/* ================= THE MAIN MASTER SPLIT SCREEN VIEWPORT ================= */
+.login-split-viewport-wrapper {
+    width: 100%; height: 100vh;
+    display: grid;
+    grid-template-columns: 1fr 1fr; 
+    align-items: stretch;
+}
+
+/* ================= LEFT PROFILE VIEWPORT SECTION: CHILDREN PROMO FIELD ================= */
+.login-promo-left-pane {
+    background-color: #F3F9F9;
+    padding: 60px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
+
+.promo-inner-content { max-width: 500px; width: 100%; text-align: left; }
+
+.promo-mini-badge {
+    background-color: #E6F6F5; color: var(--brand-green-base);
+    font-size: 0.82rem; font-weight: 800; padding: 6px 14px; border-radius: 30px;
+    display: inline-flex; align-items: center; gap: 6px; margin-bottom: 20px;
+    text-transform: uppercase; letter-spacing: 0.5px;
+}
+
+.promo-main-headline { font-size: 3.2rem; font-weight: 900; line-height: 1.15; color: var(--text-pure-black); letter-spacing: -1.5px; margin-bottom: 20px; }
+.promo-main-headline .highlight-green { color: var(--brand-green-base); }
+.promo-subtext-para { font-size: 1.05rem; line-height: 1.6; color: #4A5453; margin-bottom: 35px; font-weight: 500; }
+
+.promo-team-image-frame { width: 100%; aspect-ratio: 1.55 / 1; border-radius: 20px; overflow: hidden; box-shadow: 0 15px 35px rgba(0, 166, 153, 0.05); background-color: #E2EBEA; }
+.promo-team-img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+/* ================= RIGHT PROFILE VIEWPORT SECTION: INPUT PANEL ================= */
+.login-engine-right-pane {
+    background-color: var(--surface-white);
+    padding: 60px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
+
+.engine-inner-content { max-width: 440px; width: 100%; display: flex; flex-direction: column; }
+
+.back-home-anchor-link {
+    position: absolute; top: 40px; left: 60px;
+    font-size: 0.95rem; font-weight: 700; color: var(--brand-green-base); text-decoration: none;
+    display: inline-flex; align-items: center; gap: 8px; transition: color 0.2s, transform 0.2s;
+}
+.back-home-anchor-link:hover { color: var(--brand-green-hover); transform: translateX(-3px); }
+
+.auth-text-header { text-align: left; margin-bottom: 30px; margin-top: 20px; }
+.auth-text-header h2 { font-size: 2.2rem; font-weight: 900; color: var(--text-pure-black); letter-spacing: -0.5px; margin-bottom: 10px; }
+.auth-text-header p { font-size: 0.98rem; line-height: 1.5; color: var(--text-muted-gray); font-weight: 500; }
+
+/* --- CORE INTERACTIVE INPUT FIELDS --- */
+.auth-interactive-form { display: flex; flex-direction: column; gap: 18px; width: 100%; }
+
+.auth-input-box { display: flex; flex-direction: column; text-align: left; gap: 8px; width: 100%; }
+.auth-input-box label { font-size: 0.85rem; font-weight: 800; color: var(--text-charcoal); letter-spacing: 0.3px; text-transform: uppercase; }
+
+.auth-field-icon-shell {
+    position: relative; width: 100%; display: flex; align-items: center;
+    background-color: var(--input-field-bg); border: 1px solid #DCEBE9; border-radius: 12px;
+    color: #617876; transition: border-color 0.2s, box-shadow 0.2s;
+}
+.auth-field-icon-shell svg:not(.eye-visibility-toggle-btn svg) { position: absolute; left: 16px; pointer-events: none; flex-shrink: 0; }
+.input-leading-icon { position: absolute; left: 16px; color: #617876; pointer-events: none; }
+
+.auth-field-icon-shell input, .auth-field-icon-shell select {
+    width: 100%; padding: 14px 46px 14px 44px; font-size: 0.95rem; background: none; border: none; font-family: inherit; color: var(--text-pure-black); -webkit-appearance: none; appearance: none;
+}
+.auth-field-icon-shell select {
+    cursor: pointer; background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://w3.org' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%23617876' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'><polyline points='6 9 12 15 18 9'></polyline></svg>");
+    background-repeat: no-repeat; background-position: right 16px center; background-size: 14px;
+}
+.auth-field-icon-shell input:focus, .auth-field-icon-shell select:focus { outline: none; }
+.auth-field-icon-shell:focus-within { border-color: var(--brand-green-base); box-shadow: 0 0 0 4px rgba(0, 166, 153, 0.08); }
+
+/* FIXED RE-POSITIONING: Inside input borders tracking perfectly flush */
+.eye-visibility-toggle-btn {
+    position: absolute; right: 16px;
+    background: none; border: none; color: #A0AEC1;
+    cursor: pointer; display: flex; align-items: center; justify-content: center; padding: 4px; transition: color 0.15s ease;
+}
+.eye-visibility-toggle-btn:hover { color: var(--brand-green-base); }
+
+.forgot-password-row-wrap { width: 100%; display: flex; justify-content: flex-end; margin-top: -4px; }
+.forgot-pass-anchor { font-size: 0.88rem; font-weight: 700; color: var(--brand-green-base); text-decoration: none; }
+.forgot-pass-anchor:hover { text-underline-offset: 3px; text-decoration: underline; }
+
+.auth-validation-toast-alert {
+    width: 100%; font-size: 0.88rem; font-weight: 700; color: var(--primary-coral);
+    background-color: #FFF2F3; border: 1px dashed rgba(255, 90, 95, 0.3); border-radius: 12px; padding: 12px 16px; text-align: left; display: none;
+}
+
+.auth-primary-submit-btn {
+    background-color: var(--brand-green-base); color: #FFFFFF; border: none; padding: 15px 32px; font-size: 1rem; font-weight: 800; border-radius: 12px;
+    cursor: pointer; width: 100%; box-shadow: 0 5px 15px rgba(0, 166, 153, 0.2); transition: background-color 0.2s, transform 0.2s; text-align: center; margin-top: 5px;
+}
+.auth-primary-submit-btn:hover { background-color: var(--brand-green-hover); transform: translateY(-2px); }
+
+/* --- OR BREAK SEPARATOR --- */
+.auth-separator-break-row { width: 100%; text-align: center; position: relative; margin: 25px 0 20px 0; display: flex; align-items: center; justify-content: center; }
+.auth-separator-break-row::before { content: ''; position: absolute; left: 0; width: 100%; height: 1px; background-color: #E2EBE9; z-index: 1; }
+.auth-separator-break-row span { position: relative; z-index: 5; background-color: #FFFFFF; padding: 0 14px; font-size: 0.78rem; font-weight: 800; color: var(--text-muted-gray); letter-spacing: 0.5px; }
+
+/* --- FEDERATED SOCIAL AUTH --- */
+.social-federated-auth-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; width: 100%; margin-bottom: 25px; }
+.social-fed-btn { background-color: #FFFFFF; border: 1px solid #DCEBE9; border-radius: 12px; padding: 12px 16px; font-size: 0.95rem; font-weight: 700; color: var(--text-charcoal); text-decoration: none; display: flex; align-items: center; justify-content: center; gap: 10px; transition: background-color 0.2s, border-color 0.2s; }
+.social-fed-btn:hover { background-color: #FAFAFA; border-color: #BCD3D1; }
+
+.auth-foot-redirect-prompt { font-size: 0.95rem; font-weight: 600; color: var(--text-muted-gray); text-align: center; }
+.signup-redirect-anchor { color: var(--brand-green-base); text-decoration: none; font-weight: 800; }
+.signup-redirect-anchor:hover { text-underline-offset: 3px; text-decoration: underline; }
+
+/* ================= ADAPTIVE RESPONSIVE COMPACT MEDIA OVERLAYS ================= */
+@media (max-width: 992px) {
+    .login-split-viewport-wrapper { grid-template-columns: 1fr; height: auto; }
+    .login-promo-left-pane { padding: 45px 24px; order: 2; }
+    .login-engine-right-pane { padding: 80px 24px 45px 24px; order: 1; }
+    .back-home-anchor-link { top: 30px; left: 24px; }
+    .promo-main-headline { font-size: 2.4rem; text-align: center; }
+    .promo-inner-content { display: flex; flex-direction: column; align-items: center; text-align: center; }
+}
+@media (max-width: 480px) {
+    .auth-text-header h2 { font-size: 1.85rem; }
+    .social-federated-auth-grid { grid-template-columns: 1fr; gap: 12px; }
+}
+
+</style>
+
+<script>
+/* =========================================================
+   LOGIN PAGE SCRIPT
+========================================================= */
+
+
+/* =========================================================
+   1. PASSWORD VISIBILITY TOGGLE
+========================================================= */
+
+function togglePasswordMaskVisibility() {
+
+    const passwordInput =
+        document.getElementById("loginPassword");
+
+    const toggleButton =
+        document.getElementById("passwordVisibilityTrigger");
+
+    if (!passwordInput || !toggleButton) return;
+
+    if (passwordInput.type === "password") {
+
+        passwordInput.type = "text";
+
+        toggleButton.innerHTML = `
+            <svg viewBox="0 0 24 24"
+                 width="18"
+                 height="18"
+                 fill="none"
+                 stroke="currentColor"
+                 stroke-width="2.5"
+                 stroke-linecap="round"
+                 stroke-linejoin="round">
+
+                <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20
+                         c-7 0-11-8-11-8
+                         a18.45 18.45 0 0 1 5.06-5.94
+                         M9.9 4.24A9.12 9.12 0 0 1 12 4
+                         c7 0 11 8 11 8
+                         a18.5 18.5 0 0 1-2.16 3.19
+                         m-6.72-1.07
+                         a3 3 0 1 1-4.24-4.24"/>
+
+                <line x1="1" y1="1" x2="23" y2="23"/>
+            </svg>
+        `;
+
+    } else {
+
+        passwordInput.type = "password";
+
+        toggleButton.innerHTML = `
+            <svg viewBox="0 0 24 24"
+                 width="18"
+                 height="18"
+                 fill="none"
+                 stroke="currentColor"
+                 stroke-width="2.5"
+                 stroke-linecap="round"
+                 stroke-linejoin="round">
+
+                <path d="M1 12s4-8 11-8
+                         11 8 11 8
+                         -4 8-11 8
+                         -11-8-11-8z"/>
+
+                <circle cx="12" cy="12" r="3"/>
+            </svg>
+        `;
+    }
+}
+
+
+/* =========================================================
+   2. LOGIN FORM HANDLER
+========================================================= */
+
+function handleSecureLoginEngine(event) {
+
+    event.preventDefault();
+
+    const roleSelect =
+        document.getElementById("loginRole");
+
+    const emailInput =
+        document.getElementById("loginEmail");
+
+    const passwordInput =
+        document.getElementById("loginPassword");
+
+    const validationAlertToast =
+        document.getElementById("authValidationAlert");
+
+    if (
+        !roleSelect ||
+        !emailInput ||
+        !passwordInput ||
+        !validationAlertToast
+    ) {
+        return;
+    }
+
+
+    /* =====================================================
+       GET FORM VALUES
+    ===================================================== */
+
+    const roleValue =
+        roleSelect.value.trim();
+
+    const emailValue =
+        emailInput.value.trim();
+
+    const passwordValue =
+        passwordInput.value.trim();
+
+
+    /* =====================================================
+       REQUIRED FIELD VALIDATION
+    ===================================================== */
+
+    if (
+        roleValue === "" ||
+        emailValue === "" ||
+        passwordValue === ""
+    ) {
+
+        validationAlertToast.textContent =
+            "Please fill in all the required form fields before signing in.";
+
+        validationAlertToast.style.display =
+            "block";
+
+        highlightAuthErrorBorders([
+            roleSelect,
+            emailInput,
+            passwordInput
+        ]);
+
+        return;
+    }
+
+
+    /* =====================================================
+       EMAIL VALIDATION
+    ===================================================== */
+
+    const formalEmailRegex =
+        /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+    if (!formalEmailRegex.test(emailValue)) {
+
+        validationAlertToast.textContent =
+            "Please enter a valid electronic email address format.";
+
+        validationAlertToast.style.display =
+            "block";
+
+        if (emailInput.parentElement) {
+            emailInput.parentElement.style.borderColor =
+                "#FF5A5F";
+        }
+
+        emailInput.focus();
+
+        return;
+    }
+
+
+    /* =====================================================
+       CLEAR VALIDATION
+    ===================================================== */
+
+    validationAlertToast.style.display =
+        "none";
+
+    clearAuthErrorBorders([
+        roleSelect,
+        emailInput,
+        passwordInput
+    ]);
+
+
+    /* =====================================================
+       SAVE LOGIN EMAIL
+       
+       THIS IS THE IMPORTANT PART.
+       
+       Whatever email the user enters on the login page
+       will be stored and displayed in the dashboard.
+       
+       Example:
+       
+       test@gmail.com
+       
+       becomes:
+       
+       authenticatedUserEmail = test@gmail.com
+    ===================================================== */
+
+    localStorage.setItem(
+        "authenticatedUserEmail",
+        emailValue
+    );
+
+
+    /* =====================================================
+       SAVE LOGIN ROLE
+    ===================================================== */
+
+    localStorage.setItem(
+        "authenticatedUserRole",
+        roleValue
+    );
+
+
+    /* =====================================================
+       REDIRECT TO DASHBOARD
+    ===================================================== */
+
+    if (roleValue === "partner") {
+
+        window.location.href =
+            "partner-dashboard.html";
+
+    } else if (roleValue === "client") {
+
+        window.location.href =
+            "client-dashboard.html";
+
+    } else {
+
+        validationAlertToast.textContent =
+            "Please select a valid login role.";
+
+        validationAlertToast.style.display =
+            "block";
+    }
+}
+
+
+/* =========================================================
+   3. HIGHLIGHT ERROR BORDERS
+========================================================= */
+
+function highlightAuthErrorBorders(inputsList) {
+
+    inputsList.forEach(field => {
+
+        if (!field) return;
+
+        if (field.value.trim() === "") {
+
+            if (field.parentElement) {
+
+                field.parentElement.style.borderColor =
+                    "#FF5A5F";
+            }
+
+        } else {
+
+            if (field.parentElement) {
+
+                field.parentElement.style.borderColor =
+                    "";
+            }
+        }
+    });
+}
+
+
+/* =========================================================
+   4. CLEAR ERROR BORDERS
+========================================================= */
+
+function clearAuthErrorBorders(inputsList) {
+
+    inputsList.forEach(field => {
+
+        if (!field) return;
+
+        if (field.parentElement) {
+
+            field.parentElement.style.borderColor =
+                "";
+        }
+    });
+}
+
+
+/* =========================================================
+   5. CLEAR ERROR MESSAGE WHILE TYPING
+========================================================= */
+
+document.addEventListener(
+    "DOMContentLoaded",
+    function () {
+
+        const emailInput =
+            document.getElementById("loginEmail");
+
+        const passwordInput =
+            document.getElementById("loginPassword");
+
+        const roleSelect =
+            document.getElementById("loginRole");
+
+        const validationAlertToast =
+            document.getElementById(
+                "authValidationAlert"
+            );
+
+
+        const fields = [
+            emailInput,
+            passwordInput,
+            roleSelect
+        ];
+
+
+        fields.forEach(field => {
+
+            if (!field) return;
+
+
+            field.addEventListener(
+                "input",
+                function () {
+
+                    if (this.parentElement) {
+
+                        this.parentElement.style.borderColor =
+                            "";
+                    }
+
+                    if (validationAlertToast) {
+
+                        validationAlertToast.style.display =
+                            "none";
+                    }
+                }
+            );
+
+
+            field.addEventListener(
+                "change",
+                function () {
+
+                    if (this.parentElement) {
+
+                        this.parentElement.style.borderColor =
+                            "";
+                    }
+
+                    if (validationAlertToast) {
+
+                        validationAlertToast.style.display =
+                            "none";
+                    }
+                }
+            );
+        });
+    }
+);
+</script>
+</body>
+</html>
