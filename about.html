@@ -139,20 +139,30 @@ function initiatePreloader() {
         </div>
 
         <!-- Centered Navigation Menu Layout -->
-        <nav class="nav-menu" id="navMenu">
-            <a href="index.html" class="nav-item ">Home</a>
-            <a href="programs.html" class="nav-item">Programs</a>
-            <a href="about.html" class="nav-item active">About Us</a>
-            <a href="blogs.html" class="nav-item">Blogs</a>
-            <a href="contact.html" class="nav-item">Contact</a>
-        </nav>
+       <!-- Centered Navigation Menu Layout -->
+<nav class="nav-menu" id="navMenu">
 
-        <!-- Right-Aligned Authentication Action Element -->
-        <div class="auth-actions">
-          <!-- UPDATED NAVIGATION ROUTER BUTTON -->
-<button class="auth-btn" onclick="window.location.href='login.html'">Parent Portal</button>
+    <a href="index.html" class="nav-item ">Home</a>
+    <a href="programs.html" class="nav-item">Programs</a>
+    <a href="about.html" class="nav-item active">About Us</a>
+    <a href="blogs.html" class="nav-item">Blogs</a>
+    <a href="contact.html" class="nav-item">Contact</a>
 
-        </div>
+    <!-- Mobile Parent Portal -->
+    <div class="mobile-auth-action">
+        <button class="auth-btn" onclick="window.location.href='login.html'">
+            Parent Portal
+        </button>
+    </div>
+
+</nav>
+
+<!-- Desktop Authentication -->
+<div class="auth-actions">
+    <button class="auth-btn" onclick="window.location.href='login.html'">
+        Parent Portal
+    </button>
+</div>
         
     </div>
 </header>
@@ -1019,40 +1029,7 @@ function initAboutSentenceScrollReveal() {
 
 </style>
 
-<script>
-    /**
- * Stackly Childcare Website - Dynamic Bento Grid Automatic Swapping Engine
- */
-document.addEventListener("DOMContentLoaded", () => {
-    initBento2SecondShuffleEngine();
-});
 
-function initBento2SecondShuffleEngine() {
-    const cells = document.querySelectorAll(".gallery-bento-mosaic .bento-cell");
-    if (cells.length === 0) return;
-
-    setInterval(() => {
-        cells.forEach(cell => {
-            const photos = cell.querySelectorAll(".bento-shuffled-photo");
-            if (photos.length < 2) return;
-
-            let activeIndex = -1;
-            photos.forEach((photo, idx) => {
-                if (photo.classList.contains("active")) {
-                    activeIndex = idx;
-                }
-            });
-
-            if (activeIndex !== -1) {
-                photos[activeIndex].classList.remove("active");
-                const nextIndex = (activeIndex + 1) % photos.length;
-                photos[nextIndex].add("active");
-            }
-        });
-    }, 2000);
-}
-
-</script>
 
 <!-- DYNAMIC PLAYFUL PROGRAMS SECTIONS GRID -->
 <section class="programs-grid-section" id="curriculum-programs">

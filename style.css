@@ -498,3 +498,232 @@ body.mobile-menu-open {
     }
 }
 
+/* =========================================================
+   MOBILE PARENT PORTAL
+========================================================= */
+
+.mobile-auth-action {
+    display: none;
+}
+
+
+/* =========================================================
+   TABLET / MOBILE
+========================================================= */
+
+@media (max-width: 992px) {
+
+    .floating-header {
+        top: 10px;
+        width: 95%;
+        height: 70px;
+        --header-height: 70px;
+    }
+
+    .hamburger-menu {
+        display: flex;
+    }
+
+
+    /* Mobile Navigation Drawer */
+    .nav-menu {
+        position: absolute;
+        top: -500px;
+        left: 0;
+        width: 100%;
+
+        background-color: #FFFFFF;
+
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+
+        border-radius: 0 0 20px 20px;
+
+        flex-direction: column;
+        gap: 0;
+
+        padding: 20px 0;
+
+        transition:
+            top 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+
+        z-index: 1001 !important;
+    }
+
+
+    /* Open menu */
+    .nav-menu.active {
+        top: 68px;
+    }
+
+
+    /* Navigation items */
+    .nav-item {
+        width: 100%;
+        text-align: center;
+
+        padding: 15px 0;
+
+        border-bottom: 1px solid #F5F5F5;
+    }
+
+
+    .nav-item::after {
+        display: none;
+    }
+
+
+    /* Hide desktop Parent Portal */
+    .auth-actions {
+        display: none;
+    }
+
+
+    /* =====================================================
+       SHOW PARENT PORTAL INSIDE MOBILE MENU
+    ===================================================== */
+
+    .mobile-auth-action {
+        display: flex;
+
+        justify-content: center;
+        align-items: center;
+
+        width: 100%;
+
+        padding: 18px 20px 10px;
+    }
+
+
+    .mobile-auth-action .auth-btn {
+        width: 90%;
+        max-width: 280px;
+
+        padding: 13px 24px;
+
+        border-radius: 14px;
+
+        font-size: 0.95rem;
+    }
+
+
+    /* =====================================================
+       HAMBURGER → CLOSE ICON
+    ===================================================== */
+
+    .hamburger-menu.active .bar:nth-child(1) {
+        transform: translateY(9px) rotate(45deg);
+    }
+
+    .hamburger-menu.active .bar:nth-child(2) {
+        opacity: 0;
+    }
+
+    .hamburger-menu.active .bar:nth-child(3) {
+        transform: translateY(-9px) rotate(-45deg);
+    }
+}
+
+/* =========================================================
+   FINAL MOBILE ACTIVE NAVIGATION FIX
+   ========================================================= */
+
+@media (max-width: 992px) {
+
+    /* Navigation item */
+    .nav-menu .nav-item {
+        width: 100% !important;
+        position: relative !important;
+
+        text-align: center !important;
+
+        padding: 15px 20px !important;
+
+        color: var(--text-main) !important;
+
+        background-color: transparent !important;
+
+        font-weight: 600 !important;
+
+        border-bottom: 1px solid #F5F5F5 !important;
+
+        transition:
+            color 0.3s ease,
+            background-color 0.3s ease !important;
+    }
+
+
+    /* =====================================================
+       ACTIVE MENU
+       ===================================================== */
+
+    .nav-menu .nav-item.active {
+        color: var(--primary-color) !important;
+
+        background-color: rgba(255, 90, 95, 0.10) !important;
+
+        font-weight: 700 !important;
+    }
+
+
+    /* =====================================================
+       ACTIVE UNDERLINE
+       Overrides your display:none
+       ===================================================== */
+
+    .nav-menu .nav-item::after {
+        content: "" !important;
+
+        display: block !important;
+
+        position: absolute !important;
+
+        left: 15% !important;
+
+        bottom: 0 !important;
+
+        width: 0 !important;
+
+        height: 3px !important;
+
+        background-color: var(--secondary-color) !important;
+
+        border-radius: 10px !important;
+
+        transition: width 0.3s ease !important;
+    }
+
+
+    /* Active underline */
+    .nav-menu .nav-item.active::after {
+        width: 70% !important;
+    }
+
+
+    /* Hover */
+    .nav-menu .nav-item:hover {
+        color: var(--primary-color) !important;
+
+        background-color: rgba(255, 90, 95, 0.05) !important;
+    }
+
+
+    .nav-menu .nav-item:hover::after {
+        width: 70% !important;
+    }
+}
+
+
+/* =========================================================
+   DESKTOP ACTIVE NAVIGATION
+   ========================================================= */
+
+@media (min-width: 993px) {
+
+    .nav-menu .nav-item.active {
+        color: var(--primary-color) !important;
+    }
+
+    .nav-menu .nav-item.active::after {
+        width: 100% !important;
+    }
+}

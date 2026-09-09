@@ -139,20 +139,30 @@ function initiatePreloader() {
         </div>
 
         <!-- Centered Navigation Menu Layout -->
-        <nav class="nav-menu" id="navMenu">
-            <a href="index.html" class="nav-item ">Home</a>
-            <a href="programs.html" class="nav-item">Programs</a>
-            <a href="about.html" class="nav-item">About Us</a>
-            <a href="blogs.html" class="nav-item">Blogs</a>
-            <a href="contact.html" class="nav-item active">Contact</a>
-        </nav>
+        <!-- Centered Navigation Menu Layout -->
+<nav class="nav-menu" id="navMenu">
 
-        <!-- Right-Aligned Authentication Action Element -->
-        <div class="auth-actions">
-    <!-- UPDATED NAVIGATION ROUTER BUTTON -->
-<button class="auth-btn" onclick="window.location.href='login.html'">Parent Portal</button>
+    <a href="index.html" class="nav-item ">Home</a>
+    <a href="programs.html" class="nav-item">Programs</a>
+    <a href="about.html" class="nav-item">About Us</a>
+    <a href="blogs.html" class="nav-item">Blogs</a>
+    <a href="contact.html" class="nav-item active">Contact</a>
 
-        </div>
+    <!-- Mobile Parent Portal -->
+    <div class="mobile-auth-action">
+        <button class="auth-btn" onclick="window.location.href='login.html'">
+            Parent Portal
+        </button>
+    </div>
+
+</nav>
+
+<!-- Desktop Authentication -->
+<div class="auth-actions">
+    <button class="auth-btn" onclick="window.location.href='login.html'">
+        Parent Portal
+    </button>
+</div>
         
     </div>
 </header>
