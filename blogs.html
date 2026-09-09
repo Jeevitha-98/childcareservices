@@ -127,7 +127,7 @@ function initiatePreloader() {
         
         <!-- Brand Logo (Refreshes Page on Click) -->
         <div class="logo-wrapper" onclick="refreshPage()">
-            <img src="https://placehold.co" alt="Stackly Logo" class="brand-img">
+            <img src="./assests/childcare logo.webp" alt="Stackly Logo" class="brand-img">
         </div>
 
         <!-- Mobile Hamburger Menu Icon Toggle -->
@@ -142,7 +142,7 @@ function initiatePreloader() {
             <a href="index.html" class="nav-item ">Home</a>
             <a href="programs.html" class="nav-item">Programs</a>
             <a href="about.html" class="nav-item">About Us</a>
-            <a href="blogs.html" class="nav-item active">Our Team</a>
+            <a href="blogs.html" class="nav-item active">Blogs</a>
             <a href="contact.html" class="nav-item">Contact</a>
         </nav>
 
@@ -156,30 +156,363 @@ function initiatePreloader() {
     </div>
 </header>
 
+<div id="mobileMenuBackdrop" class="mobile-menu-backdrop"></div>
+
+
+
+
 <script>
-    // --- LOGO PAGE REFRESH FUNCTION ---
+/* =========================================================
+   HEADER + MOBILE HAMBURGER MENU
+   ========================================================= */
+
+let savedScrollPosition = 0;
+
+
+/* =========================================================
+   REFRESH PAGE
+   ========================================================= */
+
 function refreshPage() {
     window.location.reload();
 }
 
-// --- HAMBURGER MENU DRAWER INTERACTION ---
+
+/* =========================================================
+   TOGGLE MOBILE MENU
+   ========================================================= */
+
 function toggleMobileMenu() {
-    const hamburger = document.getElementById('hamburgerToggle');
-    const navMenu = document.getElementById('navMenu');
-    
-    hamburger.classList.toggle('active');
-    navMenu.classList.toggle('active');
+
+    const hamburger = document.getElementById("hamburgerToggle");
+    const navMenu = document.getElementById("navMenu");
+    const backdrop = document.getElementById("mobileMenuBackdrop");
+
+    if (!hamburger || !navMenu) {
+        return;
+    }
+
+    const isMenuOpen = navMenu.classList.contains("active");
+
+
+    /* =====================================================
+       OPEN MENU
+       ===================================================== */
+
+    if (!isMenuOpen) {
+
+        /* Save current scroll position */
+        savedScrollPosition =
+            window.scrollY ||
+            window.pageYOffset ||
+            document.documentElement.scrollTop ||
+            0;
+
+
+        /* Fix body at current scroll position */
+        document.body.style.top =
+            "-" + savedScrollPosition + "px";
+
+
+        /* Open hamburger */
+        hamburger.classList.add("active");
+
+
+        /* Open navigation */
+        navMenu.classList.add("active");
+
+
+        /* Show blurred background */
+        if (backdrop) {
+            backdrop.classList.add("active");
+        }
+
+
+        /* Lock HTML scrolling */
+        document.documentElement.classList.add(
+            "mobile-menu-open"
+        );
+
+
+        /* Lock BODY scrolling */
+        document.body.classList.add(
+            "mobile-menu-open"
+        );
+
+    }
+
+
+    /* =====================================================
+       CLOSE MENU
+       ===================================================== */
+
+    else {
+
+        closeMobileMenu();
+
+    }
 }
 
-// Automatically close responsive drawer if any nav link is selected
-document.querySelectorAll('.nav-item').forEach(item => {
-    item.addEventListener('click', () => {
-        document.getElementById('hamburgerToggle').classList.remove('active');
-        document.getElementById('navMenu').classList.remove('active');
-    });
-});
 
+/* =========================================================
+   CLOSE MOBILE MENU
+   ========================================================= */
+
+function closeMobileMenu() {
+
+    const hamburger =
+        document.getElementById("hamburgerToggle");
+
+    const navMenu =
+        document.getElementById("navMenu");
+
+    const backdrop =
+        document.getElementById("mobileMenuBackdrop");
+
+
+    if (!hamburger || !navMenu) {
+        return;
+    }
+
+
+    /* Close hamburger */
+    hamburger.classList.remove("active");
+
+
+    /* Close navigation */
+    navMenu.classList.remove("active");
+
+
+    /* Hide backdrop */
+    if (backdrop) {
+        backdrop.classList.remove("active");
+    }
+
+
+    /* Unlock HTML */
+    document.documentElement.classList.remove(
+        "mobile-menu-open"
+    );
+
+
+    /* Unlock BODY */
+    document.body.classList.remove(
+        "mobile-menu-open"
+    );
+
+
+    /* Remove fixed positioning */
+    document.body.style.top = "";
+
+
+    /* Restore previous scroll position */
+    window.scrollTo(
+        0,
+        savedScrollPosition
+    );
+}
+
+
+/* =========================================================
+   DOM READY
+   ========================================================= */
+
+document.addEventListener(
+    "DOMContentLoaded",
+    function () {
+
+
+        /* ================================================
+           NAVIGATION CLICK
+           ================================================ */
+
+        const navItems =
+            document.querySelectorAll(".nav-item");
+
+
+        navItems.forEach(function (item) {
+
+            item.addEventListener(
+                "click",
+                function () {
+
+                    closeMobileMenu();
+
+                }
+            );
+
+        });
+
+
+        /* ================================================
+           BACKDROP CLICK
+           ================================================ */
+
+        const backdrop =
+            document.getElementById(
+                "mobileMenuBackdrop"
+            );
+
+
+        if (backdrop) {
+
+            backdrop.addEventListener(
+                "click",
+                function () {
+
+                    closeMobileMenu();
+
+                }
+            );
+
+        }
+
+
+        /* ================================================
+           ESC KEY
+           ================================================ */
+
+        document.addEventListener(
+            "keydown",
+            function (event) {
+
+                if (event.key === "Escape") {
+
+                    const navMenu =
+                        document.getElementById(
+                            "navMenu"
+                        );
+
+
+                    if (
+                        navMenu &&
+                        navMenu.classList.contains(
+                            "active"
+                        )
+                    ) {
+
+                        closeMobileMenu();
+
+                    }
+
+                }
+
+            }
+        );
+
+
+        /* ================================================
+           WINDOW RESIZE
+           Close mobile menu when switching to desktop
+           ================================================ */
+
+        window.addEventListener(
+            "resize",
+            function () {
+
+                if (window.innerWidth > 992) {
+
+                    const navMenu =
+                        document.getElementById(
+                            "navMenu"
+                        );
+
+
+                    if (
+                        navMenu &&
+                        navMenu.classList.contains(
+                            "active"
+                        )
+                    ) {
+
+                        closeMobileMenu();
+
+                    }
+
+                }
+
+            }
+        );
+
+    }
+);
+
+
+/* =========================================================
+   PREVENT TOUCH SCROLL OUTSIDE MENU
+   ========================================================= */
+
+document.addEventListener(
+    "touchmove",
+    function (event) {
+
+        const navMenu =
+            document.getElementById("navMenu");
+
+
+        if (
+            navMenu &&
+            navMenu.classList.contains("active")
+        ) {
+
+            /*
+             * Prevent background page from scrolling.
+             * Allow touch movement inside navigation.
+             */
+
+            if (!navMenu.contains(event.target)) {
+
+                event.preventDefault();
+
+            }
+
+        }
+
+    },
+    {
+        passive: false
+    }
+);
+
+
+/* =========================================================
+   PREVENT MOUSE WHEEL SCROLL OUTSIDE MENU
+   ========================================================= */
+
+document.addEventListener(
+    "wheel",
+    function (event) {
+
+        const navMenu =
+            document.getElementById("navMenu");
+
+
+        if (
+            navMenu &&
+            navMenu.classList.contains("active")
+        ) {
+
+            /*
+             * Prevent background page from scrolling.
+             * Allow wheel movement inside navigation.
+             */
+
+            if (!navMenu.contains(event.target)) {
+
+                event.preventDefault();
+
+            }
+
+        }
+
+    },
+    {
+        passive: false
+    }
+);
 </script>
+
+
 
 
 <!-- FRESH FULL-WIDTH BLOG HERO PROFILE BANNER -->
@@ -201,8 +534,17 @@ document.querySelectorAll('.nav-item').forEach(item => {
             
             <!-- Dual Interactive Floating Action Buttons -->
             <div class="blog-hero-actions">
-                <button class="blog-hero-btn primary-blog-cta float-action-node-1">Explore Articles ✨</button>
-                <button class="blog-hero-btn secondary-blog-cta float-action-node-2">Subscribe Now ➔</button>
+        <button
+    class="blog-hero-btn primary-blog-cta float-action-node-1"
+    onclick="window.location.href='404.html'">
+    Explore Articles ✨
+</button>
+
+<button
+    class="blog-hero-btn secondary-blog-cta float-action-node-2"
+    onclick="window.location.href='404.html'">
+    Subscribe Now ➔
+</button>
             </div>
         </div>
 
@@ -402,7 +744,7 @@ document.querySelectorAll('.nav-item').forEach(item => {
 
 /* ================= COMPREHENSIVE HIGH-UTILITY RESPONSIVE INTERFACE ================= */
 @media (max-width: 1024px) {
-    .blog-hero-section { padding-top: 30px !important; }
+    .blog-hero-section { padding-top: 130px !important; }
     .blog-hero-container {
         grid-template-columns: 1fr;
         gap: 50px;
@@ -1105,7 +1447,11 @@ function initShowcaseScrollReveal() {
 
         <!-- Right Side: Action Trigger CTA Hook -->
         <div class="banner-action-column">
-            <button class="banner-cta-trigger interactive-float-node">Schedule a Tour ✨</button>
+         <button
+    class="banner-cta-trigger interactive-float-node"
+    onclick="window.location.href='404.html'">
+    Schedule a Tour ✨
+</button>
         </div>
 
     </div>
@@ -1588,7 +1934,11 @@ function initBentoMosaicScrollReveal() {
 
         <!-- Right Side: Action Trigger CTA Button -->
         <div class="single-banner-action-wrap">
-            <button class="single-banner-btn horizontal-float-node">Enroll Today ✨</button>
+      <button
+    class="single-banner-btn horizontal-float-node"
+    onclick="window.location.href='404.html'">
+    Enroll Today ✨
+</button>
         </div>
 
     </div>

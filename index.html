@@ -143,7 +143,7 @@ function initiatePreloader() {
             <a href="index.html" class="nav-item active">Home</a>
             <a href="programs.html" class="nav-item">Programs</a>
             <a href="about.html" class="nav-item">About Us</a>
-            <a href="blogs.html" class="nav-item">Our Team</a>
+            <a href="blogs.html" class="nav-item">Blogs</a>
             <a href="contact.html" class="nav-item">Contact</a>
         </nav>
 
@@ -157,30 +157,364 @@ function initiatePreloader() {
     </div>
 </header>
 
+
+<div id="mobileMenuBackdrop" class="mobile-menu-backdrop"></div>
+
+
+
+
 <script>
-    // --- LOGO PAGE REFRESH FUNCTION ---
+/* =========================================================
+   HEADER + MOBILE HAMBURGER MENU
+   ========================================================= */
+
+let savedScrollPosition = 0;
+
+
+/* =========================================================
+   REFRESH PAGE
+   ========================================================= */
+
 function refreshPage() {
     window.location.reload();
 }
 
-// --- HAMBURGER MENU DRAWER INTERACTION ---
+
+/* =========================================================
+   TOGGLE MOBILE MENU
+   ========================================================= */
+
 function toggleMobileMenu() {
-    const hamburger = document.getElementById('hamburgerToggle');
-    const navMenu = document.getElementById('navMenu');
-    
-    hamburger.classList.toggle('active');
-    navMenu.classList.toggle('active');
+
+    const hamburger = document.getElementById("hamburgerToggle");
+    const navMenu = document.getElementById("navMenu");
+    const backdrop = document.getElementById("mobileMenuBackdrop");
+
+    if (!hamburger || !navMenu) {
+        return;
+    }
+
+    const isMenuOpen = navMenu.classList.contains("active");
+
+
+    /* =====================================================
+       OPEN MENU
+       ===================================================== */
+
+    if (!isMenuOpen) {
+
+        /* Save current scroll position */
+        savedScrollPosition =
+            window.scrollY ||
+            window.pageYOffset ||
+            document.documentElement.scrollTop ||
+            0;
+
+
+        /* Fix body at current scroll position */
+        document.body.style.top =
+            "-" + savedScrollPosition + "px";
+
+
+        /* Open hamburger */
+        hamburger.classList.add("active");
+
+
+        /* Open navigation */
+        navMenu.classList.add("active");
+
+
+        /* Show blurred background */
+        if (backdrop) {
+            backdrop.classList.add("active");
+        }
+
+
+        /* Lock HTML scrolling */
+        document.documentElement.classList.add(
+            "mobile-menu-open"
+        );
+
+
+        /* Lock BODY scrolling */
+        document.body.classList.add(
+            "mobile-menu-open"
+        );
+
+    }
+
+
+    /* =====================================================
+       CLOSE MENU
+       ===================================================== */
+
+    else {
+
+        closeMobileMenu();
+
+    }
 }
 
-// Automatically close responsive drawer if any nav link is selected
-document.querySelectorAll('.nav-item').forEach(item => {
-    item.addEventListener('click', () => {
-        document.getElementById('hamburgerToggle').classList.remove('active');
-        document.getElementById('navMenu').classList.remove('active');
-    });
-});
 
+/* =========================================================
+   CLOSE MOBILE MENU
+   ========================================================= */
+
+function closeMobileMenu() {
+
+    const hamburger =
+        document.getElementById("hamburgerToggle");
+
+    const navMenu =
+        document.getElementById("navMenu");
+
+    const backdrop =
+        document.getElementById("mobileMenuBackdrop");
+
+
+    if (!hamburger || !navMenu) {
+        return;
+    }
+
+
+    /* Close hamburger */
+    hamburger.classList.remove("active");
+
+
+    /* Close navigation */
+    navMenu.classList.remove("active");
+
+
+    /* Hide backdrop */
+    if (backdrop) {
+        backdrop.classList.remove("active");
+    }
+
+
+    /* Unlock HTML */
+    document.documentElement.classList.remove(
+        "mobile-menu-open"
+    );
+
+
+    /* Unlock BODY */
+    document.body.classList.remove(
+        "mobile-menu-open"
+    );
+
+
+    /* Remove fixed positioning */
+    document.body.style.top = "";
+
+
+    /* Restore previous scroll position */
+    window.scrollTo(
+        0,
+        savedScrollPosition
+    );
+}
+
+
+/* =========================================================
+   DOM READY
+   ========================================================= */
+
+document.addEventListener(
+    "DOMContentLoaded",
+    function () {
+
+
+        /* ================================================
+           NAVIGATION CLICK
+           ================================================ */
+
+        const navItems =
+            document.querySelectorAll(".nav-item");
+
+
+        navItems.forEach(function (item) {
+
+            item.addEventListener(
+                "click",
+                function () {
+
+                    closeMobileMenu();
+
+                }
+            );
+
+        });
+
+
+        /* ================================================
+           BACKDROP CLICK
+           ================================================ */
+
+        const backdrop =
+            document.getElementById(
+                "mobileMenuBackdrop"
+            );
+
+
+        if (backdrop) {
+
+            backdrop.addEventListener(
+                "click",
+                function () {
+
+                    closeMobileMenu();
+
+                }
+            );
+
+        }
+
+
+        /* ================================================
+           ESC KEY
+           ================================================ */
+
+        document.addEventListener(
+            "keydown",
+            function (event) {
+
+                if (event.key === "Escape") {
+
+                    const navMenu =
+                        document.getElementById(
+                            "navMenu"
+                        );
+
+
+                    if (
+                        navMenu &&
+                        navMenu.classList.contains(
+                            "active"
+                        )
+                    ) {
+
+                        closeMobileMenu();
+
+                    }
+
+                }
+
+            }
+        );
+
+
+        /* ================================================
+           WINDOW RESIZE
+           Close mobile menu when switching to desktop
+           ================================================ */
+
+        window.addEventListener(
+            "resize",
+            function () {
+
+                if (window.innerWidth > 992) {
+
+                    const navMenu =
+                        document.getElementById(
+                            "navMenu"
+                        );
+
+
+                    if (
+                        navMenu &&
+                        navMenu.classList.contains(
+                            "active"
+                        )
+                    ) {
+
+                        closeMobileMenu();
+
+                    }
+
+                }
+
+            }
+        );
+
+    }
+);
+
+
+/* =========================================================
+   PREVENT TOUCH SCROLL OUTSIDE MENU
+   ========================================================= */
+
+document.addEventListener(
+    "touchmove",
+    function (event) {
+
+        const navMenu =
+            document.getElementById("navMenu");
+
+
+        if (
+            navMenu &&
+            navMenu.classList.contains("active")
+        ) {
+
+            /*
+             * Prevent background page from scrolling.
+             * Allow touch movement inside navigation.
+             */
+
+            if (!navMenu.contains(event.target)) {
+
+                event.preventDefault();
+
+            }
+
+        }
+
+    },
+    {
+        passive: false
+    }
+);
+
+
+/* =========================================================
+   PREVENT MOUSE WHEEL SCROLL OUTSIDE MENU
+   ========================================================= */
+
+document.addEventListener(
+    "wheel",
+    function (event) {
+
+        const navMenu =
+            document.getElementById("navMenu");
+
+
+        if (
+            navMenu &&
+            navMenu.classList.contains("active")
+        ) {
+
+            /*
+             * Prevent background page from scrolling.
+             * Allow wheel movement inside navigation.
+             */
+
+            if (!navMenu.contains(event.target)) {
+
+                event.preventDefault();
+
+            }
+
+        }
+
+    },
+    {
+        passive: false
+    }
+);
 </script>
+
+
 
 
 <!-- FULL WIDTH & HEIGHT HERO BANNER -->
@@ -388,7 +722,7 @@ document.querySelectorAll('.nav-item').forEach(item => {
 
 /* --- ADAPTIVE BREAKPOINT MAXIMIZATION SYSTEM --- */
 @media (max-width: 992px) {
-    .hero-fresh-banner { height: auto; min-height: auto; padding: 120px 24px 60px 24px; }
+    .hero-fresh-banner { height: auto; min-height: auto; padding: 130px 24px 60px 24px; }
     .hero-fresh-container { grid-template-columns: 1fr; gap: 60px; text-align: center; }
     .hero-fresh-content { align-items: center; text-align: center; }
     .hero-fresh-title { font-size: 2.6rem; justify-content: center; }
@@ -1931,7 +2265,7 @@ function initBannerScrollRevealObserver() {
                     </div>
                     <div class="profile-phone-labels">
                         <span>Call Us Now</span>
-                        <a href="tel:+11123065498" class="profile-phone-anchor">+11 123 0654 98</a>
+                        <a href="tel:+11123065498" class="profile-phone-anchor">+91 7010792745</a>
                     </div>
                 </div>
             </div>

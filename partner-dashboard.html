@@ -1802,6 +1802,101 @@ body {
     .panel-section-title-wrapper-card { flex-direction: column; align-items: flex-start; gap: 10px; }
     .header-profile-user-card .avatar-circle-frame { display: none; } 
 }
+
+
+@media (max-width: 768px) {
+
+    .workspace-top-header {
+        height: 64px;
+        padding: 0 12px;
+    }
+
+    .header-left-cluster {
+        min-width: 0;
+        flex: 1;
+        gap: 8px;
+    }
+
+    .header-right-cluster {
+        flex-shrink: 1;
+        min-width: 0;
+        gap: 8px;
+        max-width: 70%;
+    }
+
+    .header-profile-user-card {
+        min-width: 0;
+        max-width: 100%;
+    }
+
+    .profile-display-name-node {
+        display: block;
+        max-width: 150px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        font-size: 0.82rem;
+    }
+
+    .header-notification-bell-pod {
+        flex-shrink: 0;
+    }
+}
+
+
+/* =========================================================
+   SMALL MOBILE
+========================================================= */
+
+@media (max-width: 520px) {
+
+    .workspace-top-header {
+        padding: 0 10px;
+    }
+
+    .header-left-cluster {
+        flex: 0 0 auto;
+    }
+
+    .header-right-cluster {
+        flex: 1;
+        justify-content: flex-end;
+        max-width: calc(100% - 45px);
+    }
+
+    .header-profile-user-card {
+        flex: 1;
+        justify-content: flex-end;
+    }
+
+    .profile-display-name-node {
+        max-width: 125px;
+        font-size: 0.76rem;
+    }
+
+    .header-notification-bell-pod {
+        padding: 4px;
+    }
+}
+
+
+/* =========================================================
+   VERY SMALL PHONES
+========================================================= */
+
+@media (max-width: 380px) {
+
+    .profile-display-name-node {
+        max-width: 105px;
+        font-size: 0.72rem;
+    }
+
+    .header-right-cluster {
+        gap: 5px;
+    }
+}
+
+
                     </style>
 
 

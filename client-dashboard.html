@@ -1814,6 +1814,217 @@ body {
     .panel-section-title-wrapper-card { flex-direction: column; align-items: flex-start; gap: 10px; }
     .header-profile-user-card .avatar-circle-frame { display: none; } 
 }
+
+
+
+@media (max-width: 992px) {
+
+    .workspace-top-header {
+        height: 70px;
+        padding: 0 20px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+    .header-left-cluster {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        flex-shrink: 0;
+        min-width: 0;
+    }
+
+    .mobile-hamburger-toggle-trigger {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+        padding: 5px;
+    }
+
+    .dashboard-brand-refresh-logo {
+        display: flex;
+        align-items: center;
+        flex-shrink: 0;
+    }
+
+    .brand-img-tag-logo {
+        height: 30px;
+        width: auto;
+        max-width: 110px;
+        object-fit: contain;
+    }
+
+    .header-right-cluster {
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        gap: 12px;
+        flex: 1;
+        min-width: 0;
+        max-width: none;
+    }
+
+    .header-notification-bell-pod {
+        flex-shrink: 0;
+        padding: 5px;
+    }
+
+    .header-profile-user-card {
+        display: flex;
+        align-items: center;
+        gap: 7px;
+        min-width: 0;
+        flex-shrink: 1;
+    }
+
+    .profile-display-name-node {
+        display: block;
+        min-width: 0;
+        max-width: none;
+
+        font-size: 0.82rem;
+        font-weight: 800;
+
+        white-space: nowrap;
+        overflow: visible;
+        text-overflow: clip;
+
+        color: var(--text-pure-black);
+    }
+}
+
+
+/* =========================================================
+   MOBILE - 768px
+========================================================= */
+
+@media (max-width: 768px) {
+
+    .workspace-top-header {
+        height: 64px;
+        padding: 0 12px;
+    }
+
+    .header-left-cluster {
+        gap: 5px;
+    }
+
+    .brand-img-tag-logo {
+        height: 27px;
+        max-width: 95px;
+    }
+
+    .header-right-cluster {
+        gap: 7px;
+    }
+
+    .header-profile-user-card {
+        gap: 5px;
+    }
+
+    .profile-display-name-node {
+        font-size: 0.76rem;
+        white-space: nowrap;
+        overflow: visible;
+        text-overflow: clip;
+    }
+
+    .header-notification-bell-pod {
+        padding: 4px;
+        flex-shrink: 0;
+    }
+}
+
+
+/* =========================================================
+   SMALL MOBILE - 520px
+========================================================= */
+
+@media (max-width: 520px) {
+
+    .workspace-top-header {
+        height: 60px;
+        padding: 0 9px;
+    }
+
+    .header-left-cluster {
+        gap: 4px;
+    }
+
+    .brand-img-tag-logo {
+        height: 25px;
+        max-width: 85px;
+    }
+
+    .header-right-cluster {
+        gap: 5px;
+        min-width: 0;
+        flex: 1;
+    }
+
+    .header-profile-user-card {
+        gap: 4px;
+        min-width: 0;
+    }
+
+    /* Hide avatar to give more space to email */
+    .header-profile-user-card .avatar-circle-frame {
+        display: none;
+    }
+
+    .profile-display-name-node {
+        font-size: 0.70rem;
+        font-weight: 800;
+
+        white-space: nowrap;
+        overflow: visible;
+        text-overflow: clip;
+        max-width: none;
+    }
+
+    .header-notification-bell-pod {
+        padding: 3px;
+        flex-shrink: 0;
+    }
+}
+
+
+/* =========================================================
+   VERY SMALL MOBILE - 380px
+========================================================= */
+
+@media (max-width: 380px) {
+
+    .workspace-top-header {
+        padding: 0 7px;
+    }
+
+    .header-left-cluster {
+        gap: 3px;
+    }
+
+    .brand-img-tag-logo {
+        height: 23px;
+        max-width: 75px;
+    }
+
+    .header-right-cluster {
+        gap: 4px;
+    }
+
+    .profile-display-name-node {
+        font-size: 0.64rem;
+        font-weight: 800;
+    }
+
+    .header-notification-bell-pod {
+        padding: 2px;
+    }
+}
+
+
             </style>
 
 <script>
